@@ -7,6 +7,7 @@ public class ImperativeExample {
 	
 	public static void main(String[] args) {
 		
+		
 		List<String> namesList = List.of("Alex", "Ben", "Chloe", "Adam");
 		
 		List<String> result = namesGreaterThanSize(namesList, 3);
@@ -19,13 +20,20 @@ public class ImperativeExample {
 		
 		List<String> newNamesList = new ArrayList<String>();
 		
-		for(int y = 0; y < namesList.size(); x++) {
+		for(int y = 0; y < namesList.size(); y++) {
 			
 			if(namesList.get(y).length() > 3) {
 				newNamesList.add(namesList.get(y));
 			}
 			
 		}
+		
+//		for(String name: namesList) {
+//			if(name.length() > 3) {
+//				newNamesList.add(name);
+//			}
+//			
+//		}
 		
 		return newNamesList;
 		
