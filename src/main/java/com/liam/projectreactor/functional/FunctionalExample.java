@@ -9,7 +9,7 @@ public class FunctionalExample {
 public static void main(String[] args) {
 		
 		
-		List<String> namesList = List.of("Alex", "Ben", "Chloe", "Adam");
+		List<String> namesList = List.of("Alex", "Ben", "Chloe", "Adam", "Adam");
 		
 		List<String> result = namesGreaterThanSize(namesList, 3);
 		System.out.println(result);
@@ -21,6 +21,7 @@ public static void main(String[] args) {
 		
 		return namesList.stream()
 			.filter(s->s.length() > len)
+			.distinct()
 			.collect(Collectors.toList());
 		
 	}
