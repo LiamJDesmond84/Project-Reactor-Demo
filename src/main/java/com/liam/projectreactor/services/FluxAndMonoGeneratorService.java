@@ -21,19 +21,21 @@ public class FluxAndMonoGeneratorService {
 
 		fluxAndMonoGenServ.nameMono()
 			.subscribe(name -> {
-				System.out.println("The only name is: " + name);
+				System.out.println("The Mono name is: " + name);
 			});
 		
 	}
 	
 	public Mono<String> nameMono() {
 		
-		return Mono.just("Alex");
+		return Mono.just("Alex")
+				.log();
 	}
 	
 	public Flux<String> namesFlux() {
 		
-		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe")); // DB or a remote service call
+		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
+				.log(); // DB or a remote service call
 		
 	}
 
