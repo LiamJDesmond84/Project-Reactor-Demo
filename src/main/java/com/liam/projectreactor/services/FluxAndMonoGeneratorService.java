@@ -3,6 +3,7 @@ package com.liam.projectreactor.services;
 import java.util.List;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public class FluxAndMonoGeneratorService {
 	
@@ -17,6 +18,17 @@ public class FluxAndMonoGeneratorService {
 				System.out.println("The name is: " + name);
 			});
 		
+
+		fluxAndMonoGenServ.nameMono()
+			.subscribe(name -> {
+				System.out.println("The only name is: " + name);
+			});
+		
+	}
+	
+	public Mono<String> nameMono() {
+		
+		return Mono.just("Alex");
 	}
 	
 	public Flux<String> namesFlux() {
