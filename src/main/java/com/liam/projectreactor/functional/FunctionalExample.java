@@ -19,9 +19,12 @@ public static void main(String[] args) {
 	
 	private static List<String> namesGreaterThanSize(List<String> namesList, int len) {
 		
-		return namesList.stream()
+		return namesList
+			.stream()
 			.filter(s->s.length() > len)
+			.map(String::toUpperCase)
 			.distinct()
+			.sorted()
 			.collect(Collectors.toList());
 		
 	}
