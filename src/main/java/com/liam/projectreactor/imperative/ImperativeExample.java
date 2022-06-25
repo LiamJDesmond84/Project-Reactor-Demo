@@ -16,20 +16,20 @@ public class ImperativeExample {
 
 	}
 	
-	private static List<String> namesGreaterThanSize(List<String> namesList, int x) {
+	private static List<String> namesGreaterThanSize(List<String> namesList, int len) {
 		
 		List<String> newNamesList = new ArrayList<String>();
 		
-		for(int y = 0; y < namesList.size(); y++) {
+		for(int x = 0; x < namesList.size(); x++) {
 			
-			if(namesList.get(y).length() > 3) {
-				newNamesList.add(namesList.get(y));
+			if(namesList.get(x).length() > len) {
+				newNamesList.add(namesList.get(x));
 			}
 			
 		}
 		
 //		for(String name: namesList) {
-//			if(name.length() > 3) {
+//			if(name.length() > len) {
 //				newNamesList.add(name);
 //			}
 //			
