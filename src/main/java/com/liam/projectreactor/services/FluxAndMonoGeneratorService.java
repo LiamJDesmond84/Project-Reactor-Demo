@@ -34,8 +34,8 @@ public class FluxAndMonoGeneratorService {
 	
 	public Flux<String> namesFlux() {
 		
-		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
-				.log(); // DB or a remote service call
+		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe")) // DB or a remote service call
+				.log(); 
 		
 	}
 
