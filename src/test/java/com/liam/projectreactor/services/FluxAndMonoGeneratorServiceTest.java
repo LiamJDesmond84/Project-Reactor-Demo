@@ -73,9 +73,7 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.create(namesFluxMap)
-			.expectNext("ALEX") // First should be ALEX
-			.expectNext("CHLOE")
-			.expectNextCount(0) // 0 left after CHLOE
+			.expectNext("4-ALEX", "5-CHLOE")
 			.verifyComplete();
 	}
 	

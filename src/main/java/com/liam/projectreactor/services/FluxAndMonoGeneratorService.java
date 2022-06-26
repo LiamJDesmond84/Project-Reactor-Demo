@@ -67,7 +67,8 @@ public class FluxAndMonoGeneratorService {
 		
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
 				.map(String::toUpperCase)
-				.filter(s -> s.length() > stringLen)
+				.filter(x -> x.length() > stringLen)
+				.map(x -> x.length() + "-" + x)
 				.log();
 	}
 	
