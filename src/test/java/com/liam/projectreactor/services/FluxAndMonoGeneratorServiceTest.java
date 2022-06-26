@@ -3,6 +3,7 @@ package com.liam.projectreactor.services;
 import org.junit.jupiter.api.Test;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 public class FluxAndMonoGeneratorServiceTest {
@@ -24,6 +25,22 @@ public class FluxAndMonoGeneratorServiceTest {
 //			.expectNextCount(3)
 			.expectNext("Alex") // First should be Alex
 			.expectNextCount(2) // 2 left after Alex
+			.verifyComplete();
+	}
+	
+	@Test
+	void nameMono() {
+		
+		//given
+		
+		
+		//when
+		Mono<String> nameMonoTest = fluxAndMonoGenServ.nameMono();
+		
+		//then
+		StepVerifier.create(nameMonoTest)
+			.expectNext("Alex")
+			.expectNextCount(0)
 			.verifyComplete();
 	}
 
