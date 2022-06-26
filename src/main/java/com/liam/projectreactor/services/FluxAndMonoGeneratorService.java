@@ -34,6 +34,11 @@ public class FluxAndMonoGeneratorService {
 			System.out.println("The filtered name mapped to uppercase is: " + x);
 		});
 		
+		fluxAndMonoGenServ.nameMonoFilter(3)
+		.subscribe(name -> {
+			System.out.println("The Mono String length + uppercase name is: " + name);
+		});
+		
 //		fluxAndMonoGenServ.namesFluxImmutability()
 //		.subscribe(x -> {
 //			System.out.println("The name mapped to uppercase is: " + x);
@@ -68,7 +73,19 @@ public class FluxAndMonoGeneratorService {
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
 				.map(String::toUpperCase)
 				.filter(x -> x.length() > stringLen)
-				.map(x -> x.length() + "-" + x)
+				.map(x -> x.length() + "-" + x) // Adding the name length + '-' to beginning of name
+				.log();
+	}
+	
+	
+	
+	
+	public Mono<String> nameMonoFilter(int stringLen) {
+		
+		return Mono.just("Alex")
+				.map(String::toUpperCase)
+				.filter(x -> x.length() > stringLen)
+				.map(x -> x.length() + "-" + x) // Adding the name length + '-' to beginning of name
 				.log();
 	}
 	
