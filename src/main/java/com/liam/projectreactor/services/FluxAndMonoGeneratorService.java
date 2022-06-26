@@ -29,10 +29,15 @@ public class FluxAndMonoGeneratorService {
 				System.out.println("The name mapped to uppercase is: " + x);
 			});
 		
-		fluxAndMonoGenServ.namesFluxImmutability()
+		fluxAndMonoGenServ.namesFluxMapFilter(3)
 		.subscribe(x -> {
-			System.out.println("The name mapped to uppercase is: " + x);
+			System.out.println("The filtered name mapped to uppercase is: " + x);
 		});
+		
+//		fluxAndMonoGenServ.namesFluxImmutability()
+//		.subscribe(x -> {
+//			System.out.println("The name mapped to uppercase is: " + x);
+//		});
 		
 	}
 	
@@ -58,13 +63,23 @@ public class FluxAndMonoGeneratorService {
 	}
 	
 	
-	public Flux<String> namesFluxImmutability() {
+	public Flux<String> namesFluxMapFilter(int stringLen) { // Filter the string whose length is greater than 3
 		
-		Flux<String> namesFluxImm = Flux.fromIterable(List.of("Alex", "Ben", "Chloe"));
-
-		namesFluxImm.map(String::toUpperCase); // DOES NOT CHANGE ORIGINAL SOURCE(namesFluxImm)
-		
-		return namesFluxImm; // DOES NOT CHANGE ORIGINAL SOURCE(namesFluxImm)
+		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
+				.map(String::toUpperCase)
+				.filter(s -> s.length() > stringLen)
+				.log();
 	}
+	
+	
+	
+//	public Flux<String> namesFluxImmutability() {
+//		
+//		Flux<String> namesFluxImm = Flux.fromIterable(List.of("Alex", "Ben", "Chloe"));
+//
+//		namesFluxImm.map(String::toUpperCase); // DOES NOT CHANGE ORIGINAL SOURCE(namesFluxImm)
+//		
+//		return namesFluxImm; // DOES NOT CHANGE ORIGINAL SOURCE(namesFluxImm)
+//	}
 
 }

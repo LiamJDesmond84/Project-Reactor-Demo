@@ -62,21 +62,21 @@ public class FluxAndMonoGeneratorServiceTest {
 			.verifyComplete();
 	}
 	
-	@Test
-	void namesFluxImm() {
-		
-		//given
-		
-		
-		//when
-		Flux<String> namesFluxImm = fluxAndMonoGenServ.namesFluxImmutability();
-		
-		//then
-		StepVerifier.create(namesFluxImm)
-			.expectNext("ALEX") // First should be ALEX
-			.expectNext("BEN")
-			.expectNextCount(1) // 1 left after BEN
-			.verifyComplete();
-	}
+//	@Test
+//	void namesFluxImm() { // Reactive Streams are immutable, only operators(like .map) attached to the datasource can transform the data
+//		
+//		//given
+//		
+//		
+//		//when
+//		Flux<String> namesFluxImm = fluxAndMonoGenServ.namesFluxImmutability();
+//		
+//		//then
+//		StepVerifier.create(namesFluxImm)
+//			.expectNext("ALEX") // First should be ALEX
+//			.expectNext("BEN")
+//			.expectNextCount(1) // 1 left after BEN
+//			.verifyComplete();
+//	}
 
 }
