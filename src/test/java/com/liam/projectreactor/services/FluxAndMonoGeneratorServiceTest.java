@@ -43,5 +43,24 @@ public class FluxAndMonoGeneratorServiceTest {
 			.expectNextCount(0)
 			.verifyComplete();
 	}
+	
+	
+	@Test
+	void namesFluxMap() {
+		
+		//given
+		
+		
+		//when
+		Flux<String> namesFluxMap = fluxAndMonoGenServ.namesFluxMap();
+		
+		//then
+		StepVerifier.create(namesFluxMap)
+//			.expectNext("Alex", "Ben", "Chloe")
+//			.expectNextCount(3)
+			.expectNext("ALEX") // First should be Alex
+			.expectNextCount(2) // 2 left after Alex
+			.verifyComplete();
+	}
 
 }
