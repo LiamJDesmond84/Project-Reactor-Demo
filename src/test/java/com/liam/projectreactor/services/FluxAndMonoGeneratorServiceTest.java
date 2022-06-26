@@ -61,5 +61,22 @@ public class FluxAndMonoGeneratorServiceTest {
 			.expectNextCount(1) // 1 left after BEN
 			.verifyComplete();
 	}
+	
+	@Test
+	void namesFluxImm() {
+		
+		//given
+		
+		
+		//when
+		Flux<String> namesFluxImm = fluxAndMonoGenServ.namesFluxImmutability();
+		
+		//then
+		StepVerifier.create(namesFluxImm)
+			.expectNext("ALEX") // First should be ALEX
+			.expectNext("BEN")
+			.expectNextCount(1) // 1 left after BEN
+			.verifyComplete();
+	}
 
 }
