@@ -99,6 +99,18 @@ public class FluxAndMonoGeneratorService {
 	}
 	
 	
+	//FLUX
+	
+	
+	public Flux<String> namesFluxFlatmap(int stringLen) { // Filter the string whose length is greater than 3
+		
+		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
+				.map(String::toUpperCase)
+				.filter(x -> x.length() > stringLen)
+				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E
+				.log();
+	}
+	
 	
 //	public Flux<String> namesFluxImmutability() {
 //		
