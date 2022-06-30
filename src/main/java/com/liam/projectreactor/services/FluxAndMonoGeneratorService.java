@@ -108,9 +108,11 @@ public class FluxAndMonoGeneratorService {
 				.map(String::toUpperCase)
 				.filter(x -> x.length() > stringLen)
 				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E
+				.flatMap(x -> splitString(x)) // A
 				.log();
 	}
 	
+	// ALEX -> A, L, E, X
 	public Flux<String> splitString(String name) {
 		
 		String[] charArray = name.split("");
