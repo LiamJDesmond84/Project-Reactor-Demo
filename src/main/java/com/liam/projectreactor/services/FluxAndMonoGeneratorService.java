@@ -111,6 +111,13 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}
 	
+	public Flux<String> splitString(String name) {
+		
+		String[] charArray = name.split("");
+		
+		return Flux.fromArray(charArray);
+	}
+	
 	
 //	public Flux<String> namesFluxImmutability() {
 //		
