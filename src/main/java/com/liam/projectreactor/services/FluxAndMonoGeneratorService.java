@@ -103,6 +103,9 @@ public class FluxAndMonoGeneratorService {
 	//FLUX
 	//FLATMAP
 	
+	// 1: "Alex", "Ben", "Chloe" - Ben goes away
+	// 2: splitString - [A, L, E, X] - [C, H, L, O, E]
+	// 3: flatmap - A, L, E, X, C, H, L, O, E
 	public Flux<String> namesFluxFlatmap(int stringLen) { // Filter the string whose length is greater than 3
 		
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
