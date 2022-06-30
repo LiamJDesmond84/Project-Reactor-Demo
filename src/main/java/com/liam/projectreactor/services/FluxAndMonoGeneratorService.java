@@ -1,5 +1,6 @@
 package com.liam.projectreactor.services;
 
+import java.util.Arrays;
 import java.util.List;
 
 import reactor.core.publisher.Flux;
@@ -100,7 +101,7 @@ public class FluxAndMonoGeneratorService {
 	
 	
 	//FLUX
-	
+	//FLATMAP
 	
 	public Flux<String> namesFluxFlatmap(int stringLen) { // Filter the string whose length is greater than 3
 		
@@ -108,7 +109,8 @@ public class FluxAndMonoGeneratorService {
 				.map(String::toUpperCase)
 				.filter(x -> x.length() > stringLen)
 				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E
-				.flatMap(x -> splitString(x)) // A
+				.flatMap(x -> splitString(x)) // BELOW METHOD
+				// A, L, E, X, C, H, L, O, E
 				.log();
 	}
 	
@@ -116,7 +118,9 @@ public class FluxAndMonoGeneratorService {
 	public Flux<String> splitString(String name) {
 		
 		String[] charArray = name.split("");
-		
+		System.out.println(Arrays.toString(charArray));
+		// [A, L, E, X]
+		// [C, H, L, O, E]
 		return Flux.fromArray(charArray);
 	}
 	
