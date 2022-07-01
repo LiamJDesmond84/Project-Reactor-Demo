@@ -121,8 +121,8 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.create(nameMonoTest)
-			.expectNext("A","L", "E", "X", "C", "H", "L", "O", "E")
-			.expectNextCount(0)
+//			.expectNext("A","L", "E", "X", "C", "H", "L", "O", "E")
+			.expectNextCount(9)
 			.verifyComplete();
 	}
 	
