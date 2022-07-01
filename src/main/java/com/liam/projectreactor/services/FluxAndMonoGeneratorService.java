@@ -1,7 +1,9 @@
 package com.liam.projectreactor.services;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -117,6 +119,16 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}
 	
+	// ALEX -> A, L, E, X
+	public Flux<String> splitString(String name) {
+		
+		String[] charArray = name.split("");
+		System.out.println(Arrays.toString(charArray));
+		// [A, L, E, X]
+		// [C, H, L, O, E]
+		return Flux.fromArray(charArray);
+	}
+	
 	
 	public Flux<String> namesFluxFlatmapAsync(int stringLen) { // Filter the string whose length is greater than 3
 		
@@ -129,16 +141,21 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}
 	
-	
-	// ALEX -> A, L, E, X
-	public Flux<String> splitString(String name) {
+	public Flux<String> splitStringWithDelay(String name) {
 		
 		String[] charArray = name.split("");
+		
+		int delay = new Random().nextInt(1000);
+		
 		System.out.println(Arrays.toString(charArray));
 		// [A, L, E, X]
 		// [C, H, L, O, E]
-		return Flux.fromArray(charArray);
+		return Flux.fromArray(charArray)
+				.delayElements(Duration.ofMillis(delay));
 	}
+	
+	
+
 
 	
 	
