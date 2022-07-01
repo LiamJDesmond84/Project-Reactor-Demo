@@ -130,6 +130,8 @@ public class FluxAndMonoGeneratorService {
 	}
 	
 	
+	//FLUX
+	//FLATMAP - NOT good with Async
 	public Flux<String> namesFluxFlatmapAsync(int stringLen) { // Filter the string whose length is greater than 3
 		
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
