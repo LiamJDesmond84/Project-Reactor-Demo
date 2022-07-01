@@ -136,7 +136,7 @@ public class FluxAndMonoGeneratorService {
 				.map(String::toUpperCase)
 				.filter(x -> x.length() > stringLen)
 				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E
-				.flatMap(x -> splitString(x)) // BELOW METHOD
+				.flatMap(x -> splitStringWithDelay(x)) // BELOW METHOD
 				// A, L, E, X, C, H, L, O, E
 				.log();
 	}

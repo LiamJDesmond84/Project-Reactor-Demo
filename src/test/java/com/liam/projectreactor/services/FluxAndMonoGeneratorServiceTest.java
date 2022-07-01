@@ -110,6 +110,22 @@ public class FluxAndMonoGeneratorServiceTest {
 			.verifyComplete();
 	}
 	
+	@Test
+	void namesFluxFlatmapWithDelay() {
+		
+		//given
+		int stringLen = 3;
+		
+		//when
+		Flux<String> nameMonoTest = fluxAndMonoGenServ.namesFluxFlatmapAsync(stringLen);
+		
+		//then
+		StepVerifier.create(nameMonoTest)
+			.expectNext("A","L", "E", "X", "C", "H", "L", "O", "E")
+			.expectNextCount(0)
+			.verifyComplete();
+	}
+	
 //	@Test
 //	void namesFluxImm() { // Reactive Streams are immutable, only operators(like .map) attached to the datasource can transform the data
 //		
