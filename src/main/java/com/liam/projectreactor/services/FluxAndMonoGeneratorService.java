@@ -117,6 +117,19 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}
 	
+	
+	public Flux<String> namesFluxFlatmapAsync(int stringLen) { // Filter the string whose length is greater than 3
+		
+		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
+				.map(String::toUpperCase)
+				.filter(x -> x.length() > stringLen)
+				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E
+				.flatMap(x -> splitString(x)) // BELOW METHOD
+				// A, L, E, X, C, H, L, O, E
+				.log();
+	}
+	
+	
 	// ALEX -> A, L, E, X
 	public Flux<String> splitString(String name) {
 		
@@ -126,6 +139,7 @@ public class FluxAndMonoGeneratorService {
 		// [C, H, L, O, E]
 		return Flux.fromArray(charArray);
 	}
+
 	
 	
 //	public Flux<String> namesFluxImmutability() {
