@@ -148,7 +148,7 @@ public class FluxAndMonoGeneratorService {
 	
 	
 	//FLUX
-	//FLATMAP - Good with Async - But beware - random?
+	//FLATMAP - Good with Async - But beware of DELAYELEMENTS - random?
 
 //	   ___ _       _                        _                        
 //	  / __\ | __ _| |_  /\/\   __ _ _ __   /_\  ___ _   _ _ __   ___ 
@@ -163,6 +163,23 @@ public class FluxAndMonoGeneratorService {
 				.filter(x -> x.length() > stringLen)
 				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E
 				.flatMap(x -> splitStringWithDelay(x)) // BELOW METHOD
+				// A, L, E, X, C, H, L, O, E
+				.log();
+	}
+	
+//	   ___                      _                      
+//	  / __\___  _ __   ___ __ _| |_  /\/\   __ _ _ __  
+//	 / /  / _ \| '_ \ / __/ _` | __|/    \ / _` | '_ \ 
+//	/ /__| (_) | | | | (_| (_| | |_/ /\/\ \ (_| | |_) |
+//	\____/\___/|_| |_|\___\__,_|\__\/    \/\__,_| .__/ 
+//	                                            |_|   
+	public Flux<String> namesFluxContcatMap(int stringLen) { // Filter the string whose length is greater than 3
+		
+		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
+				.map(String::toUpperCase)
+				.filter(x -> x.length() > stringLen)
+				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E
+				.concatMap(x -> splitStringWithDelay(x)) // BELOW METHOD
 				// A, L, E, X, C, H, L, O, E
 				.log();
 	}
@@ -183,6 +200,8 @@ public class FluxAndMonoGeneratorService {
 	}
 	
 	
+
+
 
 
 	
