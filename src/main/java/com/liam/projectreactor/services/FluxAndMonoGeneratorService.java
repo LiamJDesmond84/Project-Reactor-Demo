@@ -69,6 +69,11 @@ public class FluxAndMonoGeneratorService {
 	}
 	
 	//FLUX
+//	   /\/\   __ _ _ __  
+//	  /    \ / _` | '_ \ 
+//	 / /\/\ \ (_| | |_) |
+//	 \/    \/\__,_| .__/ 
+//	              |_| 
 	
 	public Flux<String> namesFluxMap() {
 		
@@ -79,8 +84,14 @@ public class FluxAndMonoGeneratorService {
 	}
 	
 	//FLUX
-	
-	
+
+//                      ___ _ _ _            
+//  /\/\   __ _ _ __   / __(_) | |_ ___ _ __ 
+// /    \ / _` | '_ \ / _\ | | | __/ _ \ '__|
+/// /\/\ \ (_| | |_) / /   | | | ||  __/ |   
+//\/    \/\__,_| .__/\/    |_|_|\__\___|_|   
+//             |_|                           
+//	
 	public Flux<String> namesFluxMapFilter(int stringLen) { // Filter the string whose length is greater than 3
 		
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
@@ -103,7 +114,13 @@ public class FluxAndMonoGeneratorService {
 	
 	
 	//FLUX
-	//FLATMAP
+
+//	   ___ _       _                      
+//	  / __\ | __ _| |_  /\/\   __ _ _ __  
+//	 / _\ | |/ _` | __|/    \ / _` | '_ \ 
+//	/ /   | | (_| | |_/ /\/\ \ (_| | |_) |
+//	\/    |_|\__,_|\__\/    \/\__,_| .__/ 
+//	                               |_|  
 	
 	// 1: "Alex", "Ben", "Chloe" - Ben goes away
 	// 2: splitString - [A, L, E, X] - [C, H, L, O, E]
@@ -131,7 +148,14 @@ public class FluxAndMonoGeneratorService {
 	
 	
 	//FLUX
-	//FLATMAP - NOT good with Async
+	//FLATMAP - Good with Async - But beware - random?
+
+//	   ___ _       _                        _                        
+//	  / __\ | __ _| |_  /\/\   __ _ _ __   /_\  ___ _   _ _ __   ___ 
+//	 / _\ | |/ _` | __|/    \ / _` | '_ \ //_\\/ __| | | | '_ \ / __|
+//	/ /   | | (_| | |_/ /\/\ \ (_| | |_) /  _  \__ \ |_| | | | | (__ 
+//	\/    |_|\__,_|\__\/    \/\__,_| .__/\_/ \_/___/\__, |_| |_|\___|
+//	                               |_|              |___/            
 	public Flux<String> namesFluxFlatmapAsync(int stringLen) { // Filter the string whose length is greater than 3
 		
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
