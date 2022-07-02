@@ -123,6 +123,24 @@ public class FluxAndMonoGeneratorServiceTest {
 		StepVerifier.create(nameMonoTest)
 //			.expectNext("A","L", "E", "X", "C", "H", "L", "O", "E")
 			.expectNextCount(9)
+			// Without an operator like expectNextCount, it won't veryify complete, as it's still waiting for elements to come through
+			.verifyComplete();
+	}
+	
+	
+	@Test
+	void namesFluxContcatMap() {
+		
+		//given
+		int stringLen = 3;
+		
+		//when
+		Flux<String> nameMonoTest = fluxAndMonoGenServ.namesFluxContcatMap(stringLen);
+		
+		//then
+		StepVerifier.create(nameMonoTest)
+			.expectNext("A","L", "E", "X", "C", "H", "L", "O", "E")
+//			.expectNextCount(9)
 			.verifyComplete();
 	}
 	
