@@ -143,7 +143,8 @@ public class FluxAndMonoGeneratorService {
 		System.out.println(Arrays.toString(charArray));
 		// [A, L, E, X]
 		// [C, H, L, O, E]
-		return Flux.fromArray(charArray);
+		return Flux.fromArray(charArray)
+				.log();
 	}
 	
 	
@@ -195,8 +196,8 @@ public class FluxAndMonoGeneratorService {
 		// [C, H, L, O, E]
 		return Flux.fromArray(charArray)
 				// delays each element that is being emitted - ends up random?
-				.log()
-				.delayElements(Duration.ofMillis(delay));
+				.delayElements(Duration.ofMillis(delay))
+				.log();
 	}
 	
 	

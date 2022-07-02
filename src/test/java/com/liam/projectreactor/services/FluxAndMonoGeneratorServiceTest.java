@@ -111,7 +111,7 @@ public class FluxAndMonoGeneratorServiceTest {
 	}
 	
 	@Test
-	void namesFluxFlatmapWithDelay() {
+	void namesFluxFlatmapAsync() {
 		
 		//given
 		int stringLen = 3;
