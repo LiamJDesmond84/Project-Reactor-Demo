@@ -159,11 +159,11 @@ public class FluxAndMonoGeneratorService {
 	}
 	
 	public Mono<List<String>> splitStringMono(String str) {
-		String[] StringArr = str.split("");
+		String[] charArr = str.split("");
 		
 //		char[] charArr = str.toCharArray();
 		
-		var charList = List.of(StringArr); // ALEX -> A, L, E, X
+		List<String> charList = List.of(charArr); // ALEX -> A, L, E, X
 		System.out.println(charList.getClass().getName());
 		
 		return Mono.just(charList);
