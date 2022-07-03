@@ -149,7 +149,7 @@ public class FluxAndMonoGeneratorService {
 	
 	
 	//FLUX
-	//FLATMAP - Good with Async - But beware of DELAYELEMENTS - random?
+	//FLATMAP - Good with Async - But beware of DELAYED ELEMENTS - random?
 
 //	   ___ _       _                        _                        
 //	  / __\ | __ _| |_  /\/\   __ _ _ __   /_\  ___ _   _ _ __   ___ 
