@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -214,6 +215,20 @@ public class FluxAndMonoGeneratorService {
 	}
 	
 
+	
+	public Flux<String> namesFluxTransform(int stringLen) {
+		
+		
+		Function<Flux<String>, Flux<String>> filterMap = inp -> inp // - Passing this function into .transform
+				.map(String::toUpperCase)
+				.filter(x -> x.length() > stringLen);
+		
+		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
+				.transform(filterMap)
+				.flatMap(x -> splitString(x)) // BELOW METHOD
+				// A, L, E, X, C, H, L, O, E
+				.log();
+	}
 
 //	  _____                 _ _     _   _____          _           
 //	  \_   \_ ____   ____ _| (_) __| | /__   \___  ___| |_         
