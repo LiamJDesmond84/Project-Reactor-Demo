@@ -136,16 +136,7 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}
 	
-	// ALEX -> A, L, E, X
-	public Flux<String> splitString(String name) {
-		
-		String[] charArray = name.split("");
-		System.out.println(Arrays.toString(charArray));
-		// [A, L, E, X]
-		// [C, H, L, O, E]
-		return Flux.fromArray(charArray);
-//				.log();
-	}
+
 	
 	//MONO
 	
@@ -154,17 +145,11 @@ public class FluxAndMonoGeneratorService {
 		return Mono.just("Alex")
 				.map(String::toUpperCase)
 				.filter(x -> x.length() > stringLen)
-				.flatMap(this::splitStringMono) // Mono<List> of A, L, E, X
+				.flatMap(this::splitStringMono) // Mono<List> of A, L, E, X    -  BELOW METHOD
 				.log();
 	}
 	
-	public Mono<List<String>> splitStringMono(String str) {
-		String[] charArr = str.split("");
-		
-		List<String> charList = List.of(charArr); // ALEX -> A, L, E, X
-		
-		return Mono.just(charList);
-	}
+
  	
 	
 	//FLUX
@@ -207,23 +192,27 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}
 	
-	public Flux<String> splitStringWithDelay(String name) {
+
+	
+	
+//	   ___ _       _                                               
+//	   / __\ | __ _| |_  /\/\   __ _ _ __   /\/\   __ _ _ __  _   _ 
+//	  / _\ | |/ _` | __|/    \ / _` | '_ \ /    \ / _` | '_ \| | | |
+//	 / /   | | (_| | |_/ /\/\ \ (_| | |_) / /\/\ \ (_| | | | | |_| |   --  Mono that returns a FLUX
+//	 \/    |_|\__,_|\__\/    \/\__,_| .__/\/    \/\__,_|_| |_|\__, |
+//	                                |_|                       |___/ 
+	
+	//MONO - FLUX
+	
+	public Flux<String> nameMonoFlatMapMany(int stringLen) { // "Alex" -> "ALEX" -> splitString -> Mono<List> of [A, L, E, X]
 		
-		String[] charArray = name.split("");
-		
-		int delay = new Random().nextInt(1000);
-		
-		System.out.println(Arrays.toString(charArray));
-		// [A, L, E, X]
-		// [C, H, L, O, E]
-		return Flux.fromArray(charArray)
-				// delays each element that is being emitted - ends up random?
-				.delayElements(Duration.ofMillis(1000)); // Or int delay
-//				.log();
+		return Mono.just("Alex")
+				.map(String::toUpperCase)
+				.filter(x -> x.length() > stringLen)
+				.flatMapMany(this::splitString) // Mono<List> of A, L, E, X    -  BELOW METHOD
+				.log();
 	}
 	
-	
-
 
 
 //	  _____                 _ _     _   _____          _           
@@ -249,5 +238,52 @@ public class FluxAndMonoGeneratorService {
 //		
 //		return namesFluxImm; // DOES NOT CHANGE ORIGINAL SOURCE(namesFluxImm)
 //	}
+	
+	
+	
+	
+
+//	 __       _ _ _   __ _        _             
+//	/ _\_ __ | (_) |_/ _\ |_ _ __(_)_ __   __ _ 
+//	\ \| '_ \| | | __\ \| __| '__| | '_ \ / _` |
+//	_\ \ |_) | | | |__\ \ |_| |  | | | | | (_| |
+//	\__/ .__/|_|_|\__\__/\__|_|  |_|_| |_|\__, |
+//	   |_|                                |___/ 
+	
+	// ALEX -> A, L, E, X
+	public Flux<String> splitString(String name) {
+		
+		String[] charArray = name.split("");
+		System.out.println(Arrays.toString(charArray));
+		// [A, L, E, X]
+		// [C, H, L, O, E]
+		return Flux.fromArray(charArray);
+//				.log();
+	}
+	
+	
+	public Flux<String> splitStringWithDelay(String name) {
+		
+		String[] charArray = name.split("");
+		
+		int delay = new Random().nextInt(1000);
+		
+		System.out.println(Arrays.toString(charArray));
+		// [A, L, E, X]
+		// [C, H, L, O, E]
+		return Flux.fromArray(charArray)
+				// delays each element that is being emitted - ends up random?
+				.delayElements(Duration.ofMillis(1000)); // Or int delay
+//				.log();
+	}
+	
+	
+	public Mono<List<String>> splitStringMono(String str) {
+		String[] charArr = str.split("");
+		
+		List<String> charList = List.of(charArr); // ALEX -> A, L, E, X
+		
+		return Mono.just(charList);
+	}
 
 }
