@@ -1,5 +1,7 @@
 package com.liam.projectreactor.services;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import reactor.core.publisher.Flux;
@@ -140,6 +142,22 @@ public class FluxAndMonoGeneratorServiceTest {
 		//then
 		StepVerifier.create(nameMonoTest)
 			.expectNext("A","L", "E", "X", "C", "H", "L", "O", "E")
+//			.expectNextCount(9)
+			.verifyComplete();
+	}
+	
+	@Test
+	void nameMonoFlatMap() {
+		
+		//given
+		int stringLen = 3;
+		
+		//when
+		Mono<List<String>> nameMonoTest = fluxAndMonoGenServ.nameMonoFlatMap(stringLen);
+		
+		//then
+		StepVerifier.create(nameMonoTest)
+			.expectNext(List.of("A","L", "E", "X", "C", "H", "L", "O", "E"))
 //			.expectNextCount(9)
 			.verifyComplete();
 	}
