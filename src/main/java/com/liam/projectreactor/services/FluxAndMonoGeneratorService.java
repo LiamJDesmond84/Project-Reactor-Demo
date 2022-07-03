@@ -108,8 +108,8 @@ public class FluxAndMonoGeneratorService {
 		return Mono.just("Alex")
 				.map(String::toUpperCase)
 				.filter(x -> x.length() > stringLen)
-				.map(x -> x.length() + "-" + x) // Adding the name length + '-' to beginning of name
-				.log();
+				.map(x -> x.length() + "-" + x); // Adding the name length + '-' to beginning of name
+//				.log();
 	}
 	
 	
@@ -147,6 +147,28 @@ public class FluxAndMonoGeneratorService {
 //				.log();
 	}
 	
+	//MONO
+	
+	public Mono<List<String>> nameMonoFlatMap(int stringLen) {
+		
+		return Mono.just("Alex")
+				.map(String::toUpperCase)
+				.filter(x -> x.length() > stringLen)
+				.flatMap(this::splitStringMono); // Mono<List> of A, L, E, X
+//				.log();
+	}
+	
+	public Mono<List<String>> splitStringMono(String str) {
+		String[] StringArr = str.split("");
+		
+//		char[] charArr = str.toCharArray();
+		
+		var charList = List.of(StringArr); // ALEX -> A, L, E, X
+		System.out.println(charList.getClass().getName());
+		
+		return Mono.just(charList);
+	}
+ 	
 	
 	//FLUX
 	//FLATMAP - Good with Async - But beware of DELAYED ELEMENTS - random? CONCATMAP might be better
