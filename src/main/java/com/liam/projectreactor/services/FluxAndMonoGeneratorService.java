@@ -216,7 +216,7 @@ public class FluxAndMonoGeneratorService {
 	
 
 	
-	public Flux<String> namesFluxTransform(int stringLen) {
+	public Flux<String> namesFluxTransform(int stringLen) { // This particular transform() method has the same exact output as the flatmap() method - But the operators are separated into a function, extracted and re-used in the transform()
 		
 		
 		Function<Flux<String>, Flux<String>> filterMap = inp -> inp // - Passing this function into .transform
@@ -229,6 +229,13 @@ public class FluxAndMonoGeneratorService {
 				// A, L, E, X, C, H, L, O, E
 				.log();
 	}
+	
+// TRANSFORM INFO	
+//	When you compose chains of operators regularly and you have common operator usage patterns in your application, you can mutualize this code or give it a more descriptive name by using transform and transformDeferred.
+//
+//	The difference between the two is when the mutualized operators are applied: transform applies them at instantiation, while transformDeferred applies them at subscription (allowing for dynamic choice of the added operators)
+	
+	
 
 //	  _____                 _ _     _   _____          _           
 //	  \_   \_ ____   ____ _| (_) __| | /__   \___  ___| |_         
