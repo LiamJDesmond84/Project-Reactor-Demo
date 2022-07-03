@@ -149,22 +149,19 @@ public class FluxAndMonoGeneratorService {
 	
 	//MONO
 	
-	public Mono<List<String>> nameMonoFlatMap(int stringLen) {
+	public Mono<List<String>> nameMonoFlatMap(int stringLen) { // "Alex" -> "ALEX" -> splitString -> Mono<List> of [A, L, E, X]
 		
 		return Mono.just("Alex")
 				.map(String::toUpperCase)
 				.filter(x -> x.length() > stringLen)
-				.flatMap(this::splitStringMono); // Mono<List> of A, L, E, X
-//				.log();
+				.flatMap(this::splitStringMono) // Mono<List> of A, L, E, X
+				.log();
 	}
 	
 	public Mono<List<String>> splitStringMono(String str) {
 		String[] charArr = str.split("");
 		
-//		char[] charArr = str.toCharArray();
-		
 		List<String> charList = List.of(charArr); // ALEX -> A, L, E, X
-		System.out.println(charList.getClass().getName());
 		
 		return Mono.just(charList);
 	}
