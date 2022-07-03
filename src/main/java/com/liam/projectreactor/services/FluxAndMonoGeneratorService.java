@@ -143,13 +143,13 @@ public class FluxAndMonoGeneratorService {
 		System.out.println(Arrays.toString(charArray));
 		// [A, L, E, X]
 		// [C, H, L, O, E]
-		return Flux.fromArray(charArray)
-				.log();
+		return Flux.fromArray(charArray);
+//				.log();
 	}
 	
 	
 	//FLUX
-	//FLATMAP - Good with Async - But beware of DELAYED ELEMENTS - random?
+	//FLATMAP - Good with Async - But beware of DELAYED ELEMENTS - random? CONCATMAP might be better
 
 //	   ___ _       _                        _                        
 //	  / __\ | __ _| |_  /\/\   __ _ _ __   /_\  ___ _   _ _ __   ___ 
@@ -174,6 +174,9 @@ public class FluxAndMonoGeneratorService {
 //	/ /__| (_) | | | | (_| (_| | |_/ /\/\ \ (_| | |_) |
 //	\____/\___/|_| |_|\___\__,_|\__\/    \/\__,_| .__/ 
 //	                                            |_|   
+	
+// Like flatMap, but preserves order
+	
 	public Flux<String> namesFluxContcatMap(int stringLen) { // Filter the string whose length is greater than 3
 		
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
@@ -196,8 +199,8 @@ public class FluxAndMonoGeneratorService {
 		// [C, H, L, O, E]
 		return Flux.fromArray(charArray)
 				// delays each element that is being emitted - ends up random?
-				.delayElements(Duration.ofMillis(delay))
-				.log();
+				.delayElements(Duration.ofMillis(1000)); // Or int delay
+//				.log();
 	}
 	
 	
