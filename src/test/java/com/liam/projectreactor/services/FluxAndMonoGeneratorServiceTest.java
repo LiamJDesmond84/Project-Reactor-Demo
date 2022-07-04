@@ -196,18 +196,18 @@ public class FluxAndMonoGeneratorServiceTest {
 	}
 	
 	@Test
-	void namesFluxTransform_1() {
+	void namesFluxTransform_1() { // Empty source after filter
 		
 		//given
-		int stringLen = 3;
+		int stringLen = 6;
 		
 		//when
 		Flux<String> nameMonoTest = fluxAndMonoGenServ.namesFluxTransform(stringLen);
 		
 		//then
 		StepVerifier.create(nameMonoTest)
-			.expectNext("A","L", "E", "X", "C", "H", "L", "O", "E")
-			.expectNextCount(0)
+//			.expectNext("A","L", "E", "X", "C", "H", "L", "O", "E")
+			.expectNext("default String")
 			.verifyComplete();
 	}
 	

@@ -223,10 +223,13 @@ public class FluxAndMonoGeneratorService {
 				.map(String::toUpperCase)
 				.filter(x -> x.length() > stringLen);
 		
+		
+		//Flux.empty()
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
 				.transform(filterMap) // Using operators from filtermap ^^^ FUNCTION ^^^
 				.flatMap(x -> splitString(x)) // BELOW METHOD
 				// A, L, E, X, C, H, L, O, E
+				.defaultIfEmpty("default String")
 				.log();
 	}
 	
