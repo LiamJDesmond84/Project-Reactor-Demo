@@ -131,10 +131,11 @@ public class FluxAndMonoGeneratorService {
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
 				.map(String::toUpperCase)
 				.filter(x -> x.length() > stringLen)
-				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E
-				.flatMap(x -> splitString(x)) // BELOW METHOD
+				.log()
+				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E - [A, L, E, X], [C, H, L, O, E] ???
+				.flatMap(x -> splitString(x)); // BELOW METHOD
 				// A, L, E, X, C, H, L, O, E
-				.log();
+//				.log();
 	}
 	
 
@@ -187,7 +188,7 @@ public class FluxAndMonoGeneratorService {
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
 				.map(String::toUpperCase)
 				.filter(x -> x.length() > stringLen)
-				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E
+				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E - [A, L, E, X], [C, H, L, O, E] ???
 				.concatMap(x -> splitStringWithDelay(x)) // BELOW METHOD
 				// A, L, E, X, C, H, L, O, E
 				.log();
@@ -210,7 +211,7 @@ public class FluxAndMonoGeneratorService {
 		return Mono.just("Alex")
 				.map(String::toUpperCase)
 				.filter(x -> x.length() > stringLen)
-				.flatMapMany(this::splitString) // Mono<List> of A, L, E, X    -  BELOW METHOD
+				.flatMapMany(this::splitString) // Mono<List> of [A, L, E, X]    -  BELOW METHOD
 				.log();
 	}
 	
