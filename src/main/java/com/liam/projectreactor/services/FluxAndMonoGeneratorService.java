@@ -224,7 +224,7 @@ public class FluxAndMonoGeneratorService {
 				.filter(x -> x.length() > stringLen);
 		
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
-				.transform(filterMap)
+				.transform(filterMap) // Using operators from filtermap ^^^ FUNCTION ^^^
 				.flatMap(x -> splitString(x)) // BELOW METHOD
 				// A, L, E, X, C, H, L, O, E
 				.log();
