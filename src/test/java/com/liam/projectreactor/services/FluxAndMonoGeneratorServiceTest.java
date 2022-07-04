@@ -227,6 +227,22 @@ public class FluxAndMonoGeneratorServiceTest {
 			.verifyComplete();
 	}
 	
+	@Test
+	void nameMonoTransform() { // Empty source after filter - stringLen = 6
+		
+		//given
+		int stringLen = 4;
+		
+		//when
+		Mono<String> nameMonoTest = fluxAndMonoGenServ.nameMonoTransform(stringLen);
+		
+		//then
+		StepVerifier.create(nameMonoTest)
+//			.expectNext("A","L", "E", "X", "C", "H", "L", "O", "E")
+			.expectNext("default String")
+			.verifyComplete();
+	}
+	
 //	@Test
 //	void namesFluxImm() { // Reactive Streams are immutable, only operators(like .map) attached to the datasource can transform the data
 //		
