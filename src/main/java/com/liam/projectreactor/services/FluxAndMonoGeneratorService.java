@@ -239,17 +239,17 @@ public class FluxAndMonoGeneratorService {
 		
 		Function<Flux<String>, Flux<String>> filterMap = inp -> inp // - Passing this function into .transform
 				.map(String::toUpperCase)
-				.filter(x -> x.length() > stringLen);
+				.filter(x -> x.length() > stringLen)
+				.flatMap(x -> splitString(x)); // BELOW METHOD
 		
-		Flux.just("default String")
+		Flux<String> defaultFlux = Flux.just("default String")
 			.transform(filterMap)
-			.flatMap(x -> splitString(x))
 			.log();
 		
 		//Flux.empty()
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
 				.transform(filterMap) // Using operators from filtermap ^^^ FUNCTION ^^^
-				.flatMap(x -> splitString(x)) // BELOW METHOD
+				.switchIfEmpty(defaultFlux)
 				// A, L, E, X, C, H, L, O, E
 				.log();
 	}
