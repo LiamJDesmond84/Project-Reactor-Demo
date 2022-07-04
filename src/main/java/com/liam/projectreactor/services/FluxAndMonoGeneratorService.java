@@ -219,7 +219,7 @@ public class FluxAndMonoGeneratorService {
 	
 	public Flux<String> namesFluxTransform(int stringLen) { // This particular transform() method has the same exact output as the flatmap() method - But the operators are separated into a function, extracted and re-used in the transform()
 		
-		
+				// Input type  // Result type
 		Function<Flux<String>, Flux<String>> filterMap = inp -> inp // - Passing this function into .transform
 				.map(String::toUpperCase)
 				.filter(x -> x.length() > stringLen);
@@ -244,7 +244,7 @@ public class FluxAndMonoGeneratorService {
 
 	public Flux<String> namesFluxTransformWithSwitchIfEmpty(int stringLen) { // This particular transform() method has the same exact output as the flatmap() method - But the operators are separated into a function, extracted and re-used in the transform()
 		
-		
+				// Input type  // Result type
 		Function<Flux<String>, Flux<String>> filterMap = inp -> inp // - Passing this function into .transform
 				.map(String::toUpperCase)
 				.filter(x -> x.length() > stringLen)
