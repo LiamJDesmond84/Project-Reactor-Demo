@@ -278,6 +278,24 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}
 	
+	public Mono<String> namesMonoTransformWithSwitchIfEmpty(int stringLen) { // This particular transform() method has the same exact output as the flatmap() method - But the operators are separated into a function, extracted and re-used in the transform()
+		
+				// Input type  // Result type
+		Function<Mono<String>, Mono<String>> filterMap = inp -> inp // - Passing this function into .transform
+				.map(String::toUpperCase)
+				.filter(x -> x.length() > stringLen);
+		
+		Mono<String> defaultFlux = Mono.just("default String")
+			.transform(filterMap); // "D", "E", "F", "A", "U", "L", "T", " ", "S", "T", "R", "I", "N", "G"
+		//	.log();
+		
+		//Flux.empty()
+		return Mono.just("Alex")
+				.transform(filterMap) // Using operators from filtermap ^^^ FUNCTION ^^^
+				.switchIfEmpty(defaultFlux) // using Flux with filtermap ^^^ FUNCTION ^^^
+				.log();
+}
+	
 // TRANSFORM INFO	
 //	When you compose chains of operators regularly and you have common operator usage patterns in your application, you can mutualize this code or give it a more descriptive name by using transform and transformDeferred.
 //
