@@ -233,7 +233,14 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}
 	
-	
+
+//	   __                _         __                          
+//	  /__\ __ ___  _ __ | |_ _   _/ _\ ___  _   _ _ __ ___ ___ 
+//	 /_\| '_ ` _ \| '_ \| __| | | \ \ / _ \| | | | '__/ __/ _ \
+//	//__| | | | | | |_) | |_| |_| |\ \ (_) | |_| | | | (_|  __/ - Along with .defaultIfEmpty() ABOVE ^^^
+//	\__/|_| |_| |_| .__/ \__|\__, \__/\___/ \__,_|_|  \___\___|
+//	              |_|        |___/     	
+
 	public Flux<String> namesFluxTransformWithSwitchIfEmpty(int stringLen) { // This particular transform() method has the same exact output as the flatmap() method - But the operators are separated into a function, extracted and re-used in the transform()
 		
 		

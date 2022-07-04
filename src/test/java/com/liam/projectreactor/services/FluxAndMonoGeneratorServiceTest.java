@@ -196,7 +196,7 @@ public class FluxAndMonoGeneratorServiceTest {
 	}
 	
 	@Test
-	void namesFluxTransform_1() { // Empty source after filter
+	void namesFluxTransform_1() { // Empty source after filter - stringLen = 6
 		
 		//given
 		int stringLen = 6;
@@ -212,7 +212,7 @@ public class FluxAndMonoGeneratorServiceTest {
 	}
 	
 	@Test
-	void namesFluxTransform_With_SwitchIfEmpty() { // Empty source after filter
+	void namesFluxTransform_With_SwitchIfEmpty() { // Empty source after filter - stringLen = 6
 		
 		//given
 		int stringLen = 6;
