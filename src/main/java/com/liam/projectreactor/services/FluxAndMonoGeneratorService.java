@@ -243,14 +243,13 @@ public class FluxAndMonoGeneratorService {
 				.flatMap(x -> splitString(x)); // BELOW METHOD
 		
 		Flux<String> defaultFlux = Flux.just("default String")
-			.transform(filterMap)
-			.log();
+			.transform(filterMap); // "D", "E", "F", "A", "U", "L", "T", " ", "S", "T", "R", "I", "N", "G"
+//			.log();
 		
 		//Flux.empty()
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
 				.transform(filterMap) // Using operators from filtermap ^^^ FUNCTION ^^^
-				.switchIfEmpty(defaultFlux)
-				// A, L, E, X, C, H, L, O, E
+				.switchIfEmpty(defaultFlux) // using Flux with filtermap ^^^ FUNCTION ^^^
 				.log();
 	}
 	
