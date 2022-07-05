@@ -286,13 +286,12 @@ public class FluxAndMonoGeneratorService {
 				.filter(x -> x.length() > stringLen);
 		
 		Mono<String> defaultFlux = Mono.just("default String")
-			.transform(filterMap); // "D", "E", "F", "A", "U", "L", "T", " ", "S", "T", "R", "I", "N", "G"
+			.transform(filterMap); // "DEFAULT STRING"
 		//	.log();
 		
-		//Flux.empty()
 		return Mono.just("Alex")
 				.transform(filterMap) // Using operators from filtermap ^^^ FUNCTION ^^^
-				.switchIfEmpty(defaultFlux) // using Flux with filtermap ^^^ FUNCTION ^^^
+				.switchIfEmpty(defaultFlux) // using Mono with filtermap ^^^ FUNCTION ^^^
 				.log();
 }
 	
@@ -300,6 +299,35 @@ public class FluxAndMonoGeneratorService {
 //	When you compose chains of operators regularly and you have common operator usage patterns in your application, you can mutualize this code or give it a more descriptive name by using transform and transformDeferred.
 //
 //	The difference between the two is when the mutualized operators are applied: transform applies them at instantiation, while transformDeferred applies them at subscription (allowing for dynamic choice of the added operators)
+	
+
+	
+
+//======================___________.__                                 _____                        
+//======================\_   _____/|  |  __ _____  ___     .__        /     \   ____   ____   ____  
+//====================== |    __)  |  | |  |  \  \/  /   __|  |___   /  \ /  \ /  _ \ /    \ /  _ \ 
+//====================== |     \   |  |_|  |  />    <   /__    __/  /    Y    (  <_> )   |  (  <_> )
+//====================== \___  /   |____/____//__/\_ \     |__|     \____|__  /\____/|___|  /\____/ 
+//======================     \/                     \/                      \/            \/        	
+//======================	
+	
+
+
+//_________                              __   
+//\_   ___ \  ____   ____   ____ _____ _/  |_ 
+///    \  \/ /  _ \ /    \_/ ___\\__  \\   __\  ---- Only FLUX
+//\     \___(  <_> )   |  \  \___ / __ \|  |  
+// \______  /\____/|___|  /\___  >____  /__|  
+//        \/            \/     \/     \/     	
+	
+	
+
+//_________                              __   __      __.__  __  .__     
+//\_   ___ \  ____   ____   ____ _____ _/  |_/  \    /  \__|/  |_|  |__  
+///    \  \/ /  _ \ /    \_/ ___\\__  \\   __\   \/\/   /  \   __\  |  \ 
+//\     \___(  <_> )   |  \  \___ / __ \|  |  \        /|  ||  | |   Y  \ ---- FLUX & MONO
+// \______  /\____/|___|  /\___  >____  /__|   \__/\  / |__||__| |___|  /
+//        \/            \/     \/     \/            \/                \/ 
 	
 	
 

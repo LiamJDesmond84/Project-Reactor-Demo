@@ -228,7 +228,7 @@ public class FluxAndMonoGeneratorServiceTest {
 	}
 	
 	@Test
-	void nameMonoTransform() { // Empty source after filter - stringLen = 6
+	void nameMonoTransform() { // Empty source after filter - stringLen = 4
 		
 		//given
 		int stringLen = 4;
@@ -238,13 +238,12 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.create(nameMonoTest)
-//			.expectNext("A","L", "E", "X", "C", "H", "L", "O", "E")
 			.expectNext("default String")
 			.verifyComplete();
 	}
 	
 	@Test
-	void namesMonoTransformWithSwitchIfEmpty() { // Empty source after filter - stringLen = 6
+	void namesMonoTransformWithSwitchIfEmpty() { // Empty source after filter - stringLen = 4
 		
 		//given
 		int stringLen = 4;
