@@ -340,6 +340,30 @@ public class FluxAndMonoGeneratorService {
 //        \/            \/     \/     \/            \/                \/ 
 	
 	
+	public Flux<String> exploreConcatWith() {
+		
+		
+		Flux<String> abcFlux = Flux.just("A", "B", "C"); // Normally would by coming from a remote service or DB
+		
+		Flux<String> defFlux = Flux.just("D", "E", "F"); // Normally would by coming from a remote service or DB
+		
+		return abcFlux.concatWith(defFlux)
+				.log();
+	}
+	
+	
+	public Flux<String> exploreConcatWithMono() {
+		
+		
+		Mono<String> abcFlux = Mono.just("A"); // Normally would by coming from a remote service or DB
+		
+		Mono<String> defFlux = Mono.just("D"); // Normally would by coming from a remote service or DB
+		
+		return abcFlux.concatWith(defFlux)
+				.log();
+	}
+	
+	
 
 //	  _____                 _ _     _   _____          _           
 //	  \_   \_ ____   ____ _| (_) __| | /__   \___  ___| |_         
