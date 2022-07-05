@@ -327,7 +327,8 @@ public class FluxAndMonoGeneratorService {
 		
 		Flux<String> defFlux = Flux.just("D", "E", "F"); // Normally would by coming from a remote service or DB
 		
-		return Flux.concat(abcFlux, defFlux);
+		return Flux.concat(abcFlux, defFlux)
+				.log();
 	}
 	
 
