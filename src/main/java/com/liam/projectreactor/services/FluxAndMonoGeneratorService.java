@@ -355,12 +355,14 @@ public class FluxAndMonoGeneratorService {
 	public Flux<String> exploreConcatWithMono() {
 		
 		
-		Mono<String> abcFlux = Mono.just("A"); // Normally would by coming from a remote service or DB
+		Mono<String> aMono = Mono.just("A"); // Normally would by coming from a remote service or DB
+		Mono<String> bMono = Mono.just("B");
+		Mono<String> cMono = Mono.just("C");
 		
-		Mono<String> defFlux = Mono.just("D"); // Normally would by coming from a remote service or DB
 		
-		return abcFlux.concatWith(defFlux)
-				.log();
+		return aMono.concatWith(bMono)
+					.concatWith(cMono)
+					.log();
 	}
 	
 	
