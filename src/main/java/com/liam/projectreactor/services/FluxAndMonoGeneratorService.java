@@ -366,7 +366,37 @@ public class FluxAndMonoGeneratorService {
 	}
 	
 	
+	
+//	   /\/\   ___ _ __ __ _  ___ 
+//	  /    \ / _ \ '__/ _` |/ _ \
+//	 / /\/\ \  __/ | | (_| |  __/
+//	 \/    \/\___|_|  \__, |\___|
+//	                  |___/      	
+	
+	public Flux<String> exploreMerge() {
+		
+		
+		Flux<String> abcFlux = Flux.just("A", "B", "C") // Normally would by coming from a remote service or DB
+				.delayElements(Duration.ofMillis(100));
+		
+		Flux<String> defFlux = Flux.just("D", "E", "F")
+				.delayElements(Duration.ofMillis(125));
+		
+		return Flux.concat(abcFlux, defFlux)
+				.log();
+	}
+	
+	
+	
+//	   /\/\   ___ _ __ __ _  ___/ / /\ \ (_) |_| |__  
+//	  /    \ / _ \ '__/ _` |/ _ \ \/  \/ / | __| '_ \ 
+//	 / /\/\ \  __/ | | (_| |  __/\  /\  /| | |_| | | |
+//	 \/    \/\___|_|  \__, |\___| \/  \/ |_|\__|_| |_|
+//	                  |___/                           	
 
+
+	
+	
 //	  _____                 _ _     _   _____          _           
 //	  \_   \_ ____   ____ _| (_) __| | /__   \___  ___| |_         
 //	   / /\/ '_ \ \ / / _` | | |/ _` |   / /\/ _ \/ __| __|  _____ 
