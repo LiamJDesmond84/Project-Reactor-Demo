@@ -317,7 +317,7 @@ public class FluxAndMonoGeneratorService {
 //\_   ___ \  ____   ____   ____ _____ _/  |_ 
 ///    \  \/ /  _ \ /    \_/ ___\\__  \\   __\  ---- Only FLUX
 //\     \___(  <_> )   |  \  \___ / __ \|  |    ---- Static Method
-// \______  /\____/|___|  /\___  >____  /__|  
+// \______  /\____/|___|  /\___  >____  /__|    ---- Sequential - 1 then the other
 //        \/            \/     \/     \/     	
 	
 	public Flux<String> exploreConcat() {
@@ -333,11 +333,11 @@ public class FluxAndMonoGeneratorService {
 	
 
 //_________                              __   __      __.__  __  .__     
-//\_   ___ \  ____   ____   ____ _____ _/  |_/  \    /  \__|/  |_|  |__  
-///    \  \/ /  _ \ /    \_/ ___\\__  \\   __\   \/\/   /  \   __\  |  \ 
-//\     \___(  <_> )   |  \  \___ / __ \|  |  \        /|  ||  | |   Y  \ ---- FLUX & MONO
-// \______  /\____/|___|  /\___  >____  /__|   \__/\  / |__||__| |___|  / ------- Produces Flux as an output
-//        \/            \/     \/     \/            \/                \/  ---- Instance Method
+//\_   ___ \  ____   ____   ____ _____ _/  |_/  \    /  \__|/  |_|  |__   ---- FLUX & MONO
+///    \  \/ /  _ \ /    \_/ ___\\__  \\   __\   \/\/   /  \   __\  |  \  ------- Produces Flux as an output
+//\     \___(  <_> )   |  \  \___ / __ \|  |  \        /|  ||  | |   Y  \ ---- Instance Method
+// \______  /\____/|___|  /\___  >____  /__|   \__/\  / |__||__| |___|  / ---- Sequential - 1 then the other
+//        \/            \/     \/     \/            \/                \/  
 	
 	
 	public Flux<String> exploreConcatWith() {
@@ -369,30 +369,32 @@ public class FluxAndMonoGeneratorService {
 	
 //	   /\/\   ___ _ __ __ _  ___ 
 //	  /    \ / _ \ '__/ _` |/ _ \
-//	 / /\/\ \  __/ | | (_| |  __/
+//	 / /\/\ \  __/ | | (_| |  __/  - Interweaved
 //	 \/    \/\___|_|  \__, |\___|
 //	                  |___/      	
 	
-	public Flux<String> exploreMerge() {
+	public Flux<String> exploreMerge() { // A, D, B, E, C, F
 		
 		
-		Flux<String> abcFlux = Flux.just("A", "B", "C") // A, B, 
+		Flux<String> abcFlux = Flux.just("A", "B", "C")
 				.delayElements(Duration.ofMillis(100));
 		
 		Flux<String> defFlux = Flux.just("D", "E", "F")
-				.delayElements(Duration.ofMillis(125));
+				.delayElements(Duration.ofMillis(100)); // Outcome would be different with a different # of milli-seconds
 		
-		return Flux.concat(abcFlux, defFlux)
+		return Flux.merge(abcFlux, defFlux)
 				.log();
 	}
 	
 	
 	
-//	   /\/\   ___ _ __ __ _  ___/ / /\ \ (_) |_| |__  
-//	  /    \ / _ \ '__/ _` |/ _ \ \/  \/ / | __| '_ \ 
-//	 / /\/\ \  __/ | | (_| |  __/\  /\  /| | |_| | | |
-//	 \/    \/\___|_|  \__, |\___| \/  \/ |_|\__|_| |_|
-//	                  |___/                           	
+
+//                            __    __ _ _   _     
+//  /\/\   ___ _ __ __ _  ___/ / /\ \ (_) |_| |__  
+// /    \ / _ \ '__/ _` |/ _ \ \/  \/ / | __| '_ \ 
+/// /\/\ \  __/ | | (_| |  __/\  /\  /| | |_| | | |
+//\/    \/\___|_|  \__, |\___| \/  \/ |_|\__|_| |_|
+//                 |___/                          
 
 
 	
