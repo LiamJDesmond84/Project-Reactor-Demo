@@ -376,7 +376,7 @@ public class FluxAndMonoGeneratorService {
 	public Flux<String> exploreMerge() {
 		
 		
-		Flux<String> abcFlux = Flux.just("A", "B", "C") // Normally would by coming from a remote service or DB
+		Flux<String> abcFlux = Flux.just("A", "B", "C") // A, B, 
 				.delayElements(Duration.ofMillis(100));
 		
 		Flux<String> defFlux = Flux.just("D", "E", "F")

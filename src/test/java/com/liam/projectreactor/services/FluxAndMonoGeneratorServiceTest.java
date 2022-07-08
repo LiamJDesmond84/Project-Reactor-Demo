@@ -311,6 +311,21 @@ public class FluxAndMonoGeneratorServiceTest {
 			.verifyComplete();
 	}
 	
+	@Test
+	void exploreMerge() {
+		
+		//given
+
+		
+		//when
+		Flux<String> value = fluxAndMonoGenServ.exploreMerge();
+		
+		//then
+		StepVerifier.create(value)
+			.expectNext("A", "D", "B", "E", "C", "F")
+			.verifyComplete();
+	}
+	
 //	@Test
 //	void namesFluxImm() { // Reactive Streams are immutable, only operators(like .map) attached to the datasource can transform the data
 //		
