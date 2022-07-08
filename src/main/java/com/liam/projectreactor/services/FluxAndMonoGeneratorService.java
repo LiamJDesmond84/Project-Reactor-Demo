@@ -315,7 +315,7 @@ public class FluxAndMonoGeneratorService {
 
 //_________                              __   
 //\_   ___ \  ____   ____   ____ _____ _/  |_ 
-///    \  \/ /  _ \ /    \_/ ___\\__  \\   __\  ---- Only FLUX
+///    \  \/ /  _ \ /    \_/ ___\\__  \\   __\  ---- FLUX Only
 //\     \___(  <_> )   |  \  \___ / __ \|  |    ---- Static Method
 // \______  /\____/|___|  /\___  >____  /__|    ---- Sequential - 1 then the other
 //        \/            \/     \/     \/     	
@@ -368,9 +368,9 @@ public class FluxAndMonoGeneratorService {
 	
 	
 //	   /\/\   ___ _ __ __ _  ___ 
-//	  /    \ / _ \ '__/ _` |/ _ \  ---- Static Method
-//	 / /\/\ \  __/ | | (_| |  __/  ---- Interweaved
-//	 \/    \/\___|_|  \__, |\___|
+//	  /    \ / _ \ '__/ _` |/ _ \  ---- FLUX Only
+//	 / /\/\ \  __/ | | (_| |  __/  ---- Static Method
+//	 \/    \/\___|_|  \__, |\___|  ---- Interweaved
 //	                  |___/      	
 	
 	public Flux<String> exploreMerge() { // A, D, B, E, C, F
@@ -390,10 +390,10 @@ public class FluxAndMonoGeneratorService {
 	
 
 //                            __    __ _ _   _     
-//  /\/\   ___ _ __ __ _  ___/ / /\ \ (_) |_| |__    ---- Instance Method
-// /    \ / _ \ '__/ _` |/ _ \ \/  \/ / | __| '_ \   ---- Interweaved
-/// /\/\ \  __/ | | (_| |  __/\  /\  /| | |_| | | |
-//\/    \/\___|_|  \__, |\___| \/  \/ |_|\__|_| |_|
+//  /\/\   ___ _ __ __ _  ___/ / /\ \ (_) |_| |__    ---- FLUX & MONO
+// /    \ / _ \ '__/ _` |/ _ \ \/  \/ / | __| '_ \   ------- Produces Flux as an output
+/// /\/\ \  __/ | | (_| |  __/\  /\  /| | |_| | | |  ---- Instance Method
+//\/    \/\___|_|  \__, |\___| \/  \/ |_|\__|_| |_|  ---- Interweaved
 //                 |___/                          
 
 
@@ -413,17 +413,15 @@ public class FluxAndMonoGeneratorService {
 	
 	
 	
-	public Flux<String> exploreMergeWithMono() { // A, D, B, E, C, F
+	public Flux<String> exploreMergeWithMono() { // A, B
 		
 		
-		Mono<String> abcMono = Mono.just("A")
-				.delayElements(Duration.ofMillis(100)); // Lower value comes out first
+		Mono<String> aMono = Mono.just("A"); // NO delay for Mono because it's just 1 element
 		
-		Mono<String> defMono = Mono.just("B")
-				.delayElements(Duration.ofMillis(125));
+		Mono<String> bMono = Mono.just("B"); // NO delay for Mono because it's just 1 element
 		
 		
-		return abcMono.mergeWith(defMono)
+		return aMono.mergeWith(bMono)
 				.log();
 	}
 	
