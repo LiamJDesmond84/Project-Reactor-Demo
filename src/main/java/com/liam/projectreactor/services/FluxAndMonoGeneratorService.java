@@ -368,8 +368,8 @@ public class FluxAndMonoGeneratorService {
 	
 	
 //	   /\/\   ___ _ __ __ _  ___ 
-//	  /    \ / _ \ '__/ _` |/ _ \
-//	 / /\/\ \  __/ | | (_| |  __/  - Interweaved
+//	  /    \ / _ \ '__/ _` |/ _ \  ---- Static Method
+//	 / /\/\ \  __/ | | (_| |  __/  ---- Interweaved
 //	 \/    \/\___|_|  \__, |\___|
 //	                  |___/      	
 	
@@ -377,10 +377,10 @@ public class FluxAndMonoGeneratorService {
 		
 		
 		Flux<String> abcFlux = Flux.just("A", "B", "C")
-				.delayElements(Duration.ofMillis(100));
+				.delayElements(Duration.ofMillis(100)); // Lower value comes out first
 		
 		Flux<String> defFlux = Flux.just("D", "E", "F")
-				.delayElements(Duration.ofMillis(100)); // Outcome would be different with a different # of milli-seconds
+				.delayElements(Duration.ofMillis(125));
 		
 		return Flux.merge(abcFlux, defFlux)
 				.log();
@@ -390,14 +390,42 @@ public class FluxAndMonoGeneratorService {
 	
 
 //                            __    __ _ _   _     
-//  /\/\   ___ _ __ __ _  ___/ / /\ \ (_) |_| |__  
-// /    \ / _ \ '__/ _` |/ _ \ \/  \/ / | __| '_ \ 
+//  /\/\   ___ _ __ __ _  ___/ / /\ \ (_) |_| |__    ---- Instance Method
+// /    \ / _ \ '__/ _` |/ _ \ \/  \/ / | __| '_ \   ---- Interweaved
 /// /\/\ \  __/ | | (_| |  __/\  /\  /| | |_| | | |
 //\/    \/\___|_|  \__, |\___| \/  \/ |_|\__|_| |_|
 //                 |___/                          
 
 
+	public Flux<String> exploreMergeWith() { // A, D, B, E, C, F
+		
+		
+		Flux<String> abcFlux = Flux.just("A", "B", "C")
+				.delayElements(Duration.ofMillis(100)); // Lower value comes out first
+		
+		Flux<String> defFlux = Flux.just("D", "E", "F")
+				.delayElements(Duration.ofMillis(125));
+		
+		
+		return abcFlux.mergeWith(defFlux)
+				.log();
+	}
 	
+	
+	
+	public Flux<String> exploreMergeWithMono() { // A, D, B, E, C, F
+		
+		
+		Mono<String> abcMono = Mono.just("A")
+				.delayElements(Duration.ofMillis(100)); // Lower value comes out first
+		
+		Mono<String> defMono = Mono.just("B")
+				.delayElements(Duration.ofMillis(125));
+		
+		
+		return abcMono.mergeWith(defMono)
+				.log();
+	}
 	
 //	  _____                 _ _     _   _____          _           
 //	  \_   \_ ____   ____ _| (_) __| | /__   \___  ___| |_         
