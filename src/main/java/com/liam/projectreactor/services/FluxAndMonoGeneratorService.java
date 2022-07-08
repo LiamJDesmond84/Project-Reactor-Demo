@@ -316,7 +316,7 @@ public class FluxAndMonoGeneratorService {
 //_________                              __   
 //\_   ___ \  ____   ____   ____ _____ _/  |_ 
 ///    \  \/ /  _ \ /    \_/ ___\\__  \\   __\  ---- Only FLUX
-//\     \___(  <_> )   |  \  \___ / __ \|  |  
+//\     \___(  <_> )   |  \  \___ / __ \|  |    ---- Static Method
 // \______  /\____/|___|  /\___  >____  /__|  
 //        \/            \/     \/     \/     	
 	
@@ -325,7 +325,7 @@ public class FluxAndMonoGeneratorService {
 		
 		Flux<String> abcFlux = Flux.just("A", "B", "C"); // Normally would by coming from a remote service or DB
 		
-		Flux<String> defFlux = Flux.just("D", "E", "F"); // Normally would by coming from a remote service or DB
+		Flux<String> defFlux = Flux.just("D", "E", "F");
 		
 		return Flux.concat(abcFlux, defFlux)
 				.log();
@@ -337,7 +337,7 @@ public class FluxAndMonoGeneratorService {
 ///    \  \/ /  _ \ /    \_/ ___\\__  \\   __\   \/\/   /  \   __\  |  \ 
 //\     \___(  <_> )   |  \  \___ / __ \|  |  \        /|  ||  | |   Y  \ ---- FLUX & MONO
 // \______  /\____/|___|  /\___  >____  /__|   \__/\  / |__||__| |___|  / ------- Produces Flux as an output
-//        \/            \/     \/     \/            \/                \/ 
+//        \/            \/     \/     \/            \/                \/  ---- Instance Method
 	
 	
 	public Flux<String> exploreConcatWith() {
