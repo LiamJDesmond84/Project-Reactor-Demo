@@ -315,8 +315,8 @@ public class FluxAndMonoGeneratorService {
 
 //_________                              __   
 //\_   ___ \  ____   ____   ____ _____ _/  |_ 
-///    \  \/ /  _ \ /    \_/ ___\\__  \\   __\  ---- FLUX Only
-//\     \___(  <_> )   |  \  \___ / __ \|  |    ---- Static Method
+///    \  \/ /  _ \ /    \_/ ___\\__  \\   __\  
+//\     \___(  <_> )   |  \  \___ / __ \|  |    ---- Static Method - FLUX
 // \______  /\____/|___|  /\___  >____  /__|    ---- Sequential - 1 then the other
 //        \/            \/     \/     \/     	
 	
@@ -390,9 +390,9 @@ public class FluxAndMonoGeneratorService {
 	
 
 //                            __    __ _ _   _     
-//  /\/\   ___ _ __ __ _  ___/ / /\ \ (_) |_| |__    ---- FLUX & MONO
+//  /\/\   ___ _ __ __ _  ___/ / /\ \ (_) |_| |__    
 // /    \ / _ \ '__/ _` |/ _ \ \/  \/ / | __| '_ \   ------- Produces Flux as an output
-/// /\/\ \  __/ | | (_| |  __/\  /\  /| | |_| | | |  ---- Instance Method
+/// /\/\ \  __/ | | (_| |  __/\  /\  /| | |_| | | |  ---- Instance Method - FLUX & MONO
 //\/    \/\___|_|  \__, |\___| \/  \/ |_|\__|_| |_|  ---- Interweaved
 //                 |___/                          
 
@@ -453,11 +453,11 @@ public class FluxAndMonoGeneratorService {
 	
 
 //	 ______       
-//	/ _  (_)_ __  
-//	\// /| | '_ \ 
+//	/ _  (_)_ __    ---- Static Method - FLUX
+//	\// /| | '_ \   ---- Waits for each Publisher to emit 1 element
 //	 / //\ | |_) |  ---- Instance Method
 //	/____/_| .__/   ---- Interweaved
-//	       |_|    
+//	       |_|      ---- Can be used to merge up-to 2 to 8 Publishers(Flux or Mono)
 	       
 	public Flux<String> exploreZip() { // A, D, B, E, C, F
 		
@@ -472,12 +472,12 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}      
 
-//	 ______      __    __ _ _   _     
-//	/ _  (_)_ __/ / /\ \ (_) |_| |__  
-//	\// /| | '_ \ \/  \/ / | __| '_ \ 
-//	 / //\ | |_) \  /\  /| | |_| | | |
-//	/____/_| .__/ \/  \/ |_|\__|_| |_|
-//	       |_|                        	       
+//	 ______      __    __ _ _   _       
+//	/ _  (_)_ __/ / /\ \ (_) |_| |__    ---- Instance Method - FLUX & MONO
+//	\// /| | '_ \ \/  \/ / | __| '_ \   ---- Waits for each Publisher to emit 1 element
+//	 / //\ | |_) \  /\  /| | |_| | | |  ---- Merges 2 Publishers into 1
+//	/____/_| .__/ \/  \/ |_|\__|_| |_|  ---- Publishers are subscribed eagerly
+//	       |_|                        	---- Continues until 1 Publisher sends an onComplete() event       
 	       
 	
 	
