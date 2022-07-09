@@ -457,23 +457,23 @@ public class FluxAndMonoGeneratorService {
 //	/____/_| .__/   ---- Interweaved
 //	       |_|      ---- Can be used to merge up-to 2 to 8 Publishers(Flux or Mono)
 	       
-	public Flux<String> exploreZip() { // A, D, 1, 4, etc - First element of every flux
-		
+	public Flux<String> exploreZip() { // 1ST Return Example:  "AD", "BE", "CF" - First element of every flux
+									   // 2ND Return Example: "AD14", "BE25", "CF36" - First element of every flux
 		
 		Flux<String> abcFlux = Flux.just("A", "B", "C");
 		
 		Flux<String> defFlux = Flux.just("D", "E", "F");
 		
-		Flux<String> flux3 = Flux.just("1", "2", "3");
+		Flux<String> _123Flux = Flux.just("1", "2", "3");
 		
-		Flux<String> flux4 = Flux.just("4", "5", "6");
+		Flux<String> _456Flux = Flux.just("4", "5", "6");
 		
-		return Flux.zip(abcFlux, defFlux, (w, x) -> w + x) // Tuple of n elements - Being combined.
-				.log();
-		
-//		return Flux.zip(abcFlux, defFlux, flux3, flux4) // Tuple of n elements
-//				.map(a -> a.getT1() + a.getT2() + a.getT3() + a.getT4())
+//		return Flux.zip(abcFlux, defFlux, (w, x) -> w + x) // Tuple of n elements - Being combined.
 //				.log();
+		
+		return Flux.zip(abcFlux, defFlux, _123Flux, _456Flux) // Tuple of n elements
+				.map(a -> a.getT1() + a.getT2() + a.getT3() + a.getT4()) // Combining Tuple elements
+				.log();
 	}      
 
 //	 ______      __    __ _ _   _       
@@ -483,7 +483,20 @@ public class FluxAndMonoGeneratorService {
 //	/____/_| .__/ \/  \/ |_|\__|_| |_|  ---- Publishers are subscribed eagerly
 //	       |_|                        	---- Continues until 1 Publisher sends an onComplete() event       
 	       
-	
+	public Flux<String> exploreZipWith() { // 1ST Return Example:  "AD", "BE", "CF" - First element of every flux
+		   // 2ND Return Example: "AD14", "BE25", "CF36" - First element of every flux
+
+			Flux<String> abcFlux = Flux.just("A", "B", "C");
+			
+			Mono<String> dFlux = Mono.just("D");
+			
+
+			
+			return abcFlux.zipWith(dFlux, (x, y) -> x + y)
+				.log();
+			
+			
+	} 
 	
 //	  _____                 _ _     _   _____          _           
 //	  \_   \_ ____   ____ _| (_) __| | /__   \___  ___| |_         

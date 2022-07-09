@@ -385,7 +385,8 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.create(value)
-			.expectNext("AD", "BE", "CF")
+//			.expectNext("AD", "BE", "CF")
+			.expectNext("AD14", "BE25", "CF36")
 			.verifyComplete();
 	}
 	
