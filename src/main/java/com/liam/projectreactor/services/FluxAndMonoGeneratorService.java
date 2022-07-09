@@ -445,7 +445,7 @@ public class FluxAndMonoGeneratorService {
 				.delayElements(Duration.ofMillis(125));
 		
 		
-		return Flux.merge(abcFlux, defFlux)
+		return Flux.mergeSequential(abcFlux, defFlux)
 				.log();
 	}
 	
