@@ -451,6 +451,36 @@ public class FluxAndMonoGeneratorService {
 	
 	
 	
+
+//	 ______       
+//	/ _  (_)_ __  
+//	\// /| | '_ \ 
+//	 / //\ | |_) |  ---- Instance Method
+//	/____/_| .__/   ---- Interweaved
+//	       |_|    
+	       
+	public Flux<String> exploreZip() { // A, D, B, E, C, F
+		
+		
+		Flux<String> abcFlux = Flux.just("A", "B", "C")
+				.delayElements(Duration.ofMillis(100)); // Lower value comes out first
+		
+		Flux<String> defFlux = Flux.just("D", "E", "F")
+				.delayElements(Duration.ofMillis(125));
+		
+		return Flux.zip(abcFlux, defFlux, (x, y) -> x.concat(y))
+				.log();
+	}      
+
+//	 ______      __    __ _ _   _     
+//	/ _  (_)_ __/ / /\ \ (_) |_| |__  
+//	\// /| | '_ \ \/  \/ / | __| '_ \ 
+//	 / //\ | |_) \  /\  /| | |_| | | |
+//	/____/_| .__/ \/  \/ |_|\__|_| |_|
+//	       |_|                        	       
+	       
+	
+	
 //	  _____                 _ _     _   _____          _           
 //	  \_   \_ ____   ____ _| (_) __| | /__   \___  ___| |_         
 //	   / /\/ '_ \ \ / / _` | | |/ _` |   / /\/ _ \/ __| __|  _____ 
