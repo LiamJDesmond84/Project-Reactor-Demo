@@ -483,8 +483,7 @@ public class FluxAndMonoGeneratorService {
 //	/____/_| .__/ \/  \/ |_|\__|_| |_|  ---- Publishers are subscribed eagerly
 //	       |_|                        	---- Continues until 1 Publisher sends an onComplete() event       
 	       
-	public Flux<String> exploreZipWith() { // 1ST Return Example:  "AD", "BE", "CF" - First element of every flux
-		   // 2ND Return Example: "AD14", "BE25", "CF36" - First element of every flux
+	public Flux<String> exploreZipWith() { // "AD", "BE", "CF" - First element of every flux
 
 			Flux<String> abcFlux = Flux.just("A", "B", "C");
 			
@@ -496,7 +495,24 @@ public class FluxAndMonoGeneratorService {
 				.log();
 			
 			
-	} 
+	}
+	
+	
+	public Mono<String> exploreZipWithMono() { // AB
+		   
+
+			Mono<String> aMono = Mono.just("A");
+		
+			Mono<String> bMono = Mono.just("B");
+			
+
+			
+			return aMono.zipWith(bMono)
+					.map(a -> a.getT1() + a.getT2()) // AB
+					.log();
+			
+			
+	}
 	
 //	  _____                 _ _     _   _____          _           
 //	  \_   \_ ____   ____ _| (_) __| | /__   \___  ___| |_         
