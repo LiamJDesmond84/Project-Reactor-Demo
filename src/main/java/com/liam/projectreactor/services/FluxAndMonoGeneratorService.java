@@ -48,7 +48,7 @@ public class FluxAndMonoGeneratorService {
 //			System.out.println("The name mapped to uppercase is: " + x);
 //		});
 		
-		
+
 		
 	//MONO
 		
@@ -477,7 +477,7 @@ public class FluxAndMonoGeneratorService {
 	}      
 
 //	 ______      __    __ _ _   _       
-//	/ _  (_)_ __/ / /\ \ (_) |_| |__    ---- Instance Method - FLUX & MONO
+//	/ _  (_)_ __/ / /\ \ (_) |_| |__    ---- Instance Method - FLUX & MONO(If Mono must return a Mono)
 //	\// /| | '_ \ \/  \/ / | __| '_ \   ---- Waits for each Publisher to emit 1 element
 //	 / //\ | |_) \  /\  /| | |_| | | |  ---- Merges 2 Publishers into 1
 //	/____/_| .__/ \/  \/ |_|\__|_| |_|  ---- Publishers are subscribed eagerly
@@ -488,11 +488,11 @@ public class FluxAndMonoGeneratorService {
 
 			Flux<String> abcFlux = Flux.just("A", "B", "C");
 			
-			Mono<String> dFlux = Mono.just("D");
+			Flux<String> defFlux = Flux.just("D", "E", "F");
 			
 
 			
-			return abcFlux.zipWith(dFlux, (x, y) -> x + y)
+			return abcFlux.zipWith(defFlux, (x, y) -> x + y)
 				.log();
 			
 			
