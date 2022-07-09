@@ -468,12 +468,12 @@ public class FluxAndMonoGeneratorService {
 		
 		Flux<String> flux4 = Flux.just("4", "5", "6");
 		
-//		return Flux.zip(abcFlux, defFlux, (w, x) -> w + x) // Tuple of n elements - Being combined.
-//				.log();
-		
-		return Flux.zip(abcFlux, defFlux, flux3, flux4) // Tuple of n elements
-				.map(a -> a.getT1() + a.getT2() + a.getT3() + a.getT4())
+		return Flux.zip(abcFlux, defFlux, (w, x) -> w + x) // Tuple of n elements - Being combined.
 				.log();
+		
+//		return Flux.zip(abcFlux, defFlux, flux3, flux4) // Tuple of n elements
+//				.map(a -> a.getT1() + a.getT2() + a.getT3() + a.getT4())
+//				.log();
 	}      
 
 //	 ______      __    __ _ _   _       
