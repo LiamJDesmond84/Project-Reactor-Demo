@@ -425,6 +425,32 @@ public class FluxAndMonoGeneratorService {
 				.log();
 	}
 	
+	
+	
+
+//                            __                             _   _       _ 
+//  /\/\   ___ _ __ __ _  ___/ _\ ___  __ _ _   _  ___ _ __ | |_(_) __ _| |
+// /    \ / _ \ '__/ _` |/ _ \ \ / _ \/ _` | | | |/ _ \ '_ \| __| |/ _` | |
+/// /\/\ \  __/ | | (_| |  __/\ \  __/ (_| | |_| |  __/ | | | |_| | (_| | |
+//\/    \/\___|_|  \__, |\___\__/\___|\__, |\__,_|\___|_| |_|\__|_|\__,_|_|  ---- Sequential - 1 then the other
+//                 |___/                 |_|                               	
+	
+	public Flux<String> exploreMergeSequential() { // A, D, B, E, C, F
+		
+		
+		Flux<String> abcFlux = Flux.just("A", "B", "C")
+				.delayElements(Duration.ofMillis(100)); // Lower value comes out first
+		
+		Flux<String> defFlux = Flux.just("D", "E", "F")
+				.delayElements(Duration.ofMillis(125));
+		
+		
+		return Flux.merge(abcFlux, defFlux)
+				.log();
+	}
+	
+	
+	
 //	  _____                 _ _     _   _____          _           
 //	  \_   \_ ____   ____ _| (_) __| | /__   \___  ___| |_         
 //	   / /\/ '_ \ \ / / _` | | |/ _` |   / /\/ _ \/ __| __|  _____ 
