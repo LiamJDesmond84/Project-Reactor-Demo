@@ -438,11 +438,9 @@ public class FluxAndMonoGeneratorService {
 	public Flux<String> exploreMergeSequential() { // A, D, B, E, C, F
 		
 		
-		Flux<String> abcFlux = Flux.just("A", "B", "C")
-				.delayElements(Duration.ofMillis(100)); // Lower value comes out first
+		Flux<String> abcFlux = Flux.just("A", "B", "C");
 		
-		Flux<String> defFlux = Flux.just("D", "E", "F")
-				.delayElements(Duration.ofMillis(125));
+		Flux<String> defFlux = Flux.just("D", "E", "F");
 		
 		
 		return Flux.mergeSequential(abcFlux, defFlux)
@@ -459,16 +457,22 @@ public class FluxAndMonoGeneratorService {
 //	/____/_| .__/   ---- Interweaved
 //	       |_|      ---- Can be used to merge up-to 2 to 8 Publishers(Flux or Mono)
 	       
-	public Flux<String> exploreZip() { // A, D, B, E, C, F
+	public Flux<String> exploreZip() { // A, D, 1, 4, etc - First element of every flux
 		
 		
-		Flux<String> abcFlux = Flux.just("A", "B", "C")
-				.delayElements(Duration.ofMillis(100)); // Lower value comes out first
+		Flux<String> abcFlux = Flux.just("A", "B", "C");
 		
-		Flux<String> defFlux = Flux.just("D", "E", "F")
-				.delayElements(Duration.ofMillis(125));
+		Flux<String> defFlux = Flux.just("D", "E", "F");
 		
-		return Flux.zip(abcFlux, defFlux, (x, y) -> x.concat(y))
+		Flux<String> flux3 = Flux.just("1", "2", "3");
+		
+		Flux<String> flux4 = Flux.just("4", "5", "6");
+		
+//		return Flux.zip(abcFlux, defFlux, (w, x) -> w + x) // Tuple of n elements - Being combined.
+//				.log();
+		
+		return Flux.zip(abcFlux, defFlux, flux3, flux4) // Tuple of n elements
+				.map(a -> a.getT1() + a.getT2() + a.getT3() + a.getT4())
 				.log();
 	}      
 
