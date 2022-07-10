@@ -33,26 +33,31 @@ class MovieReactiveServiceTest {
 		
 		//then
 		StepVerifier.create(result)
+		
+		// assertNext(expectNext, actual)
 		.assertNext(x -> {
+			// name of the movie
+			// reviewList
 			assertEquals("Batman Begins", x.getMovie().getName());
 			assertEquals(2, x.getReviewList().size());
 			
-			// name of the movie
-			// reviewList
+
 		})
 		.assertNext(x -> {
+			// name of the movie
+			// reviewList
 			assertEquals("The Dark Knight", x.getMovie().getName());
 			assertEquals(2, x.getReviewList().size());
 			
-			// name of the movie
-			// reviewList
+
 		})
 		.assertNext(x -> {
+			// name of the movie
+			// reviewList
 			assertEquals("The Dark Knight Rises", x.getMovie().getName());
 			assertEquals(2, x.getReviewList().size());
 			
-			// name of the movie
-			// reviewList
+
 		})
 		.verifyComplete();
 
