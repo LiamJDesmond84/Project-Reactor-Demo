@@ -25,10 +25,13 @@ public class MovieReactiveService {
 		
 		Flux<MovieInfo> moviesInfoFlux = movieInfoService.retrieveMoviesFlux();
 		
-		moviesInfoFlux.flatMap(movieInfo -> {
+		return moviesInfoFlux.flatMap(movieInfo -> {
 			
-			Mono<List<Review>> review = reviewService.retrieveReviewsFlux(movieInfo.getMovieInfoId())
+			Mono<List<Review>> reviewsMono = reviewService.retrieveReviewsFlux(movieInfo.getMovieInfoId())
 			.collectList();
+			
+			return reviewsMono
+					.map(reviewsList -> new Movie(movieInfo, reviewsList));
 			
 		});
 		
