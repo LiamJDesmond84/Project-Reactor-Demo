@@ -2,7 +2,7 @@ package com.liam.projectreactor.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import com.liam.projectreactor.models.Movie;
 import com.liam.projectreactor.models.MovieInfo;
@@ -65,10 +65,10 @@ public class MovieReactiveService {
 		
 		Mono<MovieInfo> movieInfoMono = movieInfoService.retrieveMovieInfoMonoUsingId(movieId);
 		
-		Mono<List<Review>> reviewsFlux = reviewService.retrieveReviewsFlux(movieId)
+		Mono<List<Review>> reviewsMonoList = reviewService.retrieveReviewsFlux(movieId)
 				.collectList();
 		
-		return movieInfoMono.zipWith(reviewsFlux, (movieInf, rev) -> new Movie(movieInf, rev));
+		return movieInfoMono.zipWith(reviewsMonoList, (movieInf, rev) -> new Movie(movieInf, rev));
 		
 		
 		
