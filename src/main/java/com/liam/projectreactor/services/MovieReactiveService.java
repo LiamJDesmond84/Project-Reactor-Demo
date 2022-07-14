@@ -70,8 +70,35 @@ public class MovieReactiveService {
 		
 		return movieInfoMono.zipWith(reviewsMonoList, (movieInf, rev) -> new Movie(movieInf, rev));
 		
+	}
+	
+	
+	// Mono - Because it's just ONE movie
+	public Mono<Movie> getMovieByIdFlatMap(long movieId) {
 		
+		Mono<MovieInfo> movieInfoMono = movieInfoService.retrieveMovieInfoMonoUsingId(movieId);
+		
+		Mono<List<Review>> reviewsMonoList = reviewService.retrieveReviewsFlux(movieId)
+				.collectList();
+		
+		return movieInfoMono.flatMap(movieInfoVar -> {
+			// collectList gives a Mono, but the Reviews are represented as a List
+			Mono<List<Review>> reviewsMono = reviewService.retrieveReviewsFlux(movieInfoVar.getMovieInfoId())
+			// Collecting to list because Movie class has List<Review>
+		.collectList();
+		
+	System.out.println(movieInfoMono);	
+	System.out.println(reviewsMonoList);
+
+			// Usings reviewsMono to map & build a new Movie with MovieInfo(moviesInfoFlux- > movieInfoVar) & List<Review>(reviewsMono -> reviewsListVar)
+		return reviewsMono
+				.map(reviewsListVar -> new Movie(movieInfoVar, reviewsListVar))
+				.log();
+		
+	});
 		
 	}
+	
+	
 	
 }
