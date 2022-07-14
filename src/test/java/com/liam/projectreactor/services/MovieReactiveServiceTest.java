@@ -74,7 +74,7 @@ class MovieReactiveServiceTest {
 	
 	
 	@Test
-	void getMovieById() {
+	void getMovieByIdFlatMap() {
 		
 		
 		///////
@@ -87,7 +87,7 @@ class MovieReactiveServiceTest {
 		
 		//when
 
-		Mono<Movie> result = movieReactiveService.getMovieById(movieId)
+		Mono<Movie> result = movieReactiveService.getMovieByIdFlatMap(movieId)
 				.log();
 		
 		
