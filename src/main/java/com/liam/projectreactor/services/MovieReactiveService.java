@@ -56,8 +56,22 @@ public class MovieReactiveService {
 					.log();
 			
 		});
+			
+	}
+	
+	
+	// Mono - Because it's just ONE movie
+	public Mono<Movie> getMovieById(Long movieId) {
+		
+		Mono<MovieInfo> movieInfoMono = movieInfoService.retrieveMovieInfoMonoUsingId(movieId);
+		
+		Mono<List<Review>> reviewsFlux = reviewService.retrieveReviewsFlux(movieId)
+				.collectList();
+		
+		return movieInfoMono.zipWith(reviewsFlux, (movieInf, rev) -> new Movie(movieInf, rev));
 		
 		
 		
 	}
+	
 }
