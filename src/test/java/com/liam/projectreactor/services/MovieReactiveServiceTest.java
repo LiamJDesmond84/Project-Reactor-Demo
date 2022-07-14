@@ -1,12 +1,14 @@
 package com.liam.projectreactor.services;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 
 import org.junit.jupiter.api.Test;
 
 import com.liam.projectreactor.models.Movie;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 //import org.springframework.beans.factory.annotation.Autowired;
 
@@ -67,6 +69,37 @@ class MovieReactiveServiceTest {
 		})
 		.verifyComplete();
 
+		
+	}
+	
+	
+	@Test
+	void getMovieById() {
+		
+		//given
+		long movieId = 100L;
+		
+		
+		//when
+
+		Mono<Movie> result = movieReactiveService.getMovieById(movieId)
+				.log();
+		
+		
+		//then
+		StepVerifier.create(result)
+		
+		.assertNext(x -> {
+			// name of the movie
+			// reviewList
+			
+			// assertEquals(expectNext, actual)
+			assertEquals("Batman Begins", x.getMovie().getName());
+			assertEquals(2, x.getReviewList().size());
+			
+
+		})
+		.verifyComplete();
 		
 	}
 

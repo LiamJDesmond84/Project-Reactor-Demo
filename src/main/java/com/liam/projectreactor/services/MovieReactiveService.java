@@ -61,7 +61,7 @@ public class MovieReactiveService {
 	
 	
 	// Mono - Because it's just ONE movie
-	public Mono<Movie> getMovieById(Long movieId) {
+	public Mono<Movie> getMovieById(long movieId) {
 		
 		Mono<MovieInfo> movieInfoMono = movieInfoService.retrieveMovieInfoMonoUsingId(movieId);
 		
