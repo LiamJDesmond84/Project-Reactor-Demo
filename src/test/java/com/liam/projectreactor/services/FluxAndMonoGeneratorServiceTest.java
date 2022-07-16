@@ -451,7 +451,7 @@ public class FluxAndMonoGeneratorServiceTest {
 //	___________                           __  .__                      
 //	\_   _____/__  ___ ____  ____ _______/  |_|__| ____   ____   ______
 //	 |    __)_\  \/  // ___\/ __ \\____ \   __\  |/  _ \ /    \ /  ___/
-//	 |        \>    <\  \__\  ___/|  |_> >  | |  (  <_> )   |  \\___ \ 
+//	 |        \>    <\  \__\  ___/|  |_> >  | |  (  <_> )   |  \\___ \   --- Any exception will terminate the Reactive Stream
 //	/_______  /__/\_ \\___  >___  >   __/|__| |__|\____/|___|  /____  >
 //	        \/      \/    \/    \/|__|                       \/     \/ 		
 	
@@ -490,7 +490,7 @@ public class FluxAndMonoGeneratorServiceTest {
 	}
 	
 	@Test
-	void exceptionFlux_3() {
+	void exceptionFlux_3() { // expectErrorMessage("")
 		
 		//given
 
