@@ -536,7 +536,11 @@ public class FluxAndMonoGeneratorService {
 					System.out.println("name is: " + name);
 				})
 				.doOnSubscribe(sub -> {
-					System.out.println(sub);
+					System.out.println("Subscription is : " + sub);
+					// Subscription is : reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber@14bdbc74
+				})
+				.doOnComplete(() -> {
+					System.err.println("Inside the doOnComplete callback");
 				})
 				.log();
 	}
