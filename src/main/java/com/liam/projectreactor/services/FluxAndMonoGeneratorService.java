@@ -526,7 +526,7 @@ public class FluxAndMonoGeneratorService {
 //                         	
 	
 	
-	public Flux<String> namesFluxMapFilterDoOnNext(int stringLen) { // Filter the string whose length is greater than 3
+	public Flux<String> namesFluxMapFilterDoOnSomething(int stringLen) { // Filter the string whose length is greater than 3
 		
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
 				.map(String::toUpperCase)
@@ -534,6 +534,9 @@ public class FluxAndMonoGeneratorService {
 				.map(x -> x.length() + "-" + x) // Adding the name length + '-' to beginning of name
 				.doOnNext(name -> {
 					System.out.println("name is: " + name);
+				})
+				.doOnSubscribe(sub -> {
+					System.out.println(sub);
 				})
 				.log();
 	}

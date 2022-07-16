@@ -426,20 +426,20 @@ public class FluxAndMonoGeneratorServiceTest {
 //     ___        ___       
 //    /   \___   /___\_ __  
 //   / /\ / _ \ //  // '_ \ 
-//  / /_// (_) / \_//| | | |
+//  / /_// (_) / \_//| | | | --- Operator set in the actual method
 // /___,' \___/\___/ |_| |_|
 //                       	
 		
 	
 	
 	@Test
-	void namesFluxMapFilterDoOnNext() {
+	void namesFluxMapFilterDoOnSomething() {
 		
 		//given
 		int stringLen = 3;
 		
 		//when
-		Flux<String> namesFluxMap = fluxAndMonoGenServ.namesFluxMapFilterDoOnNext(stringLen);
+		Flux<String> namesFluxMap = fluxAndMonoGenServ.namesFluxMapFilterDoOnSomething(stringLen);
 		
 		//then
 		StepVerifier.create(namesFluxMap)
