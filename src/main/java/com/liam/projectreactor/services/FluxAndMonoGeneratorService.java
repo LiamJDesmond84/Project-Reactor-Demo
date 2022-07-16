@@ -526,7 +526,7 @@ public class FluxAndMonoGeneratorService {
 //                         	
 	
 	
-	public Flux<String> namesFluxMapFilterDoOn(int stringLen) { // Filter the string whose length is greater than 3
+	public Flux<String> namesFluxMapFilterDoOnNext(int stringLen) { // Filter the string whose length is greater than 3
 		
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
 				.map(String::toUpperCase)
