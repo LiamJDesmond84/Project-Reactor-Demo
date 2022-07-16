@@ -540,8 +540,13 @@ public class FluxAndMonoGeneratorService {
 					// Subscription is : reactor.core.publisher.FluxPeekFuseable$PeekFuseableSubscriber@14bdbc74
 				})
 				.doOnComplete(() -> {
+					// Add whatever you want here.  Comes out RED sucka!
 					System.err.println("Inside the doOnComplete callback");
 				})
+				.doFinally(signalType -> {
+					System.out.println("Inside the doFinally callback - Signal Type: " + signalType);
+				})
+				// Gets invokes as a FINAL event in sequence, successfully or errored.  SIGNAL TYPE - Gives Last
 				.log();
 	}
 	
