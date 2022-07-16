@@ -468,12 +468,12 @@ public class FluxAndMonoGeneratorServiceTest {
 		//then
 		StepVerifier.create(exceptionResult)
 			.expectNext("A", "B", "C")
-			.expectError(RuntimeException.class)
+			.expectError(RuntimeException.class) // Can be blank
 			.verify();
 	}
 	
 	@Test
-	void exceptionFlux_1() {
+	void exceptionFlux_2() {
 		
 		//given
 
@@ -485,7 +485,24 @@ public class FluxAndMonoGeneratorServiceTest {
 		//then
 		StepVerifier.create(exceptionResult)
 			.expectNext("A", "B", "C")
-			.expectError()
+			.expectError() // Can be blank
+			.verify();
+	}
+	
+	@Test
+	void exceptionFlux_3() {
+		
+		//given
+
+		
+		//when
+		Flux<String> exceptionResult = fluxAndMonoGenServ.exceptionFlux();
+		
+		
+		//then
+		StepVerifier.create(exceptionResult)
+			.expectNext("A", "B", "C")
+			.expectErrorMessage("Exception Occurred")
 			.verify();
 	}
 	
