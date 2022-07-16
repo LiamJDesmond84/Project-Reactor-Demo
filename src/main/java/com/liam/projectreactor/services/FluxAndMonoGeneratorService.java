@@ -569,7 +569,8 @@ public class FluxAndMonoGeneratorService {
 		
 		return Flux.just("A", "B", "C")
 			.concatWith(Flux.error(new RuntimeException("Exception Occurred")))
-			.concatWith(Flux.just("D"));
+			.concatWith(Flux.just("D"))
+			.log();
 	}
 	
 	

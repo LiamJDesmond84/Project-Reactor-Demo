@@ -467,8 +467,9 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.create(exceptionResult)
-			.expectNext("A", "B", "C", "Exception Occurred", "D")
-			.verifyComplete();
+			.expectNext("A", "B", "C")
+			.expectError(RuntimeException.class)
+			.verify();
 	}
 	
 	
