@@ -472,6 +472,23 @@ public class FluxAndMonoGeneratorServiceTest {
 			.verify();
 	}
 	
+	@Test
+	void exceptionFlux_1() {
+		
+		//given
+
+		
+		//when
+		Flux<String> exceptionResult = fluxAndMonoGenServ.exceptionFlux();
+		
+		
+		//then
+		StepVerifier.create(exceptionResult)
+			.expectNext("A", "B", "C")
+			.expectError()
+			.verify();
+	}
+	
 	
 //	@Test
 //	void namesFluxImm() { // Reactive Streams are immutable, only operators(like .map) attached to the datasource can transform the data
