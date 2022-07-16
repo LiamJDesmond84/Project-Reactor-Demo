@@ -6,42 +6,47 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
+@Slf4j
 public class FluxAndMonoGeneratorService {
 	
 
 	
 	public static void main(String[] args) {
 		
+		Flux<String> debugTest = Flux.just("One", "Two", "Three").log();
+		
+		debugTest.subscribe(x -> log.debug("message " + x));
+		
 		FluxAndMonoGeneratorService fluxAndMonoGenServ = new FluxAndMonoGeneratorService();
 		
-		fluxAndMonoGenServ.namesFlux()
-			.subscribe(name -> {
-				System.out.println("The name is: " + name);
-			});
-		
-
-		fluxAndMonoGenServ.nameMono()
-			.subscribe(name -> {
-				System.out.println("The Mono name is: " + name);
-			});
-		
-		fluxAndMonoGenServ.namesFluxMap()
-			.subscribe(x -> {
-				System.out.println("The name mapped to uppercase is: " + x);
-			});
-		
-		fluxAndMonoGenServ.namesFluxMapFilter(3)
-		.subscribe(x -> {
-			System.out.println("The filtered name mapped to uppercase is: " + x);
-		});
-		
-		fluxAndMonoGenServ.nameMonoFilter(3)
-		.subscribe(name -> {
-			System.out.println("The Mono String length + uppercase name is: " + name);
-		});
+//		fluxAndMonoGenServ.namesFlux()
+//			.subscribe(name -> {
+//				System.out.println("The name is: " + name);
+//			});
+//		
+//
+//		fluxAndMonoGenServ.nameMono()
+//			.subscribe(name -> {
+//				System.out.println("The Mono name is: " + name);
+//			});
+//		
+//		fluxAndMonoGenServ.namesFluxMap()
+//			.subscribe(x -> {
+//				System.out.println("The name mapped to uppercase is: " + x);
+//			});
+//		
+//		fluxAndMonoGenServ.namesFluxMapFilter(3)
+//		.subscribe(x -> {
+//			System.out.println("The filtered name mapped to uppercase is: " + x);
+//		});
+//		
+//		fluxAndMonoGenServ.nameMonoFilter(3)
+//		.subscribe(name -> {
+//			System.out.println("The Mono String length + uppercase name is: " + name);
+//		});
 		
 //		fluxAndMonoGenServ.namesFluxImmutability()
 //		.subscribe(x -> {
