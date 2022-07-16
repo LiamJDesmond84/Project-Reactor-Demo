@@ -514,6 +514,30 @@ public class FluxAndMonoGeneratorService {
 			
 	}
 	
+	
+	
+	
+
+//    ___        ___       
+//   /   \___   /___\_ __  
+//  / /\ / _ \ //  // '_ \ 
+// / /_// (_) / \_//| | | |
+///___,' \___/\___/ |_| |_|
+//                         	
+	
+	
+	public Flux<String> namesFluxMapFilterDoOn(int stringLen) { // Filter the string whose length is greater than 3
+		
+		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
+				.map(String::toUpperCase)
+				.filter(x -> x.length() > stringLen)
+				.map(x -> x.length() + "-" + x) // Adding the name length + '-' to beginning of name
+				.doOnNext(name -> {
+					System.out.println("name is: " + name);
+				})
+				.log();
+	}
+	
 //	  _____                 _ _     _   _____          _           
 //	  \_   \_ ____   ____ _| (_) __| | /__   \___  ___| |_         
 //	   / /\/ '_ \ \ / / _` | | |/ _` |   / /\/ _ \/ __| __|  _____ 
