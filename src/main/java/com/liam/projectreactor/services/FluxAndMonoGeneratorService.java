@@ -16,9 +16,11 @@ public class FluxAndMonoGeneratorService {
 	
 	public static void main(String[] args) {
 		
-		Flux<String> debugTest = Flux.just("One", "Two", "Three").log();
 		
-		debugTest.subscribe(x -> log.debug("message " + x));
+		
+//		Flux<String> debugTest = Flux.just("One", "Two", "Three").log();
+//		
+//		debugTest.subscribe(x -> log.debug("message " + x));
 		
 		FluxAndMonoGeneratorService fluxAndMonoGenServ = new FluxAndMonoGeneratorService();
 		
@@ -54,16 +56,34 @@ public class FluxAndMonoGeneratorService {
 //		});
 		
 
-		
-	//MONO
+		fluxAndMonoGenServ.rangeErrors()
+		.subscribe(x -> {
+			System.out.println("Test:" + x);
+		});
 		
 	}
 	
+	
+	// Flux.range() test
+	public Flux<String> rangeErrors() {
+		  return Flux.range(1, 30)
+		      .map(i -> {
+		        if (i == 30) {
+		          throw new RuntimeException("Random error");
+		        }
+		        return i + ", foo bar";
+		      }).log();
+		}
+	
+	
+	//MONO
 	public Mono<String> nameMono() {
 		
 		return Mono.just("Alex")
 				.log();
 	}
+	
+	
 	
 	//FLUX
 	
