@@ -447,6 +447,31 @@ public class FluxAndMonoGeneratorServiceTest {
 			.verifyComplete();
 	}
 	
+	
+//	___________                           __  .__                      
+//	\_   _____/__  ___ ____  ____ _______/  |_|__| ____   ____   ______
+//	 |    __)_\  \/  // ___\/ __ \\____ \   __\  |/  _ \ /    \ /  ___/
+//	 |        \>    <\  \__\  ___/|  |_> >  | |  (  <_> )   |  \\___ \ 
+//	/_______  /__/\_ \\___  >___  >   __/|__| |__|\____/|___|  /____  >
+//	        \/      \/    \/    \/|__|                       \/     \/ 		
+	
+	@Test
+	void exceptionFlux() {
+		
+		//given
+
+		
+		//when
+		Flux<String> exceptionResult = fluxAndMonoGenServ.exceptionFlux();
+		
+		
+		//then
+		StepVerifier.create(exceptionResult)
+			.expectNext("A", "B", "C", "Exception Occurred", "D")
+			.verifyComplete();
+	}
+	
+	
 //	@Test
 //	void namesFluxImm() { // Reactive Streams are immutable, only operators(like .map) attached to the datasource can transform the data
 //		
