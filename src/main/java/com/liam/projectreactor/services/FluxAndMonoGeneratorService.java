@@ -58,7 +58,7 @@ public class FluxAndMonoGeneratorService {
 
 		fluxAndMonoGenServ.rangeErrors()
 		.subscribe(x -> {
-			System.out.println("Test:" + x);
+			System.out.println("Subscriber Test:" + x);
 		});
 		
 	}
