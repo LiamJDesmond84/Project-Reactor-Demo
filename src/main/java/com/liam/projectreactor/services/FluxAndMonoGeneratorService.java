@@ -546,7 +546,8 @@ public class FluxAndMonoGeneratorService {
 				.doFinally(signalType -> {
 					System.out.println("Inside the doFinally callback - Signal Type: " + signalType);
 				})
-				// Gets invokes as a FINAL event in sequence, successfully or errored.  SIGNAL TYPE - Gives Last
+				// Gets invokes as a FINAL event in sequence, successfully or errored.  SIGNAL TYPE - Gives Last event that was emitted in the Reactive Stream
+					// Inside the doFinally callback - Signal Type: onComplet
 				.log();
 	}
 	
