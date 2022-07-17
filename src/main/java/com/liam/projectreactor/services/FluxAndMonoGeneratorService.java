@@ -593,6 +593,15 @@ public class FluxAndMonoGeneratorService {
 			.log();
 	}
 	
+	public Flux<String> exploreOnErrorReturn() {
+		
+		return Flux.just("A", "B", "C")
+			.concatWith(Flux.error(new RuntimeException("Exception Occurred")))
+			.onErrorReturn("D")
+			.concatWith(Flux.just("D")) // Not going to be called because of Runtime Exception
+			.log();
+	}
+	
 	
 	
 //	  _____                 _ _     _   _____          _           
