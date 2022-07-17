@@ -593,7 +593,18 @@ public class FluxAndMonoGeneratorService {
 			.log();
 	}
 	
+	
 	public Flux<String> exploreOnErrorReturn() { // "A", "B", "C", "D", "D"
+		
+		return Flux.just("A", "B", "C")
+			.concatWith(Flux.error(new IllegalStateException("Exception Occurred")))
+			.onErrorReturn("D") // Recovers from error
+			.concatWith(Flux.just("D")) // Stream will continue after recovery
+			.log();
+	}
+	
+	
+	public Flux<String> exploreOnErrorResume() { // "A", "B", "C", "D", "D"
 		
 		return Flux.just("A", "B", "C")
 			.concatWith(Flux.error(new IllegalStateException("Exception Occurred")))
