@@ -585,7 +585,7 @@ public class FluxAndMonoGeneratorService {
 //	        \/      \/    \/    \/|__|                       \/     \/ 	
 	
 	
-	public Flux<String> exceptionFlux() {
+	public Flux<String> exceptionFlux() { // expectNext("A", "B", "C") - expectError()
 		
 		return Flux.just("A", "B", "C")
 			.concatWith(Flux.error(new RuntimeException("Exception Occurred")))
@@ -593,12 +593,12 @@ public class FluxAndMonoGeneratorService {
 			.log();
 	}
 	
-	public Flux<String> exploreOnErrorReturn() {
+	public Flux<String> exploreOnErrorReturn() { // "A", "B", "C", "D", "D"
 		
 		return Flux.just("A", "B", "C")
 			.concatWith(Flux.error(new IllegalStateException("Exception Occurred")))
-			.onErrorReturn("D")
-			.concatWith(Flux.just("D")) // Not going to be called because of Runtime Exception
+			.onErrorReturn("D") // Recovers from error
+			.concatWith(Flux.just("D")) // Stream will continue after recovery
 			.log();
 	}
 	

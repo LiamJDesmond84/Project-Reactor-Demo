@@ -517,9 +517,10 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.create(onErrorReturnResult)
-		.expectNext("A", "B", "C")
-		.expectErrorMessage("Exception Occurred")
-		.verify();
+		.expectNext("A", "B", "C", "D", "D")
+//		.expectErrorMessage("Exception Occurred") // Exception is now ignored because of 'onErrorReturn'
+//		.verify();// Exception is now ignored because of 'onErrorReturn'
+		.verifyComplete();
 		
 	}
 	
