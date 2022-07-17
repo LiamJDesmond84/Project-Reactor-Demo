@@ -596,7 +596,7 @@ public class FluxAndMonoGeneratorService {
 	public Flux<String> exploreOnErrorReturn() {
 		
 		return Flux.just("A", "B", "C")
-			.concatWith(Flux.error(new RuntimeException("Exception Occurred")))
+			.concatWith(Flux.error(new IllegalStateException("Exception Occurred")))
 			.onErrorReturn("D")
 			.concatWith(Flux.just("D")) // Not going to be called because of Runtime Exception
 			.log();
