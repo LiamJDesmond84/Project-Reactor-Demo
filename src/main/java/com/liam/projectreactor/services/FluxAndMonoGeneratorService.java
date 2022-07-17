@@ -604,11 +604,17 @@ public class FluxAndMonoGeneratorService {
 	}
 	
 	
-	public Flux<String> exploreOnErrorResume() { // "A", "B", "C", "D", "D"
+	public Flux<String> exploreOnErrorResume(Exception e) {
+		
+		Flux<String> recoveryFlux = Flux.just("D", "E", "F");
 		
 		return Flux.just("A", "B", "C")
-			.concatWith(Flux.error(new IllegalStateException("Exception Occurred")))
-			.onErrorReturn("D") // Recovers from error
+			.concatWith(Flux.error(e)) // Instead of hard-coding it, using exception from the parameter
+			.onErrorResume(exc -> {  // Accepts a type: Throwable
+				log.error("The Exception is: " + exc);
+				
+				return recoveryFlux;
+			})
 			.concatWith(Flux.just("D")) // Stream will continue after recovery
 			.log();
 	}
