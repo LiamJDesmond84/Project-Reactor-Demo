@@ -544,6 +544,25 @@ public class FluxAndMonoGeneratorServiceTest {
 	}
 	
 	
+	@Test
+	void exploreOnErrorResumeWithConditional() {
+		
+		//given
+		RuntimeException e = new RuntimeException("Not a valid State");
+		
+		//when
+		Flux<String> resumeValue = fluxAndMonoGenServ.exploreOnErrorResume(e);
+		
+		//then
+		StepVerifier.create(resumeValue)
+		.expectNext("A", "B", "C", "D", "E", "F", "G") // Added extra .concatWith(Flux.just("G")) - To show stream continuation after recovery
+//		.expectErrorMessage("Exception Occurred") // Exception is now ignored because of 'onErrorResume'
+//		.verify();// Exception is now ignored because of 'onErrorReturn'
+		.verifyComplete();
+		
+	}
+	
+	
 	
 //	@Test
 //	void namesFluxImm() { // Reactive Streams are immutable, only operators(like .map) attached to the datasource can transform the data
