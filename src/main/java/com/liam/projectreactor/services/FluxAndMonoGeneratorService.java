@@ -604,14 +604,16 @@ public class FluxAndMonoGeneratorService {
 	}
 	
 	
-	public Flux<String> exploreOnErrorResume(Exception e) { // "A", "B", "C", "D", "E", "F"
+	public Flux<String> exploreOnErrorResume(Exception e) { // "A", "B", "C", "D", "E", "F", "G"
 		
 		Flux<String> recoveryFlux = Flux.just("D", "E", "F");
 		
 		return Flux.just("A", "B", "C")
 			.concatWith(Flux.error(e)) // Instead of hard-coding it, using exception from the parameter
+			
 			.onErrorResume(exc -> {  // Accepts type: Throwable, return type: Publisher(Flux in our case)
 				log.error("The Exception is: " + exc);
+				
 				if(exc instanceof IllegalStateException) {
 					return recoveryFlux; // return type: Publisher(Flux in our case)
 				}
