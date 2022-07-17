@@ -612,10 +612,15 @@ public class FluxAndMonoGeneratorService {
 			.concatWith(Flux.error(e)) // Instead of hard-coding it, using exception from the parameter
 			.onErrorResume(exc -> {  // Accepts type: Throwable, return type: Publisher(Flux in our case)
 				log.error("The Exception is: " + exc);
+				if(exc instanceof IllegalStateException) {
+					return recoveryFlux; // return type: Publisher(Flux in our case)
+				}
 				
-				return recoveryFlux;
+				else {
+					return Flux.error(exc);
+				}
 			})
-			.concatWith(Flux.just("D")) // Stream will continue after recovery
+			.concatWith(Flux.just("G")) // Stream will continue after recovery
 			.log();
 	}
 	

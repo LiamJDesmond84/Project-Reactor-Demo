@@ -529,15 +529,15 @@ public class FluxAndMonoGeneratorServiceTest {
 	void exploreOnErrorResume() {
 		
 		//given
-		
+		IllegalStateException e = new IllegalStateException("Not a valid State");
 		
 		//when
-		Flux<String> onErrorReturnResult = fluxAndMonoGenServ.exploreOnErrorResume();
+		Flux<String> resumeValue = fluxAndMonoGenServ.exploreOnErrorResume(e);
 		
 		//then
-		StepVerifier.create(onErrorReturnResult)
-		.expectNext("A", "B", "C", "D", "D") // Added extra .concatWith(Flux.just("D")) - To show stream continuation after recovery
-//		.expectErrorMessage("Exception Occurred") // Exception is now ignored because of 'onErrorReturn'
+		StepVerifier.create(resumeValue)
+		.expectNext("A", "B", "C", "D", "E", "F", "G") // Added extra .concatWith(Flux.just("G")) - To show stream continuation after recovery
+//		.expectErrorMessage("Exception Occurred") // Exception is now ignored because of 'onErrorResume'
 //		.verify();// Exception is now ignored because of 'onErrorReturn'
 		.verifyComplete();
 		
