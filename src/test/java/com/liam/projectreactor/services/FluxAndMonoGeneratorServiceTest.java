@@ -545,8 +545,8 @@ public class FluxAndMonoGeneratorServiceTest {
 	
 	
 	@Test
-	void exploreOnErrorResumeWithConditional() {
-		
+	void exploreOnErrorResumeWithConditional() { // Because we used Flux.error as the "else", Stream toerminates
+												 // Flux.error - Create a Flux that terminates with an error immediately
 		//given
 		RuntimeException e = new RuntimeException("Not a valid State");
 		
@@ -555,10 +555,9 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.create(resumeValue)
-		.expectNext("A", "B", "C", "D", "E", "F", "G") // Added extra .concatWith(Flux.just("G")) - To show stream continuation after recovery
-//		.expectErrorMessage("Exception Occurred") // Exception is now ignored because of 'onErrorResume'
-//		.verify();// Exception is now ignored because of 'onErrorReturn'
-		.verifyComplete();
+		.expectNext("A", "B", "C")
+		.expectError(RuntimeException.class) // Stream terminated because of Flux.error
+		.verify();
 		
 	}
 	

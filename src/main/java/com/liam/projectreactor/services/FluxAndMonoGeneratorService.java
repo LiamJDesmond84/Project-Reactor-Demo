@@ -617,8 +617,8 @@ public class FluxAndMonoGeneratorService {
 				}
 				
 				else {
-					return Flux.error(exc);
-				}
+					return Flux.error(exc); // Because we used Flux.error as the "else", Stream toerminates
+				}							// Flux.error - Create a Flux that terminates with an error immediately
 			})
 			.concatWith(Flux.just("G")) // Stream will continue after recovery
 			.log();
