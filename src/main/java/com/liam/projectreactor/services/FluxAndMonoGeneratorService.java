@@ -580,9 +580,9 @@ public class FluxAndMonoGeneratorService {
 //	___________                           __  .__                      
 //	\_   _____/__  ___ ____  ____ _______/  |_|__| ____   ____   ______
 //	 |    __)_\  \/  // ___\/ __ \\____ \   __\  |/  _ \ /    \ /  ___/
-//	 |        \>    <\  \__\  ___/|  |_> >  | |  (  <_> )   |  \\___ \   --- Any exception will terminate the Reactive Stream
-//	/_______  /__/\_ \\___  >___  >   __/|__| |__|\____/|___|  /____  >
-//	        \/      \/    \/    \/|__|                       \/     \/ 	
+//	 |        \>    <\  \__\  ___/|  |_> >  | |  (  <_> )   |  \\___ \   --- Any exception will terminate the Reactive Stream??
+//	/_______  /__/\_ \\___  >___  >   __/|__| |__|\____/|___|  /____  >  --- onErrorReturn("Something") - Stream continues after recovery
+//	        \/      \/    \/    \/|__|                       \/     \/ 	 --- Review other ones
 	
 	
 	public Flux<String> exceptionFlux() { // expectNext("A", "B", "C") - expectError()
@@ -619,7 +619,7 @@ public class FluxAndMonoGeneratorService {
 				}
 				
 				else {
-					return Flux.error(exc); // Because we used Flux.error as the "else", Stream toerminates
+					return Flux.error(exc); // Because we used Flux.error as the "else", Stream terminates
 				}							// Flux.error - Create a Flux that terminates with an error immediately
 			})
 			.concatWith(Flux.just("G")) // Stream will continue after recovery
