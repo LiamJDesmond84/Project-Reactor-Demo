@@ -630,28 +630,28 @@ public class FluxAndMonoGeneratorService {
 
 //               __                     ___            _   _                  
 //  ___  _ __   /__\ __ _ __ ___  _ __ / __\___  _ __ | |_(_)_ __  _   _  ___ 
-// / _ \| '_ \ /_\| '__| '__/ _ \| '__/ /  / _ \| '_ \| __| | '_ \| | | |/ _ \
+// / _ \| '_ \ /_\| '__| '__/ _ \| '__/ /  / _ \| '_ \| __| | '_ \| | | |/ _ \  --- BiConsumer - Accepts: Exception, Value that caused the Exception
 // |(_) | | | //__| |  | | | (_) | | / /__| (_) | | | | |_| | | | | |_| |  __/
 // \___/|_| |_\__/|_|  |_|  \___/|_| \____/\___/|_| |_|\__|_|_| |_|\__,_|\___|
 	
 	
-	public Flux<String> exploreOnErrorContinue(Exception e) { // "A", "B", "C", "D", "E", "F", "G"
+	public Flux<String> exploreOnErrorContinue() { // "A", "B", "C", "D", "E", "F", "G"
 		
 		Flux<String> recoveryFlux = Flux.just("D", "E", "F");
 		
 		return Flux.just("A", "B", "C")
-			.concatWith(Flux.error(e)) // Instead of hard-coding it, using exception from the parameter
-			
-			.onErrorResume(exc -> {  // Accepts type: Throwable, return type: Publisher(Flux in our case)
-				log.error("The Exception is: " + exc);
-				
-				if(exc instanceof IllegalStateException) {
-					return recoveryFlux; // return type: Publisher(Flux in our case)
+			.map(x -> {
+				if(x.equals("B")) {
+					throw new IllegalStateException("Exception Occurred");
 				}
-				
 				else {
-					return Flux.error(exc); // Because we used Flux.error as the "else", Stream terminates
-				}							// Flux.error - Create a Flux that terminates with an error immediately
+					return x;
+				}
+			})
+			
+			.onErrorContinue((exc, y) -> {
+				log.error("The Exception is: " + exc);
+				log.error("The Value is: " + y);
 			})
 			.concatWith(Flux.just("G")) // Stream will continue after recovery - With the fallback Flux
 			.log();
