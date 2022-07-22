@@ -622,7 +622,7 @@ public class FluxAndMonoGeneratorService {
 					return Flux.error(exc); // Because we used Flux.error as the "else", Stream terminates
 				}							// Flux.error - Create a Flux that terminates with an error immediately
 			})
-			.concatWith(Flux.just("G")) // Stream will continue after recovery
+			.concatWith(Flux.just("G")) // Stream will continue after recovery - The fallback Flux
 			.log();
 	}
 	
@@ -633,6 +633,11 @@ public class FluxAndMonoGeneratorService {
 // / _ \| '_ \ /_\| '__| '__/ _ \| '__/ /  / _ \| '_ \| __| | '_ \| | | |/ _ \
 // |(_) | | | //__| |  | | | (_) | | / /__| (_) | | | | |_| | | | | |_| |  __/
 // \___/|_| |_\__/|_|  |_|  \___/|_| \____/\___/|_| |_|\__|_|_| |_|\__,_|\___|
+	
+	
+	
+	
+	
 	
 //	  _____                 _ _     _   _____          _           
 //	  \_   \_ ____   ____ _| (_) __| | /__   \___  ___| |_         
