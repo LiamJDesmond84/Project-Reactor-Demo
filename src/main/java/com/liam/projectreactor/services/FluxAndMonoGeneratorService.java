@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
+import com.liam.projectreactor.exceptions.ReactorException;
+
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -679,10 +681,10 @@ public class FluxAndMonoGeneratorService {
 				}
 			})
 			
-			.concatWith(Flux.just("D")) // Still logs D as well.  Already tested it below damnit.  This is redundant
-			.onErrorMap((exc, y) -> { // Takes in a Function functional interface
+			.onErrorMap(exc -> { // Takes in a Function functional interface
 				log.error("The Exception is: " + exc);
-				log.error("The Value is: " + y);
+				return new ReactorException(exc, exc.getMessage()); // We created this Exception - Takes in -> Throwable, Message
+				
 			})
 			.concatWith(Flux.just("G")) // Stream will continue after continue
 			.log();
