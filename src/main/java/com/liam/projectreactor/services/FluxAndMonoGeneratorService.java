@@ -657,6 +657,40 @@ public class FluxAndMonoGeneratorService {
 			.log();
 	}
 	
+
+
+//	    		   __                                      
+//	  ___  _ __   /__\ __ _ __ ___  _ __ /\/\   __ _ _ __  
+//	 / _ \| '_ \ /_\| '__| '__/ _ \| '__/    \ / _` | '_ \  --- Does not recover from the exception
+//	| (_) | | | //__| |  | | | (_) | | / /\/\ \ (_| | |_) | --- Transforms the exception from one type to another, like a BusinessException or Customer Exception
+//	 \___/|_| |_\__/|_|  |_|  \___/|_| \/    \/\__,_| .__/  
+//	                                                |_|   	
+	
+	public Flux<String> exploreOnErrorMap() { // "A", "C", "G" - Skips B(which we made cause the error).
+		
+		
+		return Flux.just("A", "B", "C")
+			.map(x -> {
+				if(x.equals("B")) {
+					throw new IllegalStateException("Exception Occurred");
+				}
+				else {
+					return x;
+				}
+			})
+			
+			.concatWith(Flux.just("D")) // Still logs D as well.  Already tested it below damnit.  This is redundant
+			.onErrorMap((exc, y) -> { // Takes in a Function functional interface
+				log.error("The Exception is: " + exc);
+				log.error("The Value is: " + y);
+			})
+			.concatWith(Flux.just("G")) // Stream will continue after continue
+			.log();
+	}
+	
+	
+	
+	
 	
 	
 //	  _____                 _ _     _   _____          _           
