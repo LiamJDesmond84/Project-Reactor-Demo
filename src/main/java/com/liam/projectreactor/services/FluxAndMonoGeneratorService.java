@@ -631,7 +631,7 @@ public class FluxAndMonoGeneratorService {
 //               __                     ___            _   _                  
 //  ___  _ __   /__\ __ _ __ ___  _ __ / __\___  _ __ | |_(_)_ __  _   _  ___ 
 // / _ \| '_ \ /_\| '__| '__/ _ \| '__/ /  / _ \| '_ \| __| | '_ \| | | |/ _ \  --- BiConsumer - Accepts: Exception, Value that caused the Exception
-// |(_) | | | //__| |  | | | (_) | | / /__| (_) | | | | |_| | | | | |_| |  __/
+// |(_) | | | //__| |  | | | (_) | | / /__| (_) | | | | |_| | | | | |_| |  __/  --- Continues the stream - Just ignores the element that caused the Exception
 // \___/|_| |_\__/|_|  |_|  \___/|_| \____/\___/|_| |_|\__|_|_| |_|\__,_|\___|
 	
 	
