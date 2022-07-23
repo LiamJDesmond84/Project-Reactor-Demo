@@ -683,11 +683,11 @@ public class FluxAndMonoGeneratorService {
 			
 			.concatWith(Flux.just("D")) // Does NOT log D - Does not recover from Exception
 			.onErrorMap(exc -> { // Takes in a Function functional interface - Below return?
-				log.error("The Exception is: " + exc); // Does NOT log D - Does not recover from Exception
+				log.error("The Exception is: " + exc);
 				return new ReactorException(exc, exc.getMessage()); // We created this Custom? Exception - Takes in -> Throwable, Message
 				
 			})
-			.concatWith(Flux.just("G"))  // Does NOT log B - Does not recover from Exception
+			.concatWith(Flux.just("G"))  // Does NOT log G - Does not recover from Exception
 			.log();
 	}
 	
@@ -702,14 +702,14 @@ public class FluxAndMonoGeneratorService {
 //		
 	
 	
-	public Flux<String> exploreDoOnError() { // "A", "B", "C", "D", "D"
+	public Flux<String> exploreDoOnError() { // "A", "B", "C"
 		
 		return Flux.just("A", "B", "C")
 			.concatWith(Flux.error(new IllegalStateException("Exception Occurred")))
-			.doOnError(exc -> {
+			.doOnError(exc -> { // Accepts a Consumer of type: Throwable(IllegalStateException in our case)
 				log.error("The Exception is: " + exc);
-			}) // Accepts a Consumer of type: Throwable
-			.concatWith(Flux.just("D")) // Stream will continue after recovery
+			}) 
+			.concatWith(Flux.just("D")) // Does NOT log D - Does not recover from Exception
 			.log();
 	}
 	

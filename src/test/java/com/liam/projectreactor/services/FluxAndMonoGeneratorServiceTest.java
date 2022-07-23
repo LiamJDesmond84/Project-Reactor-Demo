@@ -592,7 +592,7 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.create(resumeValue)
-		.expectNext("A") // Throws error on B & does not recover
+		.expectNext("A") // Throws error on B & does NOT recover
 		.expectError(ReactorException.class)
 		.verify();
 		
@@ -611,7 +611,7 @@ public class FluxAndMonoGeneratorServiceTest {
 		//then
 		StepVerifier.create(onErrorReturnResult)
 		.expectNext("A", "B", "C")
-		.expectError(IllegalStateException.class)
+		.expectError(IllegalStateException.class) // We throw an error and stream does NOT recover
 		.verify();
 		
 	}
