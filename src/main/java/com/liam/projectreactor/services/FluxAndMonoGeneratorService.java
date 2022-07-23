@@ -681,6 +681,7 @@ public class FluxAndMonoGeneratorService {
 				}
 			})
 			
+			.concatWith(Flux.just("D")) // Still logs D as well.  Already tested it below damnit.  This is redundant
 			.onErrorMap(exc -> { // Takes in a Function functional interface
 				log.error("The Exception is: " + exc);
 				return new ReactorException(exc, exc.getMessage()); // We created this Exception - Takes in -> Throwable, Message

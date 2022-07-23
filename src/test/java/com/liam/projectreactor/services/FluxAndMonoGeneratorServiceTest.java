@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import com.liam.projectreactor.exceptions.ReactorException;
+
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
@@ -590,8 +592,9 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.create(resumeValue)
-		.expectNext("A", "C", "D", "G") // Skips B(which we made cause the error).
-		.verifyComplete();
+		.expectNext("A") // Throws error on B
+		.expectError(ReactorException.class)
+		.verify();
 		
 	}
 	
