@@ -635,9 +635,8 @@ public class FluxAndMonoGeneratorService {
 // \___/|_| |_\__/|_|  |_|  \___/|_| \____/\___/|_| |_|\__|_|_| |_|\__,_|\___|
 	
 	
-	public Flux<String> exploreOnErrorContinue() { // "A", "B", "C", "D", "E", "F", "G"
+	public Flux<String> exploreOnErrorContinue() { // "A", "C", "G" - Skips B(which we made cause the error).
 		
-		Flux<String> recoveryFlux = Flux.just("D", "E", "F");
 		
 		return Flux.just("A", "B", "C")
 			.map(x -> {
@@ -653,7 +652,7 @@ public class FluxAndMonoGeneratorService {
 				log.error("The Exception is: " + exc);
 				log.error("The Value is: " + y);
 			})
-			.concatWith(Flux.just("G")) // Stream will continue after recovery - With the fallback Flux
+			.concatWith(Flux.just("G")) // Stream will continue after continue
 			.log();
 	}
 	
