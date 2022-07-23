@@ -648,6 +648,7 @@ public class FluxAndMonoGeneratorService {
 				}
 			})
 			
+			.concatWith(Flux.just("D"))
 			.onErrorContinue((exc, y) -> {
 				log.error("The Exception is: " + exc);
 				log.error("The Value is: " + y);
