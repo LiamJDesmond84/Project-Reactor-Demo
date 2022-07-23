@@ -648,7 +648,7 @@ public class FluxAndMonoGeneratorService {
 				}
 			})
 			
-			.concatWith(Flux.just("D"))
+			.concatWith(Flux.just("D")) // Still logs D as well.  Already tested it below damnit.  This is redundant
 			.onErrorContinue((exc, y) -> {
 				log.error("The Exception is: " + exc);
 				log.error("The Value is: " + y);

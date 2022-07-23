@@ -573,7 +573,7 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.create(resumeValue)
-		.expectNext("A", "C", "D,", "G") // Skips B(which we made cause the error).
+		.expectNext("A", "C", "D", "G") // Skips B(which we made cause the error).
 		.verifyComplete();
 		
 	}
