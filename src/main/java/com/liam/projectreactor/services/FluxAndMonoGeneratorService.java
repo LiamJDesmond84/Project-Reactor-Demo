@@ -545,9 +545,9 @@ public class FluxAndMonoGeneratorService {
 
 //    ___        ___       
 //   /   \___   /___\_ __  
-//  / /\ / _ \ //  // '_ \ 
-// / /_// (_) / \_//| | | |
-///___,' \___/\___/ |_| |_|
+//  / /\ / _ \ //  // '_ \  --- Side effects
+// / /_// (_) / \_//| | | | --- Do no effect the stream
+///___,' \___/\___/ |_| |_| --- Allows you to react to certain stream events outside of the stream
 //                         	
 	
 	
