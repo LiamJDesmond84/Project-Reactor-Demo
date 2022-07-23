@@ -695,11 +695,11 @@ public class FluxAndMonoGeneratorService {
 	
 
 //	     _         ___         __                    
-//	  __| | ___   /___\_ __   /__\ __ _ __ ___  _ __ 
+//	  __| | ___   /___\_ __   /__\ __ _ __ ___  _ __   --- Does NOT recovery from the Exception
 //	 / _` |/ _ \ //  // '_ \ /_\| '__| '__/ _ \| '__|  --- Can take an action when an Exception occurs in the pipeline
 //	| (_| | (_) / \_//| | | //__| |  | | | (_) | |     --- Does NOT modify the Reactve Stream
 //	 \__,_|\___/\___/ |_| |_\__/|_|  |_|  \___/|_|     --- Falls under the doOn Callbacks category - Side Effect
-//		
+//													   --- If you want to implement the traditional try/catch style of Exception handling - Can use doOnError
 	
 	
 	public Flux<String> exploreDoOnError() { // "A", "B", "C"
