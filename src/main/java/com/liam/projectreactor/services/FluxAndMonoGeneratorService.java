@@ -702,7 +702,16 @@ public class FluxAndMonoGeneratorService {
 //		
 	
 	
-	
+	public Flux<String> exploreDoOnError() { // "A", "B", "C", "D", "D"
+		
+		return Flux.just("A", "B", "C")
+			.concatWith(Flux.error(new IllegalStateException("Exception Occurred")))
+			.doOnError(exc -> {
+				log.error("The Exception is: " + exc);
+			}) // Accepts a Consumer of type: Throwable
+			.concatWith(Flux.just("D")) // Stream will continue after recovery
+			.log();
+	}
 	
 	
 	
