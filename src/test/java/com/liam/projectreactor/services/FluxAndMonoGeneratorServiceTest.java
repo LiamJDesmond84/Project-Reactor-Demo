@@ -573,7 +573,7 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.create(resumeValue)
-		.expectNext("A", "B", "C", "D", "E", "F", "G") // Added extra .concatWith(Flux.just("G")) - To show stream continuation after recovery
+		.expectNext("A", "C", "G") // Added extra .concatWith(Flux.just("G")) - To show stream continuation after recovery
 //		.expectErrorMessage("Exception Occurred") // Exception is now ignored because of 'onErrorResume'
 //		.verify();// Exception is now ignored because of 'onErrorReturn'
 		.verifyComplete();
