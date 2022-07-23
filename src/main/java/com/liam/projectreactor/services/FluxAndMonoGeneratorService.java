@@ -668,7 +668,7 @@ public class FluxAndMonoGeneratorService {
 //	 \___/|_| |_\__/|_|  |_|  \___/|_| \/    \/\__,_| .__/  
 //	                                                |_|   	
 	
-	public Flux<String> exploreOnErrorMap() { // "A", "C", "G" - Skips B(which we made cause the error).
+	public Flux<String> exploreOnErrorMap() { // "A" - "B" throws Exception - does not recover from error
 		
 		
 		return Flux.just("A", "B", "C")
@@ -682,14 +682,24 @@ public class FluxAndMonoGeneratorService {
 			})
 			
 			.concatWith(Flux.just("D")) // Does NOT log D - Does not recover from Exception
-			.onErrorMap(exc -> { // Takes in a Function functional interface
+			.onErrorMap(exc -> { // Takes in a Function functional interface - Below return?
 				log.error("The Exception is: " + exc); // Does NOT log D - Does not recover from Exception
-				return new ReactorException(exc, exc.getMessage()); // We created this Exception - Takes in -> Throwable, Message
+				return new ReactorException(exc, exc.getMessage()); // We created this Custom? Exception - Takes in -> Throwable, Message
 				
 			})
 			.concatWith(Flux.just("G"))  // Does NOT log B - Does not recover from Exception
 			.log();
 	}
+	
+	
+	
+
+//	     _         ___         __                    
+//	  __| | ___   /___\_ __   /__\ __ _ __ ___  _ __ 
+//	 / _` |/ _ \ //  // '_ \ /_\| '__| '__/ _ \| '__|  --- Can take an action when an Exception occurs in the pipeline
+//	| (_| | (_) / \_//| | | //__| |  | | | (_) | |     --- Does NOT modify the Reactve Stream
+//	 \__,_|\___/\___/ |_| |_\__/|_|  |_|  \___/|_|     --- Falls under the doOn Callbacks category - Side Effect
+//		
 	
 	
 	
