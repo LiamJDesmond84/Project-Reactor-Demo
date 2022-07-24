@@ -643,7 +643,7 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.create(resumeValue)
-		.expectNext("A") // Throws error on B & does NOT recover
+		//.expectNext("A") // Throws error on A
 		.expectError(ReactorException.class)
 		.verify();
 		
