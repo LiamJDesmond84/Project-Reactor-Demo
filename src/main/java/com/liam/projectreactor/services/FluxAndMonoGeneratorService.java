@@ -659,7 +659,7 @@ public class FluxAndMonoGeneratorService {
 			.log();
 	}
 	
-	public Mono<String> exploreOnErrorContinueMono(String inp) { // "A", "C", "G" - Skips B(which we made cause the error).
+	public Mono<String> exploreOnErrorContinueMono(String inp) { // 
 		
 		
 		return Mono.just(inp)

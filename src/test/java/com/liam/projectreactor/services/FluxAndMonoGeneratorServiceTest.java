@@ -661,8 +661,9 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.create(resumeValue)
-		.expectError(ReactorException.class)
-		.verify();
+//		.expectError(ReactorException.class) // Skips this part
+
+		.verifyComplete();
 //		.expectNext("reactor")
 //		.verifyComplete();
 		
