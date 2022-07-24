@@ -714,7 +714,7 @@ public class FluxAndMonoGeneratorService {
 	}
 	
 	
-	public Mono<Object> exploreoOnErrorReturnMono() { // "abc"
+	public Mono<Object> exploreOnErrorReturnMono() { // "abc"
 		
 		return Mono.just("A")
 			.map(value -> {

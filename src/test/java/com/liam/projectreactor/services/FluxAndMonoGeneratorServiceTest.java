@@ -616,6 +616,22 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 	}
 	
+	@Test
+	void exploreOnErrorReturnMono() {
+		
+		//given
+
+		
+		//when
+		Mono<Object> returnValue = fluxAndMonoGenServ.exploreOnErrorReturnMono();
+		
+		//then
+		StepVerifier.create(returnValue)
+		.expectNext("abc") // Mono.just("A") .map -> throws error
+		.verifyComplete();
+		
+	}
+	
 	
 	
 //	@Test
