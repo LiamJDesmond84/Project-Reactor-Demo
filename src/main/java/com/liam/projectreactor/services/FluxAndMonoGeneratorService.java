@@ -714,6 +714,18 @@ public class FluxAndMonoGeneratorService {
 	}
 	
 	
+	public Flux<String> exploreDoOnErrorMono() { // "A", "B", "C"
+		
+		return Flux.just("A", "B", "C")
+			.concatWith(Flux.error(new IllegalStateException("Exception Occurred")))
+			.doOnError(exc -> { // Accepts a Consumer of type: Throwable(IllegalStateException in our case)
+				log.error("The Exception is: " + exc);
+			}) 
+			.concatWith(Flux.just("D")) // Does NOT log D - Does not recover from Exception
+			.log();
+	}
+	
+	
 	
 //	  _____                 _ _     _   _____          _           
 //	  \_   \_ ____   ____ _| (_) __| | /__   \___  ___| |_         
