@@ -632,6 +632,23 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 	}
 	
+	@Test
+	void exploreOnErrorMapMono() {
+		
+		//given
+
+		
+		//when
+		Mono<String> resumeValue = fluxAndMonoGenServ.exploreOnErrorMapMono();
+		
+		//then
+		StepVerifier.create(resumeValue)
+		.expectNext("A") // Throws error on B & does NOT recover
+		.expectError(ReactorException.class)
+		.verify();
+		
+	}
+	
 	
 	
 //	@Test

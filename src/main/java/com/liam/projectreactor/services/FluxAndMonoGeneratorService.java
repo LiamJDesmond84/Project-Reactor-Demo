@@ -696,7 +696,7 @@ public class FluxAndMonoGeneratorService {
 		
 		return Mono.just("A")
 			.map(x -> {
-				if(x.equals("B")) {
+				if(x.equals("A")) {
 					throw new IllegalStateException("Exception Occurred");
 				}
 				else {
