@@ -659,7 +659,7 @@ public class FluxAndMonoGeneratorService {
 			.log();
 	}
 	
-	public Mono<String> exploreOnErrorContinueMono(String inp) { // 
+	public Mono<String> exploreOnErrorContinueMono(String inp) { // Either throws the exception & verifies complete or doesn't throw it & logs the input
 		
 		
 		return Mono.just(inp)
@@ -671,13 +671,10 @@ public class FluxAndMonoGeneratorService {
 					return inp;
 				}
 			})
-			
-
 			.onErrorContinue((exc, y) -> {
 				log.error("The Exception is: " + exc);
 				log.error("The Value is: " + y);
 			})
-
 			.log();
 	}
 	
