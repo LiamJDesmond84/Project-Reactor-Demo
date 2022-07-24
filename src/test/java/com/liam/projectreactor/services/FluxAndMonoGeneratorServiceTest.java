@@ -654,7 +654,8 @@ public class FluxAndMonoGeneratorServiceTest {
 	void exploreOnErrorContinueMono() {
 		
 		//given
-		String inp = "abc";
+//		String inp = "abc";
+		String inp = "reactor";
 		
 		//when
 		Mono<String> resumeValue = fluxAndMonoGenServ.exploreOnErrorContinueMono(inp);
@@ -663,9 +664,9 @@ public class FluxAndMonoGeneratorServiceTest {
 		StepVerifier.create(resumeValue)
 //		.expectError(ReactorException.class) // Skips this part
 
-		.verifyComplete();
-//		.expectNext("reactor")
 //		.verifyComplete();
+		.expectNext("reactor")
+		.verifyComplete();
 		
 	}
 	
