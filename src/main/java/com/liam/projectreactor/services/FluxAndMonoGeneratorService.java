@@ -711,6 +711,25 @@ public class FluxAndMonoGeneratorService {
 			.log();
 	}
 	
+	public Mono<Object> exploreOnErrorMapMonoWithParam(Exception excep) { // "B" throws Exception - does not recover from error
+		
+		// WHAT THE HELL IS THIS
+		return Mono.just("B")
+			.map(x -> {
+				
+					throw new IllegalStateException("Exception Occurred");
+				
+				
+			})
+			
+			.onErrorMap(exc -> { // Takes in a Function functional interface - Below return?
+				log.error("The Exception is: " + exc);
+				return new ReactorException(exc, exc.getMessage()); // We created this Custom? Exception - Takes in -> Throwable, Message
+				
+			})
+			.log();
+	}
+	
 	
 	
 
