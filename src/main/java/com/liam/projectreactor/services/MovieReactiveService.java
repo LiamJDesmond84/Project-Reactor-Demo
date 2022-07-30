@@ -56,7 +56,7 @@ public class MovieReactiveService {
 					.map(reviewsListVar -> new Movie(movieInfoVar, reviewsListVar))
 					.onErrorMap((exc) -> {
 						log.error("The Exception is: ", exc);
-						throw new MovieException(null)
+						throw new MovieException(exc.getMessage());
 					})
 					.log();
 			
