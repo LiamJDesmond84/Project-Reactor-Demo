@@ -2,8 +2,7 @@ package com.liam.projectreactor.services;
 
 import java.util.List;
 
-
-
+import com.liam.projectreactor.exceptions.MovieException;
 import com.liam.projectreactor.models.Movie;
 import com.liam.projectreactor.models.MovieInfo;
 import com.liam.projectreactor.models.Review;
@@ -11,12 +10,14 @@ import com.liam.projectreactor.models.Review;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
+@Slf4j
 public class MovieReactiveService {
 	
 
@@ -53,6 +54,10 @@ public class MovieReactiveService {
 				// Usings reviewsMono to map & build a new Movie with MovieInfo(moviesInfoFlux- > movieInfoVar) & List<Review>(reviewsMono -> reviewsListVar)
 			return reviewsMono
 					.map(reviewsListVar -> new Movie(movieInfoVar, reviewsListVar))
+					.onErrorMap((exc) -> {
+						log.error("The Exception is: ", exc);
+						throw new MovieException(null)
+					})
 					.log();
 			
 		});
