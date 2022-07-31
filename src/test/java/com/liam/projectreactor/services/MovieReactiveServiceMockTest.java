@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.liam.projectreactor.models.Movie;
 
 import reactor.core.publisher.Flux;
+import reactor.test.StepVerifier;
 
 @ExtendWith(MockitoExtension.class)
 public class MovieReactiveServiceMockTest {
@@ -42,6 +43,9 @@ public class MovieReactiveServiceMockTest {
 		Flux<Movie> moviesFlux = movieReactiveService.getAllMovies();
 		
 		//then
+		StepVerifier.create(moviesFlux)
+			.expectNextCount(3)
+			.verifyComplete();
 	}
 
 }
