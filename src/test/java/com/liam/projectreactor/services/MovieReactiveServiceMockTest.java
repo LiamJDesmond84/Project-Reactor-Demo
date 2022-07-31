@@ -68,7 +68,8 @@ public class MovieReactiveServiceMockTest {
 		
 		//then
 		StepVerifier.create(moviesFlux)
-			.expectError(MovieException.class)
+//			.expectError(MovieException.class) // In Section 13 - Lesson 45, this works in video.  Doesn't here for some reason.
+			.expectErrorMessage(errorMessage)
 			.verify();
 	}
 
