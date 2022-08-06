@@ -64,6 +64,38 @@ public class MovieReactiveService {
 	}
 	
 	
+	public Flux<Movie> getAllMovies_Retry() {
+		
+		Flux<MovieInfo> moviesInfoFlux = movieInfoService.retrieveMoviesFlux(); // Retrieving List of MovieInfo - But we want the ID in order to pull the list of reviews
+		
+		System.out.println(moviesInfoFlux);
+		
+
+		return moviesInfoFlux
+				// flatMap because "reviewService.retrieveReviewsFlux" returns a Reactive type(Flux)
+				// Using flatMap we are passing Movie ID & retrieving the Reviews
+			.flatMap(movieInfoVar -> {
+				// collectList gives a Mono, but the Reviews are represented as a List
+				Mono<List<Review>> reviewsMono = reviewService.retrieveReviewsFlux(movieInfoVar.getMovieInfoId())
+				// Collecting to list because Movie class has List<Review>
+			.collectList();
+			
+		System.out.println(moviesInfoFlux);	
+		System.out.println(reviewsMono);
+
+				// Usings reviewsMono to map & build a new Movie with MovieInfo(moviesInfoFlux- > movieInfoVar) & List<Review>(reviewsMono -> reviewsListVar)
+			return reviewsMono
+					.map(reviewsListVar -> new Movie(movieInfoVar, reviewsListVar));
+			})
+			.onErrorMap((exc) -> { // Exception handler
+				log.error("The Exception is: ", exc);
+				throw new MovieException(exc.getMessage());
+			})
+			.log();
+			
+	}
+	
+	
 	// Mono - Because it's just ONE movie
 	public Mono<Movie> getMovieById(long movieId) {
 		
