@@ -10,7 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-
+import com.liam.projectreactor.exceptions.MovieException;
 import com.liam.projectreactor.models.Movie;
 
 import reactor.core.publisher.Flux;
@@ -68,8 +68,8 @@ public class MovieReactiveServiceMockTest {
 		
 		//then
 		StepVerifier.create(moviesFlux)
-//			.expectError(MovieException.class) // In Section 13 - Lesson 45, this works in video.  Doesn't here for some reason.
-			.expectErrorMessage(errorMessage)
+			.expectError(MovieException.class)
+//			.expectErrorMessage(errorMessage)
 			.verify();
 	}
 
