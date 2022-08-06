@@ -87,7 +87,7 @@ public class MovieReactiveServiceMockTest {
 		.thenThrow(new RuntimeException(errorMessage)); // We want to throw an Error
 		
 		//when
-		Flux<Movie> moviesFlux = movieReactiveService.getAllMovies();
+		Flux<Movie> moviesFlux = movieReactiveService.getAllMovies_Retry();
 		
 		//then
 		StepVerifier.create(moviesFlux)
