@@ -122,6 +122,11 @@ public class MovieReactiveService {
 					Exceptions.propagate(retrySignal.failure())
 				); 
 		
+		
+//		.onRetryExhaustedThrow((retryBackOffSpec, retrySignal) -> 
+//		Exceptions.propagate(retrySignal.failure())
+//	); 
+		
 		Flux<MovieInfo> moviesInfoFlux = movieInfoService.retrieveMoviesFlux(); // Retrieving List of MovieInfo - But we want the ID in order to pull the list of reviews
 		
 		System.out.println(moviesInfoFlux);
