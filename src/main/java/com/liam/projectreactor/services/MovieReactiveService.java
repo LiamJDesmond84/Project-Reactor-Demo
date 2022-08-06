@@ -91,6 +91,7 @@ public class MovieReactiveService {
 				log.error("The Exception is: ", exc);
 				throw new MovieException(exc.getMessage());
 			})
+			.retry()
 			.log();
 			
 	}
