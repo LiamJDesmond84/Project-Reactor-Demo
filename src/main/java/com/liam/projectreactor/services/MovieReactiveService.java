@@ -12,6 +12,7 @@ import com.liam.projectreactor.models.Review;
 //import lombok.Data;
 //import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.Exceptions;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.util.retry.Retry;
@@ -116,7 +117,10 @@ public class MovieReactiveService {
 	
 	public Flux<Movie> getAllMovies_RetryWhen() {
 		
-		Retry retryWhenVar = Retry.backoff(3, Duration.ofMillis(500)); // Setting a retry amount with a Duration
+		Retry retryWhenVar = Retry.backoff(3, Duration.ofMillis(500)) // Setting a retry amount with a Duration
+				.onRetryExhaustedThrow((retryBackOffSpec, retrySignal) -> 
+					Exceptions.propagate(retrySignal.failure())
+				); 
 		
 		Flux<MovieInfo> moviesInfoFlux = movieInfoService.retrieveMoviesFlux(); // Retrieving List of MovieInfo - But we want the ID in order to pull the list of reviews
 		
