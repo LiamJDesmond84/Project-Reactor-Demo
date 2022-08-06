@@ -2,6 +2,9 @@ package com.liam.projectreactor.services;
 
 
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -94,6 +97,8 @@ public class MovieReactiveServiceMockTest {
 			.expectError(MovieException.class)
 //			.expectErrorMessage(errorMessage)
 			.verify();
+		verify(reviewService, times(4))
+		.retrieveReviewsFlux(isA(Long.class));
 	}
 
 }
