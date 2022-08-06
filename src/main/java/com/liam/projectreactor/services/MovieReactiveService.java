@@ -110,13 +110,13 @@ public class MovieReactiveService {
 //    	    _              __    __ _                
 // _ __ ___| |_ _ __ _   _/ / /\ \ \ |__   ___ _ __  
 //| '__/ _ \ __| '__| | | \ \/  \/ / '_ \ / _ \ '_ \ 
-//| | |  __/ |_| |  | |_| |\  /\  /| | | |  __/ | | |
+//| | |  __/ |_| |  | |_| |\  /\  /| | | |  __/ | | |  ---  Set a retry amount with a Duration or a condition
 //|_|  \___|\__|_|   \__, | \/  \/ |_| |_|\___|_| |_|
 //             		 |___/                           	
 	
 	public Flux<Movie> getAllMovies_RetryWhen() {
 		
-		Retry retryWhenVar = Retry.backoff(3, Duration.ofMillis(500));
+		Retry retryWhenVar = Retry.backoff(3, Duration.ofMillis(500)); // Setting a retry amount with a Duration
 		
 		Flux<MovieInfo> moviesInfoFlux = movieInfoService.retrieveMoviesFlux(); // Retrieving List of MovieInfo - But we want the ID in order to pull the list of reviews
 		
@@ -143,7 +143,7 @@ public class MovieReactiveService {
 				log.error("The Exception is: ", exc);
 				throw new MovieException(exc.getMessage());
 			})
-			.retryWhen(retryWhenVar)
+			.retryWhen(retryWhenVar) // Using retry amount with a Duration
 			.log();
 			
 	}
