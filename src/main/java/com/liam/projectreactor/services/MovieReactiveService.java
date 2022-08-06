@@ -117,15 +117,17 @@ public class MovieReactiveService {
 	
 	public Flux<Movie> getAllMovies_RetryWhen() {
 		
-		Retry retryWhenVar = Retry.backoff(3, Duration.ofMillis(500)) // Setting a retry amount with a Duration
+//		Retry retryWhenVar = Retry.backoff(3, Duration.ofMillis(500)) // Setting a retry amount with a Duration
+//				.onRetryExhaustedThrow((retryBackOffSpec, retrySignal) -> 
+//					Exceptions.propagate(retrySignal.failure())
+//				); 
+		
+		Retry retryWhenVar = Retry.backoff(3, Duration.ofMillis(500)) // Setting a retry amount with a Duration with a filter/predicate
+				.filter(ex -> ex instanceof MovieException) // ONLY perform the retry if it's this exception(MovieException)
 				.onRetryExhaustedThrow((retryBackOffSpec, retrySignal) -> 
 					Exceptions.propagate(retrySignal.failure())
 				); 
-		
-		
-//		.onRetryExhaustedThrow((retryBackOffSpec, retrySignal) -> 
-//		Exceptions.propagate(retrySignal.failure())
-//	); 
+
 		
 		Flux<MovieInfo> moviesInfoFlux = movieInfoService.retrieveMoviesFlux(); // Retrieving List of MovieInfo - But we want the ID in order to pull the list of reviews
 		
