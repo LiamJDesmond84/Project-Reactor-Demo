@@ -53,14 +53,13 @@ public class MovieReactiveService {
 
 				// Usings reviewsMono to map & build a new Movie with MovieInfo(moviesInfoFlux- > movieInfoVar) & List<Review>(reviewsMono -> reviewsListVar)
 			return reviewsMono
-					.map(reviewsListVar -> new Movie(movieInfoVar, reviewsListVar))
-					.onErrorMap((exc) -> { // Exception handler
-						log.error("The Exception is: ", exc);
-						throw new MovieException(exc.getMessage());
-					})
-					.log();
-			
-		});
+					.map(reviewsListVar -> new Movie(movieInfoVar, reviewsListVar));
+			})
+			.onErrorMap((exc) -> { // Exception handler
+				log.error("The Exception is: ", exc);
+				throw new MovieException(exc.getMessage());
+			})
+			.log();
 			
 	}
 	
