@@ -4,6 +4,8 @@ import java.time.Duration;
 import java.util.List;
 
 import com.liam.projectreactor.exceptions.MovieException;
+import com.liam.projectreactor.exceptions.NetworkException;
+import com.liam.projectreactor.exceptions.ServiceException;
 import com.liam.projectreactor.models.Movie;
 import com.liam.projectreactor.models.MovieInfo;
 import com.liam.projectreactor.models.Review;
@@ -59,7 +61,7 @@ public class MovieReactiveService {
 					.map(reviewsListVar -> new Movie(movieInfoVar, reviewsListVar));
 			})
 			.onErrorMap((exc) -> { // Exception handler
-				log.error("The Exception is: ", exc);
+				log.error("The EXCEPTION is......... ", exc);
 				throw new MovieException(exc.getMessage());
 			})
 			.log();
@@ -97,7 +99,7 @@ public class MovieReactiveService {
 					.map(reviewsListVar -> new Movie(movieInfoVar, reviewsListVar));
 			})
 			.onErrorMap((exc) -> { // Exception handler
-				log.error("The Exception is: ", exc);
+				log.error("The EXCEPTION is......... ", exc);
 				throw new MovieException(exc.getMessage());
 			})
 			.retry(3) // Retries FOREVER unless specified
@@ -151,8 +153,13 @@ public class MovieReactiveService {
 					.map(reviewsListVar -> new Movie(movieInfoVar, reviewsListVar));
 			})
 			.onErrorMap((exc) -> { // Exception handler
-				log.error("The Exception is: ", exc);
-				throw new MovieException(exc.getMessage());
+				log.error("The EXCEPTION is......... ", exc);
+				if(exc instanceof NetworkException) {
+					throw new MovieException(exc.getMessage());
+				}
+				else {
+					throw new ServiceException(exc.getMessage());
+				}
 			})
 			.retryWhen(retryWhenVar) // Using retry amount with a Duration
 			.log();
