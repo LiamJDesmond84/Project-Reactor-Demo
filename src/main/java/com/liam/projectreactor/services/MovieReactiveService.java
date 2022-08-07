@@ -157,7 +157,8 @@ public class MovieReactiveService {
 					throw new ServiceException(exc.getMessage());
 				}
 			})
-			.retryWhen(retryWhenVar) // Using retry amount with a Duration
+//			.retryWhen(retryWhenVar) // Using retry amount with a Duration
+			.retryWhen(getRetryBackOffFunction()) // Using retry amount with a Duration - Extracted function works as well
 			.log();
 			
 	}
