@@ -148,10 +148,10 @@ public class MovieReactiveServiceMockTest {
 		
 		//then
 		StepVerifier.create(moviesFlux)
-			.expectError(MovieException.class)
+			.expectError(ServiceException.class)
 //			.expectErrorMessage(errorMessage)
 			.verify();
-		verify(reviewService, times(4)) // Verifying the number of tries total(initial + retries)
+		verify(reviewService, times(1)) // Verifying the number of tries total(initial + retries)
 			.retrieveReviewsFlux(isA(Long.class));
 	}
 
