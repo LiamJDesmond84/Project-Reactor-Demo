@@ -212,6 +212,50 @@ public class MovieReactiveService {
 		}
 	
 	
+	public Flux<Movie> getAllMovies_Repeat_nLong(Long n) { // Repeats stream if there are no errors
+		
+		
+		Retry retryWhenVar = getRetryBackOffFunction(); // Extracted whole code block(below) to simple function name.
+
+		
+		Flux<MovieInfo> moviesInfoFlux = movieInfoService.retrieveMoviesFlux(); // Retrieving List of MovieInfo - But we want the ID in order to pull the list of reviews
+		
+		System.out.println(moviesInfoFlux);
+		
+
+		return moviesInfoFlux
+				// flatMap because "reviewService.retrieveReviewsFlux" returns a Reactive type(Flux)
+				// Using flatMap we are passing Movie ID & retrieving the Reviews
+			.flatMap(movieInfoVar -> {
+				// collectList gives a Mono, but the Reviews are represented as a List
+				Mono<List<Review>> reviewsMono = reviewService.retrieveReviewsFlux(movieInfoVar.getMovieInfoId())
+				// Collecting to list because Movie class has List<Review>
+			.collectList();
+			
+		System.out.println(moviesInfoFlux);	
+		System.out.println(reviewsMono);
+
+				// Usings reviewsMono to map & build a new Movie with MovieInfo(moviesInfoFlux- > movieInfoVar) & List<Review>(reviewsMono -> reviewsListVar)
+			return reviewsMono
+					.map(reviewsListVar -> new Movie(movieInfoVar, reviewsListVar));
+			})
+			.onErrorMap((exc) -> { // Exception handler
+				log.error("The EXCEPTION is......... ", exc);
+				if(exc instanceof NetworkException) {
+					throw new MovieException(exc.getMessage());
+				}
+				else {
+					throw new ServiceException(exc.getMessage());
+				}
+			})
+//			.retryWhen(retryWhenVar) // Using retry amount with a Duration
+			.retryWhen(getRetryBackOffFunction()) // Using retry amount with a Duration - Extracted function works as well
+			.repeat(n)
+			.log();
+			
+	}
+	
+	
 	
 	
 	
