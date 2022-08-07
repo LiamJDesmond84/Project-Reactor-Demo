@@ -124,11 +124,7 @@ public class MovieReactiveService {
 //					Exceptions.propagate(retrySignal.failure())
 //				); 
 		
-		Retry retryWhenVar = Retry.backoff(3, Duration.ofMillis(500)) // Setting a retry amount with a Duration with a filter/predicate
-				.filter(ex -> ex instanceof MovieException) // ONLY perform the retry if it's this exception(MovieException)
-				.onRetryExhaustedThrow((retryBackOffSpec, retrySignal) -> 
-					Exceptions.propagate(retrySignal.failure())
-				); 
+		Retry retryWhenVar = getRetryBackOffFunction(); // Extracted whole code block(below) to simple function name.
 
 		
 		Flux<MovieInfo> moviesInfoFlux = movieInfoService.retrieveMoviesFlux(); // Retrieving List of MovieInfo - But we want the ID in order to pull the list of reviews
@@ -164,6 +160,15 @@ public class MovieReactiveService {
 			.retryWhen(retryWhenVar) // Using retry amount with a Duration
 			.log();
 			
+	}
+
+	private Retry getRetryBackOffFunction() {
+		Retry retryWhenVar = Retry.backoff(3, Duration.ofMillis(500)) // Setting a retry amount with a Duration with a filter/predicate
+				.filter(ex -> ex instanceof MovieException) // ONLY perform the retry if it's this exception(MovieException)
+				.onRetryExhaustedThrow((retryBackOffSpec, retrySignal) -> 
+					Exceptions.propagate(retrySignal.failure())
+				);
+		return retryWhenVar;
 	}
 	
 	
