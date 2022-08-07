@@ -154,5 +154,30 @@ public class MovieReactiveServiceMockTest {
 		verify(reviewService, times(1)) // Verifying the number of tries total(initial + retries)
 			.retrieveReviewsFlux(isA(Long.class));
 	}
+	
+	@Test
+	void getAllMovies_Repeat() {
+		
+		
+		//given
+		String errorMessage = "Exception occurred in ReviewService";
+		
+		Mockito.when(movieInfoService.retrieveMoviesFlux()) // When this call happens...
+			.thenCallRealMethod(); // The real method(retrieveMoviesFlux) will be called
+		
+		Mockito.when(reviewService.retrieveReviewsFlux(anyLong())) // When this call happens...
+		.thenThrow(new ServiceException(errorMessage)); // We are throwing a ServiceException error now so that it will NOT trigger the retry from the top?
+		
+		//when
+		Flux<Movie> moviesFlux = movieReactiveService.getAllMovies_Repeat();
+		
+		//then
+		StepVerifier.create(moviesFlux)
+			.expectError(ServiceException.class)
+//			.expectErrorMessage(errorMessage)
+			.verify();
+		verify(reviewService, times(1)) // Verifying the number of tries total(initial + retries)
+			.retrieveReviewsFlux(isA(Long.class));
+	}
 
 }
