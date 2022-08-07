@@ -166,18 +166,16 @@ public class MovieReactiveServiceMockTest {
 			.thenCallRealMethod(); // The real method(retrieveMoviesFlux) will be called
 		
 		Mockito.when(reviewService.retrieveReviewsFlux(anyLong())) // When this call happens...
-		.thenThrow(new ServiceException(errorMessage)); // We are throwing a ServiceException error now so that it will NOT trigger the retry from the top?
+			.thenCallRealMethod(); // The real method(retrieveMoviesFlux) will be called
 		
 		//when
 		Flux<Movie> moviesFlux = movieReactiveService.getAllMovies_Repeat();
 		
 		//then
 		StepVerifier.create(moviesFlux)
-			.expectError(ServiceException.class)
-//			.expectErrorMessage(errorMessage)
+			.expectNextCount(6) // - with 1 repeat(3 responses each).
+			.thenCancel()
 			.verify();
-		verify(reviewService, times(1)) // Verifying the number of tries total(initial + retries)
-			.retrieveReviewsFlux(isA(Long.class));
 	}
 
 }

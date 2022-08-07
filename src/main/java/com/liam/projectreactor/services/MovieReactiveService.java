@@ -168,7 +168,7 @@ public class MovieReactiveService {
 		return retryWhenVar;
 	}
 	
-	public Flux<Movie> getAllMovies_Repeat() {
+	public Flux<Movie> getAllMovies_Repeat() { // Repeats stream if there are no errors
 			
 			
 			Retry retryWhenVar = getRetryBackOffFunction(); // Extracted whole code block(below) to simple function name.
