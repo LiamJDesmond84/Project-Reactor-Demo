@@ -201,9 +201,8 @@ public class MovieReactiveServiceMockTest {
 		
 		//then
 		StepVerifier.create(moviesFlux)
-			.expectNextCount(6) // - with 1 repeat(3 responses each).
-			.thenCancel()
-			.verify();
+			.expectNextCount(9) // - with 2 repeat2(Long noOfTimes - 3 responses each).
+			.verifyComplete();
 		verify(reviewService, times(9)) // Verifying the number of repeats total(initial + retries)
 		.retrieveReviewsFlux(isA(Long.class));
 
