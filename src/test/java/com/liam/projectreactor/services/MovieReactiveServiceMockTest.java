@@ -177,5 +177,30 @@ public class MovieReactiveServiceMockTest {
 			.thenCancel()
 			.verify();
 	}
+	
+	@Test
+	void getAllMovies_Repeat_nLong() {
+		
+		
+		//given
+		String errorMessage = "Exception occurred in ReviewService";
+		
+		Long n = 2L;
+		
+		Mockito.when(movieInfoService.retrieveMoviesFlux()) // When this call happens...
+			.thenCallRealMethod(); // The real method(retrieveMoviesFlux) will be called
+		
+		Mockito.when(reviewService.retrieveReviewsFlux(anyLong())) // When this call happens...
+			.thenCallRealMethod(); // The real method(retrieveMoviesFlux) will be called
+		
+		//when
+		Flux<Movie> moviesFlux = movieReactiveService.getAllMovies_Repeat_nLong(n);
+		
+		//then
+		StepVerifier.create(moviesFlux)
+			.expectNextCount(6) // - with 1 repeat(3 responses each).
+			.thenCancel()
+			.verify();
+	}
 
 }
