@@ -176,7 +176,7 @@ public class MovieReactiveServiceMockTest {
 			.expectNextCount(6) // - with 1 repeat(3 responses each).
 			.thenCancel()
 			.verify();
-		verify(reviewService, times(6)) // Verifying the number of repeats total(initial + retries)
+		verify(reviewService, times(6)) // Verifying the number of repeats total(initial returns + repeat returns)
 		.retrieveReviewsFlux(isA(Long.class));
 }
 	
@@ -201,9 +201,9 @@ public class MovieReactiveServiceMockTest {
 		
 		//then
 		StepVerifier.create(moviesFlux)
-			.expectNextCount(9) // - with 2 repeat2(Long noOfTimes - 3 responses each).
+			.expectNextCount(9) // - with 2 repeat(Long noOfTimes - 3 responses each). - Initial + repeats
 			.verifyComplete();
-		verify(reviewService, times(9)) // Verifying the number of repeats total(initial + retries)
+		verify(reviewService, times(9)) // Verifying the number of repeats total(initial returns + repeat returns)
 		.retrieveReviewsFlux(isA(Long.class));
 
 	}
