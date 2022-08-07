@@ -15,6 +15,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.liam.projectreactor.exceptions.MovieException;
+import com.liam.projectreactor.exceptions.NetworkException;
+import com.liam.projectreactor.exceptions.ServiceException;
 import com.liam.projectreactor.models.Movie;
 
 import reactor.core.publisher.Flux;
@@ -114,7 +116,32 @@ public class MovieReactiveServiceMockTest {
 			.thenCallRealMethod(); // The real method(retrieveMoviesFlux) will be called
 		
 		Mockito.when(reviewService.retrieveReviewsFlux(anyLong())) // When this call happens...
-		.thenThrow(new RuntimeException(errorMessage)); // We want to throw an Error
+		.thenThrow(new NetworkException(errorMessage)); // We are throwing a NetworkException error so that it will trigger the retry from the top?
+		
+		//when
+		Flux<Movie> moviesFlux = movieReactiveService.getAllMovies_RetryWhen();
+		
+		//then
+		StepVerifier.create(moviesFlux)
+			.expectError(MovieException.class)
+//			.expectErrorMessage(errorMessage)
+			.verify();
+		verify(reviewService, times(4)) // Verifying the number of tries total(initial + retries)
+			.retrieveReviewsFlux(isA(Long.class));
+	}
+	
+	@Test
+	void getAllMovies_RetryWhen_1() {
+		
+		
+		//given
+		String errorMessage = "Exception occurred in ReviewService";
+		
+		Mockito.when(movieInfoService.retrieveMoviesFlux()) // When this call happens...
+			.thenCallRealMethod(); // The real method(retrieveMoviesFlux) will be called
+		
+		Mockito.when(reviewService.retrieveReviewsFlux(anyLong())) // When this call happens...
+		.thenThrow(new ServiceException(errorMessage)); // We are throwing a ServiceException error now so that it will NOT trigger the retry from the top?
 		
 		//when
 		Flux<Movie> moviesFlux = movieReactiveService.getAllMovies_RetryWhen();
