@@ -27,7 +27,12 @@ public class FluxAndMonoSchedulersService {
     	
     	Flux<String> namesFlux =  Flux.fromIterable(namesList)
     			.publishOn(Schedulers.parallel())
+//    			.publishOn(Schedulers.boundedElastic()) // Just to show seperate threads
     			.map(this::upperCase) // with delay method below
+    			.map(x -> {
+    				log.info("Thread 1: {}", x);
+    				return x;
+    			})
 //    			.map(x -> x.toUpperCase())
     			.log();
     	
@@ -35,7 +40,7 @@ public class FluxAndMonoSchedulersService {
     			.publishOn(Schedulers.parallel())
     			.map(this::upperCase) // with delay method below
     			.map(x -> {
-    				log.info("The name is: {}", x);
+    				log.info("Thread 2: {}", x);
     				return x;
     			})
     			.log();
