@@ -160,9 +160,9 @@ public class FluxAndMonoGeneratorService {
 				.filter(x -> x.length() > stringLen)
 				.log()
 				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E - [A, L, E, X], [C, H, L, O, E] ???
-				.flatMap(x -> splitString(x)); // BELOW METHOD
+				.flatMap(x -> splitString(x)) // BELOW METHOD
 				// A, L, E, X, C, H, L, O, E
-//				.log();
+				.log();
 	}
 	
 
@@ -195,6 +195,7 @@ public class FluxAndMonoGeneratorService {
 		return Flux.fromIterable(List.of("Alex", "Ben", "Chloe"))
 				.map(String::toUpperCase)
 				.filter(x -> x.length() > stringLen)
+				.log()
 				// ALEX, CHLOE -> A, L, E, X, C, H, L, O, E
 				.flatMap(x -> splitStringWithDelay(x)) // BELOW METHOD
 				// A, L, E, X, C, H, L, O, E
