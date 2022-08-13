@@ -2,7 +2,8 @@ package com.liam.projectreactor.services;
 
 import java.util.List;
 
-import reactor.core.publisher.Flux;
+import reactor.core.publisher.Flux;import reactor.core.scheduler.Scheduler;
+import reactor.core.scheduler.Schedulers;
 
 import static com.liam.projectreactor.utils.CommonUtil.delay;
 
@@ -23,6 +24,7 @@ public class FluxAndMonoSchedulersService {
     public Flux<String> explorePublishOn() {
     	
     	Flux<String> namesFlux =  Flux.fromIterable(namesList)
+    			.publishOn(Schedulers.parallel())
     			.map(this::upperCase) // with delay method below
 //    			.map(x -> x.toUpperCase())
     			.log();
