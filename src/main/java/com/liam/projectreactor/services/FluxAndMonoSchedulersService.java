@@ -22,10 +22,16 @@ public class FluxAndMonoSchedulersService {
     
     public Flux<String> explorePublishOn() {
     	
-    	return Flux.fromIterable(namesList)
-//    			.map(this::upperCase)
-    			.map(x -> x.toUpperCase())
+    	Flux<String> namesFlux =  Flux.fromIterable(namesList)
+    			.map(this::upperCase) // with delay method below
+//    			.map(x -> x.toUpperCase())
     			.log();
+    	
+    	Flux<String> namesFlux1 =  Flux.fromIterable(namesList1)
+    			.map(this::upperCase) // with delay method below
+    			.log();
+    	
+    	return namesFlux.mergeWith(namesFlux1);
     }
     
 
