@@ -1,6 +1,9 @@
 package com.liam.projectreactor.services;
 
 import java.util.List;
+
+import reactor.core.publisher.Flux;
+
 import static com.liam.projectreactor.utils.CommonUtil.delay;
 
 public class FluxAndMonoSchedulersService {
@@ -16,6 +19,14 @@ public class FluxAndMonoSchedulersService {
 //| |_) | |_| | |_) | | \__ \ | | / \_//| | | |
 //| .__/ \__,_|_.__/|_|_|___/_| |_\___/ |_| |_|
 //|_|                                              
+    
+    public Flux<String> explorePublishOn() {
+    	
+    	return Flux.fromIterable(namesList)
+//    			.map(this::upperCase)
+    			.map(x -> x.toUpperCase())
+    			.log();
+    }
     
 
     private String upperCase(String name) {
