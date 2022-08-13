@@ -30,6 +30,7 @@ public class FluxAndMonoSchedulersService {
     			.log();
     	
     	Flux<String> namesFlux1 =  Flux.fromIterable(namesList1)
+    			.publishOn(Schedulers.parallel())
     			.map(this::upperCase) // with delay method below
     			.log();
     	
@@ -38,7 +39,7 @@ public class FluxAndMonoSchedulersService {
     
 
     private String upperCase(String name) {
-        delay(1000);
+        delay(1000); // mocking a "blocking" call
         return name.toUpperCase();
     }
 
