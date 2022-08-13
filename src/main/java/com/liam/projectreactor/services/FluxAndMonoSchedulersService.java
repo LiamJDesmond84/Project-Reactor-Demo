@@ -2,11 +2,13 @@ package com.liam.projectreactor.services;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
 import static com.liam.projectreactor.utils.CommonUtil.delay;
 
+@Slf4j
 public class FluxAndMonoSchedulersService {
 	
 	static List<String> namesList = List.of("alex", "ben", "chloe");
@@ -32,6 +34,10 @@ public class FluxAndMonoSchedulersService {
     	Flux<String> namesFlux1 =  Flux.fromIterable(namesList1)
     			.publishOn(Schedulers.parallel())
     			.map(this::upperCase) // with delay method below
+    			.map(x -> {
+    				log.info("The name is: {}", x);
+    				return x;
+    			})
     			.log();
     	
     	return namesFlux.mergeWith(namesFlux1);
