@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import reactor.core.Exceptions;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 import reactor.util.retry.Retry;
 
 //@Data
@@ -290,7 +291,9 @@ public class MovieReactiveService {
 		Mono<List<Review>> reviewsMonoList = reviewService.retrieveReviewsFlux(movieId)
 				.collectList();
 		
-		Revenue revenue = revenueService.getRevenue(movieId);
+		Mono.fromCallable(() -> revenueService.getRevenue(movieId))
+			.subscribeOn(Schedulers.boundedElastic()); // boundedElastic should be for blocking calls?
+//		Revenue revenue = 
 		
 		return movieInfoMono.zipWith(reviewsMonoList, (movieInf, rev) -> new Movie(movieInf, rev));
 		
