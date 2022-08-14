@@ -56,6 +56,31 @@ public class FluxAndMonoSchedulersService {
 //|___/\__,_|_.__/|___/\___|_|  |_|_.__/ \___\___/ |_| |_|
 //                                                     
     
+    public Flux<String> exploreSubscribeOn() {
+    	
+    	Flux<String> namesFlux =  Flux.fromIterable(namesList)
+    			.publishOn(Schedulers.parallel())
+//    			.publishOn(Schedulers.boundedElastic()) // Just to show seperate threads
+    			.map(this::upperCase) // with delay method below
+    			.map(x -> {
+    				log.info("Thread 1: {}", x);
+    				return x;
+    			})
+//    			.map(x -> x.toUpperCase())
+    			.log();
+    	
+    	Flux<String> namesFlux1 =  Flux.fromIterable(namesList1)
+    			.publishOn(Schedulers.parallel())
+    			.map(this::upperCase) // with delay method below
+    			.map(x -> {
+    				log.info("Thread 2: {}", x);
+    				return x;
+    			})
+    			.log();
+    	
+    	return namesFlux.mergeWith(namesFlux1);
+    }
+    
 
     private String upperCase(String name) {
         delay(1000); // mocking a "blocking" call
