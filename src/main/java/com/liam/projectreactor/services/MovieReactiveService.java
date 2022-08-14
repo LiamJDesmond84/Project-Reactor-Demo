@@ -291,11 +291,19 @@ public class MovieReactiveService {
 		Mono<List<Review>> reviewsMonoList = reviewService.retrieveReviewsFlux(movieId)
 				.collectList();
 		
-		Mono.fromCallable(() -> revenueService.getRevenue(movieId))
-			.subscribeOn(Schedulers.boundedElastic()); // boundedElastic should be for blocking calls?
-//		Revenue revenue = 
+		Mono<Revenue> revenueMono = Mono.fromCallable(() -> revenueService.getRevenue(movieId))
+			.subscribeOn(Schedulers.boundedElastic()); // boundedElastic should be for blocking calls? Default?
+
 		
-		return movieInfoMono.zipWith(reviewsMonoList, (movieInf, rev) -> new Movie(movieInf, rev));
+		return movieInfoMono
+				.zipWith(reviewsMonoList, (movieInf, rev) -> new Movie(movieInf, rev))
+				
+				.zipWith(revenueMono, (movieVar, revenueVar) -> {
+					
+					movieVar.setRevenue(revenueVar);
+					
+					return movieVar;
+				});
 		
 	}
 	
