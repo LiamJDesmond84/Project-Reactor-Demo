@@ -57,8 +57,8 @@ public class FluxAndMonoSchedulersService {
 //                                                     
     
     public Flux<String> exploreSubscribeOn() {
-    
-    	Flux<String> namesFlux =  flux1() // Extracted from below method
+    	
+    	Flux<String> namesFlux =  flux1(namesList)
     			.map(x -> {
     				log.info("Thread 1: {}", x);
     				return x;
@@ -66,9 +66,7 @@ public class FluxAndMonoSchedulersService {
 //    			.map(x -> x.toUpperCase())
     			.log();
     	
-    	Flux<String> namesFlux1 =  Flux.fromIterable(namesList1)
-    			.publishOn(Schedulers.parallel())
-    			.map(this::upperCase) // with delay method below
+    	Flux<String> namesFlux1 =  flux1(namesList1)
     			.map(x -> {
     				log.info("Thread 2: {}", x);
     				return x;
@@ -79,11 +77,11 @@ public class FluxAndMonoSchedulersService {
     }
 
 
-	private Flux<String> flux1() {
-		return Flux.fromIterable(namesList)
-    			.map(this::upperCase) // with delay method below
+private Flux<String> flux1(List<String> namesListParam) {
+	return Flux.fromIterable(namesListParam)
+			.map(this::upperCase) // with delay method below
 ;
-	}
+}
     
 
     private String upperCase(String name) {
