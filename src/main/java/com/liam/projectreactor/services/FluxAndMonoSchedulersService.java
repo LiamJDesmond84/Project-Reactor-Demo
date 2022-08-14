@@ -48,6 +48,14 @@ public class FluxAndMonoSchedulersService {
     	return namesFlux.mergeWith(namesFlux1);
     }
     
+    
+//    		 _                   _ _            ___       
+// ___ _   _| |__  ___  ___ _ __(_) |__   ___  /___\_ __  
+/// __| | | | '_ \/ __|/ __| '__| | '_ \ / _ \//  // '_ \ 
+//\__ \ |_| | |_) \__ \ (__| |  | | |_) |  __/ \_//| | | |
+//|___/\__,_|_.__/|___/\___|_|  |_|_.__/ \___\___/ |_| |_|
+//                                                     
+    
 
     private String upperCase(String name) {
         delay(1000); // mocking a "blocking" call
