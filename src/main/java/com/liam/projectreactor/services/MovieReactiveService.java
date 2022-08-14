@@ -25,6 +25,7 @@ import reactor.util.retry.Retry;
 @Slf4j
 public class MovieReactiveService {
 	
+	private RevenueService revenueService;
 
 	private MovieInfoService movieInfoService;
 	
@@ -34,6 +35,12 @@ public class MovieReactiveService {
 //		this.movieInfoService = movieInfoService;
 //		this.reviewService = reviewService;
 //	}
+	
+//	public MovieReactiveService(MovieInfoService movieInfoService, ReviewService reviewService, RevenueService revenueService) {
+//	this.movieInfoService = movieInfoService;
+//	this.reviewService = reviewService;
+//	this.revenueService = revenueService'
+//}
 
 	
 	
