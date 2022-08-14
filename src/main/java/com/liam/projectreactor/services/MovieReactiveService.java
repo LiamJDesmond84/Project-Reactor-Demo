@@ -38,11 +38,11 @@ public class MovieReactiveService {
 //		this.reviewService = reviewService;
 //	}
 	
-//	public MovieReactiveService(MovieInfoService movieInfoService, ReviewService reviewService, RevenueService revenueService) {
-//	this.movieInfoService = movieInfoService;
-//	this.reviewService = reviewService;
-//	this.revenueService = revenueService'
-//}
+	public MovieReactiveService(MovieInfoService movieInfoService, ReviewService reviewService, RevenueService revenueService) {
+	this.movieInfoService = movieInfoService;
+	this.reviewService = reviewService;
+	this.revenueService = revenueService;
+}
 
 	
 	
