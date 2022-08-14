@@ -20,6 +20,8 @@ class MovieReactiveServiceTest {
 
 	private ReviewService reviewService = new ReviewService();
 	
+	private RevenueService revenueService = new RevenueService();
+	
 //	MovieReactiveService movieReactiveService = new MovieReactiveService(movieInfoService, reviewService);
 	MovieReactiveService movieReactiveService = new MovieReactiveService();
 
@@ -109,6 +111,24 @@ class MovieReactiveServiceTest {
 		
 	}
 	
+	
+	@Test
+	void getMovieByIdWithRevenue() {
+		
+		//given
+		long movieId = 100L;
+		
+		//when
+		Mono<Movie> movieMono = movieReactiveService.getMovieByIdWithRevenue(movieId);
+		
+		//then
+		StepVerifier.create(movieMono)
+			.assertNext(x -> {
+				assertEquals("Batman Begins", x.getMovie().getName());
+				assertEquals(2, x.getReviewList().size());
+			})
+			.verifyComplete();
+	}
 	
 
 //    ___        ___       
