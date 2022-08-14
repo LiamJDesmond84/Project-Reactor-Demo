@@ -286,24 +286,28 @@ public class MovieReactiveService {
 	// Mono - Because it's just ONE movie
 	public Mono<Movie> getMovieByIdWithRevenue(long movieId) { // Revenue is a blocking call(delay to mimic DB or API call)
 		
-		Mono<MovieInfo> movieInfoMono = movieInfoService.retrieveMovieInfoMonoUsingId(movieId);
+		Mono<MovieInfo> movieInfoMono = movieInfoService.retrieveMovieInfoMonoUsingId(movieId).log("FIRST").log();
+
 		
 		Mono<List<Review>> reviewsMonoList = reviewService.retrieveReviewsFlux(movieId)
-				.collectList();
+				.collectList().log("SECOND");
+
 		
-		Mono<Revenue> revenueMono = Mono.fromCallable(() -> revenueService.getRevenue(movieId))
-			.subscribeOn(Schedulers.boundedElastic()); // boundedElastic should be for blocking calls? Default?
+		Mono<Revenue> revenueMono = Mono.fromCallable(() -> revenueService.getRevenue(movieId)).log("THIRD").log();
+
+//			.subscribeOn(Schedulers.boundedElastic())
+//				.log("THIRD"); // boundedElastic should be for blocking calls? Default?
 
 		
 		return movieInfoMono
-				.zipWith(reviewsMonoList, (movieInf, rev) -> new Movie(movieInf, rev))
+				.zipWith(reviewsMonoList, (movieInf, rev) -> new Movie(movieInf, rev)).log("ZIP 1").log()
 				
 				.zipWith(revenueMono, (movieVar, revenueVar) -> {
 					
 					movieVar.setRevenue(revenueVar);
 					
 					return movieVar;
-				});
+				}).log("FINAL RETURN");
 		
 	}
 	
