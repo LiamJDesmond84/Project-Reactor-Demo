@@ -293,10 +293,9 @@ public class MovieReactiveService {
 				.collectList().log("SECOND");
 
 		
-		Mono<Revenue> revenueMono = Mono.fromCallable(() -> revenueService.getRevenue(movieId)).log("THIRD").log();
-
-//			.subscribeOn(Schedulers.boundedElastic())
-//				.log("THIRD"); // boundedElastic should be for blocking calls? Default?
+		Mono<Revenue> revenueMono = Mono.fromCallable(() -> revenueService.getRevenue(movieId))
+			.subscribeOn(Schedulers.boundedElastic())
+				.log("THIRD").log(); // boundedElastic should be for blocking calls? Default?
 
 		
 		return movieInfoMono
@@ -307,7 +306,7 @@ public class MovieReactiveService {
 					movieVar.setRevenue(revenueVar);
 					
 					return movieVar;
-				}).log("FINAL RETURN");
+				}).log("FINAL RETURN").log();
 		
 	}
 	
