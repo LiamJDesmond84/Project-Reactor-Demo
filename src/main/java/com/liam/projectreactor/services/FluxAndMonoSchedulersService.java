@@ -3,7 +3,7 @@ package com.liam.projectreactor.services;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
-import reactor.core.publisher.Flux;import reactor.core.scheduler.Scheduler;
+import reactor.core.publisher.Flux;
 import reactor.core.scheduler.Schedulers;
 
 import static com.liam.projectreactor.utils.CommonUtil.delay;
@@ -57,11 +57,8 @@ public class FluxAndMonoSchedulersService {
 //                                                     
     
     public Flux<String> exploreSubscribeOn() {
-    	
-    	Flux<String> namesFlux =  Flux.fromIterable(namesList)
-    			.publishOn(Schedulers.parallel())
-//    			.publishOn(Schedulers.boundedElastic()) // Just to show seperate threads
-    			.map(this::upperCase) // with delay method below
+    
+    	Flux<String> namesFlux =  flux1() // Extracted from below method
     			.map(x -> {
     				log.info("Thread 1: {}", x);
     				return x;
@@ -80,6 +77,13 @@ public class FluxAndMonoSchedulersService {
     	
     	return namesFlux.mergeWith(namesFlux1);
     }
+
+
+	private Flux<String> flux1() {
+		return Flux.fromIterable(namesList)
+    			.map(this::upperCase) // with delay method below
+;
+	}
     
 
     private String upperCase(String name) {
