@@ -8,6 +8,7 @@ import com.liam.projectreactor.exceptions.NetworkException;
 import com.liam.projectreactor.exceptions.ServiceException;
 import com.liam.projectreactor.models.Movie;
 import com.liam.projectreactor.models.MovieInfo;
+import com.liam.projectreactor.models.Revenue;
 import com.liam.projectreactor.models.Review;
 
 //import lombok.AllArgsConstructor;
@@ -276,6 +277,20 @@ public class MovieReactiveService {
 		
 		Mono<List<Review>> reviewsMonoList = reviewService.retrieveReviewsFlux(movieId)
 				.collectList();
+		
+		return movieInfoMono.zipWith(reviewsMonoList, (movieInf, rev) -> new Movie(movieInf, rev));
+		
+	}
+	
+	// Mono - Because it's just ONE movie
+	public Mono<Movie> getMovieByIdWithRevenue(long movieId) { // Revenue is a blocking call(delay to mimic DB or API call)
+		
+		Mono<MovieInfo> movieInfoMono = movieInfoService.retrieveMovieInfoMonoUsingId(movieId);
+		
+		Mono<List<Review>> reviewsMonoList = reviewService.retrieveReviewsFlux(movieId)
+				.collectList();
+		
+		Revenue revenue = revenueService.getRevenue(movieId);
 		
 		return movieInfoMono.zipWith(reviewsMonoList, (movieInf, rev) -> new Movie(movieInf, rev));
 		
