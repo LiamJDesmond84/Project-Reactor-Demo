@@ -79,7 +79,7 @@ public class FluxAndMonoSchedulersService {
 
 private Flux<String> flux1(List<String> namesListParam) {
 	return Flux.fromIterable(namesListParam)
-			.map(this::upperCase) // with delay method below
+			.map(this::upperCase) // with delay method below(uppercase)
 ;
 }
     

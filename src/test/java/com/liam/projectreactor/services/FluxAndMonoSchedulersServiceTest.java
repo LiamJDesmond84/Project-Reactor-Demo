@@ -26,5 +26,22 @@ class FluxAndMonoSchedulersServiceTest {
 			.expectNextCount(6)
 			.verifyComplete();
 	}
+	
+	
+	@Test
+	void exploreSubscribeOn() {
+		
+		//given
+		
+		
+		//when
+		Flux<String> flux = fluxAndMonoSchedulersService.exploreSubscribeOn();
+		
+		//then
+		
+		StepVerifier.create(flux)
+			.expectNextCount(6)
+			.verifyComplete();
+	}
 
 }
