@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
 import org.reactivestreams.Subscription;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.BaseSubscriber;
@@ -69,7 +69,7 @@ public class BackpressureTest {
 	
 	
 	@Test
-	void testBackPressure_1() {
+	void testBackPressure_1() throws InterruptedException {
 		
 		Flux<Integer> numberRange = Flux.range(1, 100)
 			.log();
@@ -112,8 +112,9 @@ public class BackpressureTest {
 			}
 			
 		});
-		
 		assertTrue(latch.await(5L, TimeUnit.SECONDS));
+		
+
 	}
 	
 
