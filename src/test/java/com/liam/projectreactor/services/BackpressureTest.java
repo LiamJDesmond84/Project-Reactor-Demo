@@ -38,6 +38,9 @@ public class BackpressureTest {
 			protected void hookOnNext(Integer value) {
 //				super.hookOnNext(value);
 				log.info("Hook onNext: {}", value);
+				if (value == 1) {
+					cancel();
+				}
 				
 			}
 			
@@ -55,6 +58,7 @@ public class BackpressureTest {
 			@Override
 			protected void hookOnCancel() {
 //				super.hookOnCancel();
+				log.info("Inside of cancel");
 			}
 			
 	
