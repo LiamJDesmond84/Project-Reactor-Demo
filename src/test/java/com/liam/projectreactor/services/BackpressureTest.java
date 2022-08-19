@@ -27,11 +27,32 @@ public class BackpressureTest {
 		numberRange
 		.subscribe(new BaseSubscriber<Integer>() {
 			
-			protected void hookOnSubscriber(Subscription subscription) {
+			protected void hookOnSubscribe(Subscription subscription) {
 				super.hookOnSubscribe(subscription);
+			}
+			
+			protected void hookOnNext(Integer value) {
+				super.hookOnNext(value);
+				
+			}
+			
+			protected void hookOnComplete() {
+				super.hookOnComplete();
+				
+			}
+			
+			protected void hookOnError(Throwable throwable) {
+				super.hookOnError(throwable);
+			}
+			
+			protected void hookOnCancel() {
+				super.hookOnCancel();
+			}
+			
 	
 }
-		}));
+
+		);
 			
 		
 	}
