@@ -29,29 +29,32 @@ public class BackpressureTest {
 			
 			@Override
 			protected void hookOnSubscribe(Subscription subscription) {
-				super.hookOnSubscribe(subscription);
+//				super.hookOnSubscribe(subscription);
+				request(2); // Just requesting 2 elements
+
 			}
 			
 			@Override
 			protected void hookOnNext(Integer value) {
-				super.hookOnNext(value);
+//				super.hookOnNext(value);
+				log.info("Hook onNext: {}", value);
 				
 			}
 			
 			@Override
 			protected void hookOnComplete() {
-				super.hookOnComplete();
+//				super.hookOnComplete();
 				
 			}
 			
 			@Override
 			protected void hookOnError(Throwable throwable) {
-				super.hookOnError(throwable);
+//				super.hookOnError(throwable);
 			}
 			
 			@Override
 			protected void hookOnCancel() {
-				super.hookOnCancel();
+//				super.hookOnCancel();
 			}
 			
 	
