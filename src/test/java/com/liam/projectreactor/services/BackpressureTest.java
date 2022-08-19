@@ -90,7 +90,10 @@ public class BackpressureTest {
 			protected void hookOnNext(Integer value) {
 //				super.hookOnNext(value);
 				log.info("Hook onNext: {}", value);
-				if (value == 1) {
+				if (value %2 == 0 || value < 50) {
+					request(2);
+				}
+				else {
 					cancel();
 				}
 			}
