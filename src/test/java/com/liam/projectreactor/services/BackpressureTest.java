@@ -38,15 +38,19 @@ public class BackpressureTest {
 			protected void hookOnNext(Integer value) {
 //				super.hookOnNext(value);
 				log.info("Hook onNext: {}", value);
-				if (value == 1) {
-					cancel();
-				}
+//				if (value == 1) {
+//					cancel();
+//					
+//				}
+				onComplete();
 				
 			}
 			
 			@Override
 			protected void hookOnComplete() {
 //				super.hookOnComplete();
+				
+				log.info("Inside of onComplete");
 				
 			}
 			
