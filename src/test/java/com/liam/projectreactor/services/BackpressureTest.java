@@ -112,9 +112,9 @@ public class BackpressureTest {
 			}
 			
 		});
-		assertTrue(latch.await(5L, TimeUnit.SECONDS));
 		
-
+		assertTrue(latch.await(5L, TimeUnit.SECONDS)); // Latch stays open for 5(5L) seconds
+		
 	}
 	
 
