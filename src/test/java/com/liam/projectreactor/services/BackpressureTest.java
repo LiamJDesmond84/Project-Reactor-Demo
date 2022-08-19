@@ -13,7 +13,8 @@ public class BackpressureTest {
 	@Test
 	void testBackPressure() {
 		
-		Flux<Integer> numberRange = Flux.range(1, 100);
+		Flux<Integer> numberRange = Flux.range(1, 100)
+			.log();
 		
 		
 		numberRange
