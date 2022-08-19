@@ -1,7 +1,11 @@
 package com.liam.projectreactor.services;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.jupiter.api.Test;
 import org.reactivestreams.Subscription;
+import static org.junit.jupiter.api.Assertions.*;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.BaseSubscriber;
@@ -71,24 +75,19 @@ public class BackpressureTest {
 			.log();
 		
 		
-//		numberRange
-//			.subscribe(num -> {
-//				log.info("The number is: " + num);   -  Regular unbounded subscribe()
-//			});
+		CountDownLatch latch = new CountDownLatch(1);
 		
 		numberRange
 		.subscribe(new BaseSubscriber<Integer>() {
 			
 			@Override
 			protected void hookOnSubscribe(Subscription subscription) {
-//				super.hookOnSubscribe(subscription);
 				request(2); // Just requesting 2 elements
 
 			}
 			
 			@Override
 			protected void hookOnNext(Integer value) {
-//				super.hookOnNext(value);
 				log.info("Hook onNext: {}", value);
 				if (value %2 == 0 || value < 50) {
 					request(2);
@@ -99,23 +98,22 @@ public class BackpressureTest {
 			}
 			
 			@Override
-			protected void hookOnComplete() {
-//				super.hookOnComplete();		
+			protected void hookOnComplete() {		
 			}
 			
 			@Override
 			protected void hookOnError(Throwable throwable) {
-//				super.hookOnError(throwable);
 			}
 			
 			@Override
 			protected void hookOnCancel() {
-//				super.hookOnCancel();
 				log.info("Inside of cancel");
+				latch.countDown();
 			}
 			
 		});
 		
+		assertTrue(latch.await(5L, TimeUnit.SECONDS));
 	}
 	
 
