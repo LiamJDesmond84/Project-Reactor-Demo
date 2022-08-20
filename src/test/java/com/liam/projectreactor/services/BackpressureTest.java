@@ -127,6 +127,8 @@ public class BackpressureTest {
 		
 		CountDownLatch latch = new CountDownLatch(1);
 		
+		
+		
 		numberRange
 		.onBackpressureDrop(item -> {
 			log.info("Dropped items are: " + item);
@@ -151,6 +153,60 @@ public class BackpressureTest {
 				
 				if(value == 2) {
 					hookOnCancel();
+				}
+			}
+			
+			@Override
+			protected void hookOnComplete() {		
+			}
+			
+			@Override
+			protected void hookOnError(Throwable throwable) {
+			}
+			
+			@Override
+			protected void hookOnCancel() {
+				log.info("Inside of cancel");
+				latch.countDown();
+			}
+			
+		});
+		
+		assertTrue(latch.await(5L, TimeUnit.SECONDS)); // Latch stays open for 5(5L) seconds
+		
+	}
+	
+	
+	
+	@Test
+	void testBackPressure_buffer() throws InterruptedException {
+		
+		Flux<Integer> numberRange = Flux.range(1, 100)
+			.log();
+		
+		
+		CountDownLatch latch = new CountDownLatch(1);
+		
+		
+		
+		numberRange
+		.onBackpressureDrop(item -> {
+			log.info("Dropped items are: " + item);
+		})
+		.subscribe(new BaseSubscriber<Integer>() {
+			
+			@Override
+			protected void hookOnSubscribe(Subscription subscription) {
+				request(1); // Just requesting 1 element
+
+			}
+			
+			@Override
+			protected void hookOnNext(Integer value) {
+				log.info("Hook onNext: {}", value);
+				
+				if(value < 50) {
+					request(1);
 				}
 			}
 			
