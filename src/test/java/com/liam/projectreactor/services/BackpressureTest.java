@@ -142,11 +142,15 @@ public class BackpressureTest {
 			@Override
 			protected void hookOnNext(Integer value) {
 				log.info("Hook onNext: {}", value);
-				if (value %2 == 0 || value < 50) {
-					request(2);
-				}
-				else {
-					cancel();
+//				if (value %2 == 0 || value < 50) {
+//					request(2);
+//				}
+//				else {
+//					cancel();
+//				}
+				
+				if(value == 2) {
+					hookOnCancel();
 				}
 			}
 			
