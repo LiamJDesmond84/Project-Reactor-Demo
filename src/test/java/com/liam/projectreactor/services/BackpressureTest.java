@@ -246,9 +246,7 @@ public class BackpressureTest {
 		
 		
 		numberRange
-		.onBackpressureBuffer(10, item -> { // buffers #(10, holds 11 elements(index starts at 0) after # of requests(value < 50 including request(1))
-			log.info("Last buffer element is: " + item); // last element of the buffer
-		})
+		.onBackpressureError()
 		.subscribe(new BaseSubscriber<Integer>() {
 			
 			@Override
@@ -275,6 +273,9 @@ public class BackpressureTest {
 			
 			@Override
 			protected void hookOnError(Throwable throwable) {
+				log.error("Exception is: " + throwable);
+				// "The receiver is overrun by more signals than expected" - more than 50
+				// if you want to throw an exception if the producer offers more elements than the subscriber can process
 			}
 			
 			@Override
