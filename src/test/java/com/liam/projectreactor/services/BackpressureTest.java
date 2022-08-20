@@ -190,7 +190,63 @@ public class BackpressureTest {
 		
 		
 		numberRange
-		.onBackpressureBuffer(10, item -> { // buffers #(10, holds 11 elements) after # of requests(value < 50 including request(1))
+		.onBackpressureBuffer(10, item -> { // buffers #(10, holds 11 elements(index starts at 0) after # of requests(value < 50 including request(1))
+			log.info("Last buffer element is: " + item); // last element of the buffer
+		})
+		.subscribe(new BaseSubscriber<Integer>() {
+			
+			@Override
+			protected void hookOnSubscribe(Subscription subscription) {
+				request(1); // Just requesting 1 element
+
+			}
+			
+			@Override
+			protected void hookOnNext(Integer value) {
+				log.info("Hook onNext: {}", value);
+				
+				if(value < 50) {
+					request(1);
+				}
+				else {
+					hookOnCancel();
+				}
+			}
+			
+			@Override
+			protected void hookOnComplete() {		
+			}
+			
+			@Override
+			protected void hookOnError(Throwable throwable) {
+			}
+			
+			@Override
+			protected void hookOnCancel() {
+				log.info("Inside of cancel");
+				latch.countDown();
+			}
+			
+		});
+		
+		assertTrue(latch.await(5L, TimeUnit.SECONDS)); // Latch stays open for 5(5L) seconds
+		
+	}
+	
+	
+	@Test
+	void testBackPressure_error() throws InterruptedException { // Throws an OverFlowException when the publisher sends more data than the subscriber's requested amount
+		
+		Flux<Integer> numberRange = Flux.range(1, 100)
+			.log();
+		
+		
+		CountDownLatch latch = new CountDownLatch(1);
+		
+		
+		
+		numberRange
+		.onBackpressureBuffer(10, item -> { // buffers #(10, holds 11 elements(index starts at 0) after # of requests(value < 50 including request(1))
 			log.info("Last buffer element is: " + item); // last element of the buffer
 		})
 		.subscribe(new BaseSubscriber<Integer>() {
