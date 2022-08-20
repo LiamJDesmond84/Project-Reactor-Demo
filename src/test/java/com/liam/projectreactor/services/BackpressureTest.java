@@ -128,6 +128,9 @@ public class BackpressureTest {
 		CountDownLatch latch = new CountDownLatch(1);
 		
 		numberRange
+		.onBackpressureDrop(item -> {
+			log.info("Dropped items are: " + item);
+		})
 		.subscribe(new BaseSubscriber<Integer>() {
 			
 			@Override
