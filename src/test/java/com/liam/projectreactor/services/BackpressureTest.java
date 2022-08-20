@@ -190,8 +190,8 @@ public class BackpressureTest {
 		
 		
 		numberRange
-		.onBackpressureDrop(item -> {
-			log.info("Dropped items are: " + item);
+		.onBackpressureBuffer(10, item -> { // buffers #(10, holds 11 elements) after # of requests(value < 50 including request(1))
+			log.info("Last buffer element is: " + item); // last element of the buffer
 		})
 		.subscribe(new BaseSubscriber<Integer>() {
 			
@@ -207,6 +207,9 @@ public class BackpressureTest {
 				
 				if(value < 50) {
 					request(1);
+				}
+				else {
+					hookOnCancel();
 				}
 			}
 			
