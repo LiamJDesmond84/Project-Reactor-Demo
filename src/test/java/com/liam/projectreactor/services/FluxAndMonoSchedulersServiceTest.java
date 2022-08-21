@@ -43,5 +43,23 @@ class FluxAndMonoSchedulersServiceTest {
 			.expectNextCount(6)
 			.verifyComplete();
 	}
+	
+	@Test
+	void explore_parallel() {
+		
+		//given
+		
+		
+		//when
+		Flux<String> namesFlux = fluxAndMonoSchedulersService.explore_parallel();
+		
+		//then
+		StepVerifier.create(namesFlux)
+//			.expectNext("Alex", "Ben", "Chloe")
+//			.expectNextCount(3)
+			.expectNext("Alex") // First should be Alex
+			.expectNextCount(2) // 2 left after Alex
+			.verifyComplete();
+	}
 
 }

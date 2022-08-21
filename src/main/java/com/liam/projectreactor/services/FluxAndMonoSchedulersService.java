@@ -83,17 +83,14 @@ public class FluxAndMonoSchedulersService {
     }
 
 
-private Flux<String> flux1(List<String> namesListParam) {
-	return Flux.fromIterable(namesListParam)
-			.map(this::upperCase) // with delay method below(uppercase)
-;
-}
+	private Flux<String> flux1(List<String> namesListParam) {
+		return Flux.fromIterable(namesListParam)
+				.map(this::upperCase) // with delay method below(uppercase)
+	;
+	}
     
 
-    private String upperCase(String name) {
-        delay(1000); // mocking a "blocking" call
-        return name.toUpperCase();
-    }
+
     
     
     
@@ -106,19 +103,24 @@ private Flux<String> flux1(List<String> namesListParam) {
 //| .__/ \__,_|_|  \__,_|_|_|\___|_\/    |_|\__,_/_/\_\
 //|_|                                    
     
-    public void explore_parallel() { // showing sequential behavior of the reactive pipeline
+    public Flux<String> explore_parallel() { // showing sequential behavior of the reactive pipeline
     	
-    	Flux.fromIterable(namesList)
+    	return Flux.fromIterable(namesList)
 			.publishOn(Schedulers.parallel())
-	//		.publishOn(Schedulers.boundedElastic()) // Just to show seperate threads
 			.map(this::upperCase) // with delay method below
 			.map(x -> {
 				log.info("Thread 1: {}", x);
 				return x;
 			})
-	//		.map(x -> x.toUpperCase())
 			.log();
     	
+    }
+    
+    
+    
+    private String upperCase(String name) {
+        delay(1000); // mocking a "blocking" call
+        return name.toUpperCase();
     }
 
 }
