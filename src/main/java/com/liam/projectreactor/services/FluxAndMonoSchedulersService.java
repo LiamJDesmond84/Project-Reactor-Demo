@@ -105,5 +105,20 @@ private Flux<String> flux1(List<String> namesListParam) {
 //| |_) | (_| | | | (_| | | |  __/ / /   | | |_| |>  < 
 //| .__/ \__,_|_|  \__,_|_|_|\___|_\/    |_|\__,_/_/\_\
 //|_|                                    
+    
+    public void explore_parallel() { // showing sequential behavior of the reactive pipeline
+    	
+    	Flux.fromIterable(namesList)
+			.publishOn(Schedulers.parallel())
+	//		.publishOn(Schedulers.boundedElastic()) // Just to show seperate threads
+			.map(this::upperCase) // with delay method below
+			.map(x -> {
+				log.info("Thread 1: {}", x);
+				return x;
+			})
+	//		.map(x -> x.toUpperCase())
+			.log();
+    	
+    }
 
 }
