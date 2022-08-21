@@ -101,6 +101,9 @@ public class FluxAndMonoSchedulersService {
     
     public ParallelFlux<String> explore_parallel() { // showing sequential behavior of the reactive pipeline
     	
+    	Integer cores = Runtime.getRuntime().availableProcessors(); // Showing # of cores of your machine
+    	log.info("Number of cores: " + cores);
+    	
     	return Flux.fromIterable(namesList)
 //			.publishOn(Schedulers.parallel())
 
