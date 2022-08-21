@@ -4,6 +4,7 @@ import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.ParallelFlux;
 import reactor.core.scheduler.Schedulers;
 
 import static com.liam.projectreactor.utils.CommonUtil.delay;
@@ -88,12 +89,7 @@ public class FluxAndMonoSchedulersService {
 				.map(this::upperCase) // with delay method below(uppercase)
 	;
 	}
-    
 
-
-    
-    
-    
     
 
 //    					 _ _      _   ___ _            
@@ -103,10 +99,11 @@ public class FluxAndMonoSchedulersService {
 //| .__/ \__,_|_|  \__,_|_|_|\___|_\/    |_|\__,_/_/\_\
 //|_|                                    
     
-    public Flux<String> explore_parallel() { // showing sequential behavior of the reactive pipeline
+    public ParallelFlux<String> explore_parallel() { // showing sequential behavior of the reactive pipeline
     	
     	return Flux.fromIterable(namesList)
-			.publishOn(Schedulers.parallel())
+//			.publishOn(Schedulers.parallel())
+    		.parallel()
 			.map(this::upperCase) // with delay method below
 			.map(x -> {
 				log.info("Thread 1: {}", x);

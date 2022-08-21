@@ -5,6 +5,7 @@ package com.liam.projectreactor.services;
 import org.junit.jupiter.api.Test;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.ParallelFlux;
 import reactor.test.StepVerifier;
 
 class FluxAndMonoSchedulersServiceTest {
@@ -51,14 +52,14 @@ class FluxAndMonoSchedulersServiceTest {
 		
 		
 		//when
-		Flux<String> namesFlux = fluxAndMonoSchedulersService.explore_parallel();
+		ParallelFlux<String> namesFlux = fluxAndMonoSchedulersService.explore_parallel();
 		
 		//then
 		StepVerifier.create(namesFlux)
 //			.expectNext("Alex", "Ben", "Chloe")
-//			.expectNextCount(3)
-			.expectNext("Alex") // First should be Alex
-			.expectNextCount(2) // 2 left after Alex
+			.expectNextCount(3)
+//			.expectNext("Alex") // First should be Alex
+//			.expectNextCount(2) // 2 left after Alex
 			.verifyComplete();
 	}
 
