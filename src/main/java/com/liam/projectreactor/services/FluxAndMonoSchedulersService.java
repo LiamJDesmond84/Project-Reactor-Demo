@@ -95,13 +95,13 @@ public class FluxAndMonoSchedulersService {
 //    					 _ _      _   ___ _            
 // _ __   __ _ _ __ __ _| | | ___| | / __\ |_   ___  __
 //| '_ \ / _` | '__/ _` | | |/ _ \ |/ _\ | | | | \ \/ /
-//| |_) | (_| | | | (_| | | |  __/ / /   | | |_| |>  < 
-//| .__/ \__,_|_|  \__,_|_|_|\___|_\/    |_|\__,_/_/\_\
+//| |_) | (_| | | | (_| | | |  __/ / /   | | |_| |>  <   -- Disadvantage - different types of operations that can be performed are very limited
+//| .__/ \__,_|_|  \__,_|_|_|\___|_\/    |_|\__,_/_/\_\                     - i.e. .parallel() flux won't allow other specific operators(like merge())
 //|_|                                    
     
     public ParallelFlux<String> explore_parallel() { // showing sequential behavior of the reactive pipeline
     	
-    	Integer cores = Runtime.getRuntime().availableProcessors(); // Showing # of cores of your machine
+    	Integer cores = Runtime.getRuntime().availableProcessors(); // Showing # of cores of your machine - More cores == more processing more things at the same time == faster
     	log.info("Number of cores: " + cores);
     	
     	return Flux.fromIterable(namesList)
