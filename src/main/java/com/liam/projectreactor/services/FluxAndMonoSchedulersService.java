@@ -94,5 +94,16 @@ private Flux<String> flux1(List<String> namesListParam) {
         delay(1000); // mocking a "blocking" call
         return name.toUpperCase();
     }
+    
+    
+    
+    
+
+//    					 _ _      _   ___ _            
+// _ __   __ _ _ __ __ _| | | ___| | / __\ |_   ___  __
+//| '_ \ / _` | '__/ _` | | |/ _ \ |/ _\ | | | | \ \/ /
+//| |_) | (_| | | | (_| | | |  __/ / /   | | |_| |>  < 
+//| .__/ \__,_|_|  \__,_|_|_|\___|_\/    |_|\__,_/_/\_\
+//|_|                                    
 
 }
