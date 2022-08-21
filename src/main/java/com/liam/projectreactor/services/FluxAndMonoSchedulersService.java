@@ -103,8 +103,15 @@ public class FluxAndMonoSchedulersService {
     	
     	return Flux.fromIterable(namesList)
 //			.publishOn(Schedulers.parallel())
+
+    		.doOnNext(x -> {
+        		log.info("Before parallel: " + x);
+        		})
     		.parallel()
     		.runOn(Schedulers.parallel())
+    		.doOnNext(x -> {
+    			log.info("Parallel starting now: " + x);
+    		})
 			.map(this::upperCase) // with delay method below
 			.map(x -> {
 				log.info("Thread 1: {}", x);
