@@ -98,7 +98,9 @@ public class FluxAndMonoSchedulersService {
 //| '_ \ / _` | '__/ _` | | |/ _ \ |/ _\ | | | | \ \/ /
 //| |_) | (_| | | | (_| | | |  __/ / /   | | |_| |>  <   -- Disadvantage - different types of operations that can be performed are very limited
 //| .__/ \__,_|_|  \__,_|_|_|\___|_\/    |_|\__,_/_/\_\                     - i.e. .parallel() flux won't allow other specific operators(like merge())
-//|_|                                    
+//|_|             
+	
+// .parallel() & .flatMap with Schedulers.parallel() are 2 different ways of achieving the same thing
     
     public ParallelFlux<String> explore_parallel() { // showing sequential behavior of the reactive pipeline
     	

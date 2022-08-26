@@ -77,8 +77,6 @@ class FluxAndMonoSchedulersServiceTest {
 		StepVerifier.create(namesFlux)
 //			.expectNext("Alex", "Ben", "Chloe")
 			.expectNextCount(3)
-//			.expectNext("Alex") // First should be Alex
-//			.expectNextCount(2) // 2 left after Alex
 			.verifyComplete();
 	}
 
