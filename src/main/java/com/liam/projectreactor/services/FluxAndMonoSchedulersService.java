@@ -125,6 +125,17 @@ public class FluxAndMonoSchedulersService {
     }
     
     
+public Flux<String> explore_parallel_using_flatMap() { // showing sequential behavior of the reactive pipeline
+    	
+    	Integer cores = Runtime.getRuntime().availableProcessors(); // Showing # of cores of your machine - More cores == more processing more things at the same time == faster
+    	log.info("Number of cores: " + cores);
+    	
+    	return Flux.fromIterable(namesList)
+
+			.log();
+    	
+    }
+    
     
     private String upperCase(String name) {
         delay(1000); // mocking a "blocking" call
