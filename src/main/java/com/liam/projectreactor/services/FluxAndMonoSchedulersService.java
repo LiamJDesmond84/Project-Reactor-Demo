@@ -4,6 +4,7 @@ import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.core.publisher.ParallelFlux;
 import reactor.core.scheduler.Schedulers;
 
@@ -127,11 +128,13 @@ public class FluxAndMonoSchedulersService {
     
 public Flux<String> explore_parallel_using_flatMap() { // showing sequential behavior of the reactive pipeline
     	
-    	Integer cores = Runtime.getRuntime().availableProcessors(); // Showing # of cores of your machine - More cores == more processing more things at the same time == faster
-    	log.info("Number of cores: " + cores);
     	
     	return Flux.fromIterable(namesList)
-
+    		.flatMap(name -> { // flatMap returns a reactive type
+    			return Mono.just(name)
+    				.map(this::upperCase) // invoking a blocking call
+    				.subscribeOn(Schedulers.parallel());
+    		})
 			.log();
     	
     }
