@@ -130,11 +130,14 @@ public Flux<String> explore_parallel_using_flatMap() { // showing sequential beh
     	
     	
     	return Flux.fromIterable(namesList)
-    		.flatMap(name -> { // flatMap returns a reactive type
-    			return Mono.just(name)
+//    		.flatMap(name -> { // flatMap returns a reactive type
+//    			return Mono.just(name)
+//    				.map(this::upperCase) // invoking a blocking call
+//    				.subscribeOn(Schedulers.parallel());
+//    		})
+    		.flatMap(name -> Mono.just(name)
     				.map(this::upperCase) // invoking a blocking call
-    				.subscribeOn(Schedulers.parallel());
-    		})
+    				.subscribeOn(Schedulers.parallel()))
 			.log();
     	
     }
