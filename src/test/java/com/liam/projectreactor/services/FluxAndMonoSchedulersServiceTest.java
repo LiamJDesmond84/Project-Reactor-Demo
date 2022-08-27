@@ -75,14 +75,14 @@ class FluxAndMonoSchedulersServiceTest {
 		
 		//then
 		StepVerifier.create(namesFlux)
-//			.expectNext("Alex", "Ben", "Chloe")
-			.expectNextCount(3)
+			.expectNext("Alex", "Ben", "Chloe")
+			.expectNextCount(0)
 			.verifyComplete();
 	}
 	
 	
 	@Test
-	void explore_parallel_using_flatMap_1() {
+	void explore_parallel_using_flatMap_1() { // 2 Flux.fromIterables - Total of 6
 		
 		//given
 		
@@ -92,8 +92,7 @@ class FluxAndMonoSchedulersServiceTest {
 		
 		//then
 		StepVerifier.create(namesFlux)
-//			.expectNext("Alex", "Ben", "Chloe")
-			.expectNextCount(3)
+			.expectNextCount(6)
 			.verifyComplete();
 	}
 

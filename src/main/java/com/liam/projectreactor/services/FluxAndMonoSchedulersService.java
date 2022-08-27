@@ -144,24 +144,24 @@ public Flux<String> explore_parallel_using_flatMap() { // showing sequential beh
     	
     }
 
-public Flux<String> explore_parallel_using_flatMap_1() {
-	
-	Flux<String> namesFlux =  Flux.fromIterable(namesList)
-			.flatMap(name -> Mono.just(name)
-    				.map(this::upperCase) // invoking a blocking call
-    				.subscribeOn(Schedulers.parallel()))
-			.log();
-	
-	
-	
-	
-	Flux<String> namesFlux1 =  Flux.fromIterable(namesList1)
-			.flatMap(name -> Mono.just(name)
-    				.map(this::upperCase) // invoking a blocking call
-    				.subscribeOn(Schedulers.parallel()))
-			.log();
-	
-	return namesFlux.mergeWith(namesFlux1);
+		public Flux<String> explore_parallel_using_flatMap_1() {
+			
+			Flux<String> namesFlux =  Flux.fromIterable(namesList)
+					.flatMap(name -> Mono.just(name)
+		    				.map(this::upperCase) // invoking a blocking call
+		    				.subscribeOn(Schedulers.parallel()))
+					.log();
+			
+			
+			
+			
+			Flux<String> namesFlux1 =  Flux.fromIterable(namesList1)
+					.flatMap(name -> Mono.just(name)
+		    				.map(this::upperCase) // invoking a blocking call
+		    				.subscribeOn(Schedulers.parallel()))
+					.log();
+			
+			return namesFlux.mergeWith(namesFlux1);
 }
     
     
