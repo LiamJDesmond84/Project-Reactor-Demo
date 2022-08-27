@@ -144,7 +144,7 @@ public class FluxAndMonoSchedulersService {
 	    	
 	    }
 
-	public Flux<String> explore_parallel_using_flatMap_1() {
+	public Flux<String> explore_parallel_using_flatMap_1() { // Using .flatMap with Schedulers.parallel() = .parallal()
 		
 		Flux<String> namesFlux =  Flux.fromIterable(namesList)
 				.flatMap(name -> Mono.just(name)
