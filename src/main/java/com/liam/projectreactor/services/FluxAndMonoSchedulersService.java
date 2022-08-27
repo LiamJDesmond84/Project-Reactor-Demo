@@ -142,7 +142,7 @@ public class FluxAndMonoSchedulersService {
 	    				.subscribeOn(Schedulers.parallel()))
 				.log();
 	    	
-	    }
+	}
 
 	public Flux<String> explore_parallel_using_flatMap_1() { // Using .flatMap with Schedulers.parallel() = .parallal()
 		
@@ -163,7 +163,23 @@ public class FluxAndMonoSchedulersService {
 				.log();
 		
 		return namesFlux.mergeWith(namesFlux1);
-}
+	}
+	
+	public Flux<String> explore_parallel_using_flatMapSequential() { // showing sequential behavior of the reactive pipeline
+    	
+    	
+    	return Flux.fromIterable(namesList)
+//    		.flatMap(name -> { // flatMap returns a reactive type
+//    			return Mono.just(name)
+//    				.map(this::upperCase) // invoking a blocking call
+//    				.subscribeOn(Schedulers.parallel());
+//    		})
+    		.flatMap(name -> Mono.just(name)
+    				.map(this::upperCase) // invoking a blocking call
+    				.subscribeOn(Schedulers.parallel()))
+			.log();
+    	
+    }
     
     
     private String upperCase(String name) {
