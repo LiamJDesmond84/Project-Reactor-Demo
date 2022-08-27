@@ -76,7 +76,7 @@ class FluxAndMonoSchedulersServiceTest {
 		//then
 		StepVerifier.create(namesFlux)
 //			.expectNext("Alex", "Ben", "Chloe") // Random & capitalized, not reliable
-			.expectNextCount(0)
+			.expectNextCount(3)
 			.verifyComplete();
 	}
 	
