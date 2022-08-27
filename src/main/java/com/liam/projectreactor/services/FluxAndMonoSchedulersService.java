@@ -169,12 +169,7 @@ public class FluxAndMonoSchedulersService {
     	
     	
     	return Flux.fromIterable(namesList)
-//    		.flatMap(name -> { // flatMap returns a reactive type
-//    			return Mono.just(name)
-//    				.map(this::upperCase) // invoking a blocking call
-//    				.subscribeOn(Schedulers.parallel());
-//    		})
-    		.flatMap(name -> Mono.just(name)
+    		.flatMapSequential(name -> Mono.just(name)
     				.map(this::upperCase) // invoking a blocking call
     				.subscribeOn(Schedulers.parallel()))
 			.log();

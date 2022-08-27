@@ -95,5 +95,20 @@ class FluxAndMonoSchedulersServiceTest {
 			.expectNextCount(6)
 			.verifyComplete();
 	}
+	
+	@Test
+	void explore_parallel_using_flatMapSequential() { // 2 Flux.fromIterables - Total of 6
+		
+		//given
+		
+		
+		//when
+		Flux<String> namesFlux = fluxAndMonoSchedulersService.explore_parallel_using_flatMapSequential();
+		
+		//then
+		StepVerifier.create(namesFlux)
+			.expectNextCount(6)
+			.verifyComplete();
+	}
 
 }
