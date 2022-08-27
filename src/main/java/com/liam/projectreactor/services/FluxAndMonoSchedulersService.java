@@ -128,40 +128,41 @@ public class FluxAndMonoSchedulersService {
     }
     
     
-public Flux<String> explore_parallel_using_flatMap() { // showing sequential behavior of the reactive pipeline
-    	
-    	
-    	return Flux.fromIterable(namesList)
-//    		.flatMap(name -> { // flatMap returns a reactive type
-//    			return Mono.just(name)
-//    				.map(this::upperCase) // invoking a blocking call
-//    				.subscribeOn(Schedulers.parallel());
-//    		})
-    		.flatMap(name -> Mono.just(name)
-    				.map(this::upperCase) // invoking a blocking call
-    				.subscribeOn(Schedulers.parallel()))
-			.log();
-    	
-    }
+	public Flux<String> explore_parallel_using_flatMap() { // showing sequential behavior of the reactive pipeline
+	    	
+	    	
+	    	return Flux.fromIterable(namesList)
+	//    		.flatMap(name -> { // flatMap returns a reactive type
+	//    			return Mono.just(name)
+	//    				.map(this::upperCase) // invoking a blocking call
+	//    				.subscribeOn(Schedulers.parallel());
+	//    		})
+	    		.flatMap(name -> Mono.just(name)
+	    				.map(this::upperCase) // invoking a blocking call
+	    				.subscribeOn(Schedulers.parallel()))
+				.log();
+	    	
+	    }
 
-		public Flux<String> explore_parallel_using_flatMap_1() {
-			
-			Flux<String> namesFlux =  Flux.fromIterable(namesList)
-					.flatMap(name -> Mono.just(name)
-		    				.map(this::upperCase) // invoking a blocking call
-		    				.subscribeOn(Schedulers.parallel()))
-					.log();
-			
-			
-			
-			
-			Flux<String> namesFlux1 =  Flux.fromIterable(namesList1)
-					.flatMap(name -> Mono.just(name)
-		    				.map(this::upperCase) // invoking a blocking call
-		    				.subscribeOn(Schedulers.parallel()))
-					.log();
-			
-			return namesFlux.mergeWith(namesFlux1);
+	public Flux<String> explore_parallel_using_flatMap_1() {
+		
+		Flux<String> namesFlux =  Flux.fromIterable(namesList)
+				.flatMap(name -> Mono.just(name)
+	    				.map(this::upperCase) // invoking a blocking call
+	    				.subscribeOn(Schedulers.parallel()))
+				.log();
+		
+		Flux<String> namesFlux1 =  Flux.fromIterable(namesList1)
+				.flatMap(name -> Mono.just(name)
+	    				.map(this::upperCase) // invoking a blocking call
+	    				.subscribeOn(Schedulers.parallel()))
+				.map(x -> {
+					log.info("Thread 2: {}", x);
+					return x;
+				})
+				.log();
+		
+		return namesFlux.mergeWith(namesFlux1);
 }
     
     
