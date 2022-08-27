@@ -107,7 +107,8 @@ class FluxAndMonoSchedulersServiceTest {
 		
 		//then
 		StepVerifier.create(namesFlux)
-			.expectNextCount(3)
+		.expectNext("ALEX", "BEN", "CHLOE")
+			.expectNextCount(0)
 			.verifyComplete();
 	}
 
