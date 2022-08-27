@@ -79,5 +79,22 @@ class FluxAndMonoSchedulersServiceTest {
 			.expectNextCount(3)
 			.verifyComplete();
 	}
+	
+	
+	@Test
+	void explore_parallel_using_flatMap_1() {
+		
+		//given
+		
+		
+		//when
+		Flux<String> namesFlux = fluxAndMonoSchedulersService.explore_parallel_using_flatMap_1();
+		
+		//then
+		StepVerifier.create(namesFlux)
+//			.expectNext("Alex", "Ben", "Chloe")
+			.expectNextCount(3)
+			.verifyComplete();
+	}
 
 }
