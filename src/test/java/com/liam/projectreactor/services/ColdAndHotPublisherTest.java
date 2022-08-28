@@ -113,7 +113,8 @@ public class ColdAndHotPublisherTest {
 	void hotPublisherTest_refCount() { // Set a minimum # of subscribers before values are emitted, but will stop emitting if that count drops below the minumim amount
 		
 		Flux<Integer> fluxRange = Flux.range(1, 10)
-				.delayElements(Duration.ofSeconds(1));
+				.delayElements(Duration.ofSeconds(1))
+				.doOnCancel(() -> log.info("Received cancel signal")); // doOnCanel logging when dispose() runs
 		
 		
 		Flux<Integer> hotSource = fluxRange.publish()
@@ -127,10 +128,21 @@ public class ColdAndHotPublisherTest {
 		Disposable disposable2 = hotSource.subscribe(x -> System.out.println("Subscriber 2: " + x));
 		System.out.println("2 Subscribers are connected");
 		delay(3000);
+
+
 		disposable1.dispose();
+		System.out.println("Disposing 2");
 		disposable2.dispose();
+
+		Disposable disposable3 = hotSource.subscribe(x -> System.out.println("Subscriber 3: " + x));
+		hotSource.subscribe(x -> System.out.println("Subscriber 4: " + x)); // Subscriber 3 starts 3 seconds into the hot stream
 		
-		hotSource.subscribe(x -> System.out.println("Subscriber 3: " + x)); // Subscriber 3 starts 3 seconds into the hot stream
+		System.out.println("Disposing 3");
+		disposable3.dispose();
+		delay(4000);
+		
+		System.out.println("Adding 5");
+		hotSource.subscribe(x -> System.out.println("Subscriber 5: " + x)); // Subscriber 3 starts 3 seconds into the hot stream
 		delay(10000); // Just allowing 10 seconds for all 10 elements to emit
 		
 
