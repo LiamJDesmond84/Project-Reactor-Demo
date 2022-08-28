@@ -134,15 +134,11 @@ public class ColdAndHotPublisherTest {
 		System.out.println("Disposing 2");
 		disposable2.dispose();
 
-		Disposable disposable3 = hotSource.subscribe(x -> System.out.println("Subscriber 3: " + x));
-		hotSource.subscribe(x -> System.out.println("Subscriber 4: " + x)); // Subscriber 3 starts 3 seconds into the hot stream
-		
-		System.out.println("Disposing 3");
-		disposable3.dispose();
-		delay(4000);
-		
-		System.out.println("Adding 5");
-		hotSource.subscribe(x -> System.out.println("Subscriber 5: " + x)); // Subscriber 3 starts 3 seconds into the hot stream
+		System.out.println("Subscribing with 3");
+		hotSource.subscribe(x -> System.out.println("Subscriber 3: " + x));
+		delay(2000);
+		System.out.println("Subscribing with 4");
+		hotSource.subscribe(x -> System.out.println("Subscriber 4: " + x));
 		delay(10000); // Just allowing 10 seconds for all 10 elements to emit
 		
 
