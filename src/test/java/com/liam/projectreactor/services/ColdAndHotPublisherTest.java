@@ -72,11 +72,11 @@ public class ColdAndHotPublisherTest {
 		
 		connectableFlux.connect(); // now behaves like a hotstream
 		
-		connectableFlux.subscribe(x -> {
-			System.out.println("Subscriber 2: " + x);
-			delay(2000);
-		});
-		
+		connectableFlux.subscribe(x -> System.out.println("Subscriber 1: " + x));
+		delay(4000); // So that Subscriber 2 starts subscribing AFTER the elements start emitting
+
+		connectableFlux.subscribe(x -> System.out.println("Subscriber 2: " + x));
+		delay(10000); // Just allowing 10 seconds for all 10 elements to emit
 		
 
 	}
