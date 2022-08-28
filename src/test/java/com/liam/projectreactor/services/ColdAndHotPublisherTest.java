@@ -110,7 +110,8 @@ public class ColdAndHotPublisherTest {
 	
 	
 	@Test
-	void hotPublisherTest_refCount() { // Set a minimum # of subscribers before values are emitted, but will stop emitting if that count drops below the minumim amount
+	void hotPublisherTest_refCount() { // Set a minimum # of subscribers before values are emitted, but will stop emitting if that count drops to 0.
+									   // Will start from beginning if n(2) # of subscribers are subscribed.
 		
 		Flux<Integer> fluxRange = Flux.range(1, 10)
 				.delayElements(Duration.ofSeconds(1))
@@ -118,7 +119,7 @@ public class ColdAndHotPublisherTest {
 		
 		
 		Flux<Integer> hotSource = fluxRange.publish()
-				.refCount(2); // source only starts emitting values after 2 subscribers are connected & will stop if count goes below 2
+				.refCount(2); // source only starts emitting values after 2 subscribers are connected & will stop if count drops to 0.
 		
 		
 		
@@ -129,14 +130,16 @@ public class ColdAndHotPublisherTest {
 		System.out.println("2 Subscribers are connected");
 		delay(3000);
 
-
+		System.out.println("Disposing 1");
 		disposable1.dispose();
+		
 		System.out.println("Disposing 2");
 		disposable2.dispose();
 
 		System.out.println("Subscribing with 3");
 		hotSource.subscribe(x -> System.out.println("Subscriber 3: " + x));
 		delay(2000);
+		
 		System.out.println("Subscribing with 4");
 		hotSource.subscribe(x -> System.out.println("Subscriber 4: " + x));
 		delay(10000); // Just allowing 10 seconds for all 10 elements to emit
