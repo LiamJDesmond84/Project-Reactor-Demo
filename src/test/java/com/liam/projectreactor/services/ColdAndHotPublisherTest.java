@@ -1,13 +1,16 @@
 package com.liam.projectreactor.services;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.ConnectableFlux;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
+import static com.liam.projectreactor.utils.CommonUtil.delay;
 
 @Slf4j
 public class ColdAndHotPublisherTest {
@@ -61,11 +64,21 @@ public class ColdAndHotPublisherTest {
 	@Test
 	void hotPublisherTest() {
 		
-		Flux<Integer> fluxRange = Flux.range(1, 10);
+		Flux<Integer> fluxRange = Flux.range(1, 10)
+				.delayElements(Duration.ofSeconds(1));
 		
-		fluxRange.subscribe(x -> System.out.println("Subscriber 1: " + x));
 		
-		fluxRange.subscribe(x -> System.out.println("Subscriber 2: " + x));
+		ConnectableFlux<Integer> connectableFlux = fluxRange.publish();
+		
+		connectableFlux.connect(); // now behaves like a hotstream
+		
+		connectableFlux.subscribe(x -> {
+			System.out.println("Subscriber 2: " + x);
+			delay(2000);
+		});
+		
+		
+
 	}
 
 }
