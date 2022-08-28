@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.Disposable;
 import reactor.core.publisher.ConnectableFlux;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -100,6 +101,7 @@ public class ColdAndHotPublisherTest {
 		hotSource.subscribe(x -> System.out.println("Subscriber 2: " + x));
 		System.out.println("2 Subscribers are connected");
 		delay(3000);
+		
 		hotSource.subscribe(x -> System.out.println("Subscriber 3: " + x)); // Subscriber 3 starts 3 seconds into the hot stream
 		delay(10000); // Just allowing 10 seconds for all 10 elements to emit
 		
@@ -115,16 +117,19 @@ public class ColdAndHotPublisherTest {
 		
 		
 		Flux<Integer> hotSource = fluxRange.publish()
-				.refCount(2); // source only starts emitting values after 2 subscribers are connected
+				.refCount(2); // source only starts emitting values after 2 subscribers are connected & will stop if count goes below 2
 		
 		
 		
-		hotSource.subscribe(x -> System.out.println("Subscriber 1: " + x));
+		Disposable disposable1 =  hotSource.subscribe(x -> System.out.println("Subscriber 1: " + x));
 		delay(2000); // So that Subscriber 2 starts subscribing AFTER the elements start emitting
 
-		hotSource.subscribe(x -> System.out.println("Subscriber 2: " + x));
+		Disposable disposable2 = hotSource.subscribe(x -> System.out.println("Subscriber 2: " + x));
 		System.out.println("2 Subscribers are connected");
 		delay(3000);
+		disposable1.dispose();
+		disposable2.dispose();
+		
 		hotSource.subscribe(x -> System.out.println("Subscriber 3: " + x)); // Subscriber 3 starts 3 seconds into the hot stream
 		delay(10000); // Just allowing 10 seconds for all 10 elements to emit
 		
