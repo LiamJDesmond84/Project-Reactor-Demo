@@ -70,7 +70,28 @@ public class ColdAndHotPublisherTest {
 		
 		ConnectableFlux<Integer> connectableFlux = fluxRange.publish();
 		
-		connectableFlux.connect(); // now behaves like a hotstream
+		connectableFlux.connect(); // now behaves like a hotstream WITH publish as well
+		
+		connectableFlux.subscribe(x -> System.out.println("Subscriber 1: " + x));
+		delay(4000); // So that Subscriber 2 starts subscribing AFTER the elements start emitting
+
+		connectableFlux.subscribe(x -> System.out.println("Subscriber 2: " + x));
+		delay(10000); // Just allowing 10 seconds for all 10 elements to emit
+		
+
+	}
+	
+	
+	@Test
+	void hotPublisherTest_autoConnect() {
+		
+		Flux<Integer> fluxRange = Flux.range(1, 10)
+				.delayElements(Duration.ofSeconds(1));
+		
+		
+		ConnectableFlux<Integer> connectableFlux = fluxRange.publish();
+		
+		connectableFlux.connect(); // now behaves like a hotstream WITH publish as well
 		
 		connectableFlux.subscribe(x -> System.out.println("Subscriber 1: " + x));
 		delay(4000); // So that Subscriber 2 starts subscribing AFTER the elements start emitting
