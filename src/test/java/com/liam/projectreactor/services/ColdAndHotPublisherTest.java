@@ -89,14 +89,18 @@ public class ColdAndHotPublisherTest {
 				.delayElements(Duration.ofSeconds(1));
 		
 		
-		ConnectableFlux<Integer> connectableFlux = fluxRange.publish();
+		Flux<Integer> hotSource = fluxRange.publish()
+				.autoConnect(2); // source only starts emitting values after 2 subscribers are connected
 		
-		connectableFlux.connect(); // now behaves like a hotstream WITH publish as well
 		
-		connectableFlux.subscribe(x -> System.out.println("Subscriber 1: " + x));
-		delay(4000); // So that Subscriber 2 starts subscribing AFTER the elements start emitting
+		
+		hotSource.subscribe(x -> System.out.println("Subscriber 1: " + x));
+		delay(2000); // So that Subscriber 2 starts subscribing AFTER the elements start emitting
 
-		connectableFlux.subscribe(x -> System.out.println("Subscriber 2: " + x));
+		hotSource.subscribe(x -> System.out.println("Subscriber 2: " + x));
+		System.out.println("2 Subscribers are connected");
+		delay(2000);
+		hotSource.subscribe(x -> System.out.println("Subscriber 3: " + x));
 		delay(10000); // Just allowing 10 seconds for all 10 elements to emit
 		
 
