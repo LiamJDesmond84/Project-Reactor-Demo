@@ -83,7 +83,7 @@ public class ColdAndHotPublisherTest {
 	
 	
 	@Test
-	void hotPublisherTest_autoConnect() {
+	void hotPublisherTest_autoConnect() { // Set a minimum # of subscribers before values are emitted
 		
 		Flux<Integer> fluxRange = Flux.range(1, 10)
 				.delayElements(Duration.ofSeconds(1));
@@ -99,8 +99,33 @@ public class ColdAndHotPublisherTest {
 
 		hotSource.subscribe(x -> System.out.println("Subscriber 2: " + x));
 		System.out.println("2 Subscribers are connected");
-		delay(2000);
-		hotSource.subscribe(x -> System.out.println("Subscriber 3: " + x));
+		delay(3000);
+		hotSource.subscribe(x -> System.out.println("Subscriber 3: " + x)); // Subscriber 3 starts 3 seconds into the hot stream
+		delay(10000); // Just allowing 10 seconds for all 10 elements to emit
+		
+
+	}
+	
+	
+	@Test
+	void hotPublisherTest_refCount() { // Set a minimum # of subscribers before values are emitted, but will stop emitting if that count drops below the minumim amount
+		
+		Flux<Integer> fluxRange = Flux.range(1, 10)
+				.delayElements(Duration.ofSeconds(1));
+		
+		
+		Flux<Integer> hotSource = fluxRange.publish()
+				.refCount(2); // source only starts emitting values after 2 subscribers are connected
+		
+		
+		
+		hotSource.subscribe(x -> System.out.println("Subscriber 1: " + x));
+		delay(2000); // So that Subscriber 2 starts subscribing AFTER the elements start emitting
+
+		hotSource.subscribe(x -> System.out.println("Subscriber 2: " + x));
+		System.out.println("2 Subscribers are connected");
+		delay(3000);
+		hotSource.subscribe(x -> System.out.println("Subscriber 3: " + x)); // Subscriber 3 starts 3 seconds into the hot stream
 		delay(10000); // Just allowing 10 seconds for all 10 elements to emit
 		
 
