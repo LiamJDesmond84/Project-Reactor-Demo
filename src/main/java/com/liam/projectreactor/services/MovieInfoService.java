@@ -3,7 +3,7 @@ package com.liam.projectreactor.services;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.reactive.function.client.WebClient;
 
 import static com.liam.projectreactor.utils.CommonUtil.delay;
@@ -15,12 +15,12 @@ import reactor.core.publisher.Mono;
 
 public class MovieInfoService {
 	
-	@Autowired
+
 	private WebClient webClient;
 	
-//	private MovieInfoService(WebClient webClient) {
-//		this.webClient = webClient;
-//	}
+	public MovieInfoService(WebClient webClient) {
+		this.webClient = webClient;
+	}
 	
 	public MovieInfoService() { // resolves compilation issues with testcases
 		
