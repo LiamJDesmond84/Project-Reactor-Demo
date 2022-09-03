@@ -9,6 +9,7 @@ import com.liam.projectreactor.exceptions.ReactorException;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
+import reactor.test.scheduler.VirtualTimeScheduler;
 
 public class FluxAndMonoGeneratorServiceTest {
 	
@@ -674,13 +675,14 @@ public class FluxAndMonoGeneratorServiceTest {
 	void namesFluxContcatMap_virtualTimer() {
 		
 		//given
+		VirtualTimeScheduler.getOrSet();
 		int stringLen = 3;
 		
 		//when
-		Flux<String> nameMonoTest = fluxAndMonoGenServ.namesFluxContcatMap(stringLen);
+		Flux<String> nameFluxTest = fluxAndMonoGenServ.namesFluxContcatMap(stringLen);
 		
 		//then
-		StepVerifier.create(nameMonoTest)
+		StepVerifier.withVirtualTime(() -> nameFluxTest)
 			.expectNext("A","L", "E", "X", "C", "H", "L", "O", "E")
 //			.expectNextCount(9)
 			.verifyComplete();
