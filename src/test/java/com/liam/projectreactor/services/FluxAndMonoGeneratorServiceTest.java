@@ -1,5 +1,6 @@
 package com.liam.projectreactor.services;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -683,6 +684,7 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.withVirtualTime(() -> nameFluxTest)
+			.thenAwait(Duration.ofSeconds(10))
 			.expectNext("A","L", "E", "X", "C", "H", "L", "O", "E")
 //			.expectNextCount(9)
 			.verifyComplete();
