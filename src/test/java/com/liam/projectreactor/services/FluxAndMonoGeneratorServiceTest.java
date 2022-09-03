@@ -674,7 +674,7 @@ public class FluxAndMonoGeneratorServiceTest {
 	
 	@Test
 	void namesFluxContcatMap_virtualTimer() { // Makes test cases faster.  Reason?
-											  // Replaces default reactor schedulers with getOrSet
+											  // Replaces default reactor schedulers with getOrSet (time)
 		
 		//given
 		VirtualTimeScheduler.getOrSet();
