@@ -22,7 +22,20 @@ public class MovieInfoService {
 //		this.webClient = webClient;
 //	}
 	
+	public MovieInfoService() { // resolves compilation issues with testcases
+		
+	}
 	
+	
+	public Flux<MovieInfo> retrieveAllMovieInfo_RestClient() {
+		
+		return webClient
+					.get()
+					.uri("/v1/movie_infos")
+					.retrieve()
+					.bodyToFlux(MovieInfo.class);
+		
+	}
 	
 //     _        _   _      
 // ___| |_ __ _| |_(_) ___ 
