@@ -27,13 +27,14 @@ public class MovieInfoService {
 	}
 	
 	
-	public Flux<MovieInfo> retrieveAllMovieInfo_RestClient() {
+	public Flux<MovieInfo> retrieveAllMovieInfo_RestClient() { // Connecting to running reactive-movies-restful-api jar file
 		
 		return webClient
 					.get()
 					.uri("/v1/movie_infos")
 					.retrieve()
-					.bodyToFlux(MovieInfo.class);
+					.bodyToFlux(MovieInfo.class)
+					.log();
 		
 	}
 	
