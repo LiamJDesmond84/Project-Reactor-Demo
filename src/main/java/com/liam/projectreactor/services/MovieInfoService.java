@@ -2,6 +2,9 @@ package com.liam.projectreactor.services;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import org.springframework.web.reactive.function.client.WebClient;
+
 import static com.liam.projectreactor.utils.CommonUtil.delay;
 
 import com.liam.projectreactor.models.MovieInfo;
@@ -10,6 +13,17 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public class MovieInfoService {
+	
+	private WebClient webClient;
+	
+	
+	
+//     _        _   _      
+// ___| |_ __ _| |_(_) ___ 
+/// __| __/ _` | __| |/ __|
+//\__ \ || (_| | |_| | (__ 
+//|___/\__\__,_|\__|_|\___|
+//                        	
 	
 	
 	// FLUX
