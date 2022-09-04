@@ -1,8 +1,12 @@
 package com.liam.projectreactor.services;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.client.WebClient;
+
+import com.liam.projectreactor.models.MovieInfo;
+import com.liam.projectreactor.models.Review;
+
+import reactor.core.publisher.Flux;
 
 public class MovieReactiveServiceRestClientTest {
 	
@@ -19,7 +23,21 @@ public class MovieReactiveServiceRestClientTest {
 	
 	
 
-
+	@Test
+	void getAllMovies_restClient() {
+		
+		
+		//given
+		long movieInfoId = 1;
+		
+		//when
+		Flux<MovieInfo> movieInfoFlux = movieInfoService.retrieveAllMovieInfo_RestClient();
+		
+		Flux<Review> reviewFlux = reviewService.retrieveReviewsFlux_RestClient(movieInfoId);
+		
+		//then
+		@Step
+	}
 	
 
 }
