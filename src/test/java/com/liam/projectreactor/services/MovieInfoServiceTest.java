@@ -1,6 +1,7 @@
 package com.liam.projectreactor.services;
 
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.liam.projectreactor.models.MovieInfo;
@@ -48,7 +49,9 @@ public class MovieInfoServiceTest {
 		
 		//then
 		StepVerifier.create(movieInfoFlux)
-			.expectNextCount(1)
+//			.expectNextCount(1)
+			.assertNext(x -> assertEquals("Avengers: Age of Ultron", x.getName())
+)
 			.verifyComplete();
 		
 	}
