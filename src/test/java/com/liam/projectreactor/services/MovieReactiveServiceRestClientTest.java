@@ -3,10 +3,11 @@ package com.liam.projectreactor.services;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import com.liam.projectreactor.models.MovieInfo;
-import com.liam.projectreactor.models.Review;
+import com.liam.projectreactor.models.Movie;
+
 
 import reactor.core.publisher.Flux;
+import reactor.test.StepVerifier;
 
 public class MovieReactiveServiceRestClientTest {
 	
@@ -21,6 +22,7 @@ public class MovieReactiveServiceRestClientTest {
 	
 	private ReviewService reviewService = new ReviewService(webClient);
 	
+	private MovieReactiveService movieReactiveService = new MovieReactiveService(movieInfoService, reviewService);
 	
 
 	@Test
@@ -28,15 +30,15 @@ public class MovieReactiveServiceRestClientTest {
 		
 		
 		//given
-		long movieInfoId = 1;
 		
 		//when
-		Flux<MovieInfo> movieInfoFlux = movieInfoService.retrieveAllMovieInfo_RestClient();
 		
-		Flux<Review> reviewFlux = reviewService.retrieveReviewsFlux_RestClient(movieInfoId);
+		Flux<Movie> moviesFlux = movieReactiveService.getAllMovies_restClient();
 		
 		//then
-		@Step
+		StepVerifier.create(moviesFlux)
+			.expectNextCount(7)
+			.verifyComplete();
 	}
 	
 

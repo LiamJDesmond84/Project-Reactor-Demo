@@ -38,10 +38,10 @@ public class MovieReactiveService {
 //		this.reviewService = reviewService;
 //	}
 	
-	public MovieReactiveService(MovieInfoService movieInfoService, ReviewService reviewService, RevenueService revenueService) {
+	public MovieReactiveService(MovieInfoService movieInfoService, ReviewService reviewService) {
 	this.movieInfoService = movieInfoService;
 	this.reviewService = reviewService;
-	this.revenueService = revenueService;
+//	this.revenueService = revenueService;
 }
 	
 	public Flux<Movie> getAllMovies_restClient() {
