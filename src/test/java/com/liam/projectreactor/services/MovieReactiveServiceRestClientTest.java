@@ -7,6 +7,7 @@ import com.liam.projectreactor.models.Movie;
 
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 public class MovieReactiveServiceRestClientTest {
@@ -41,6 +42,27 @@ public class MovieReactiveServiceRestClientTest {
 			.expectNextCount(7)
 			.verifyComplete();
 	}
+	
+	
+	
+	@Test
+	void getMovieById_restClient() {
+		
+		//given
+		long movieId = 4;
+		
+		//when
+		
+		Mono<Movie> moviesFlux = movieReactiveService.getMovieById_restClient(movieId);
+		
+		//then
+		StepVerifier.create(moviesFlux)
+			.expectNextCount(1)
+			.verifyComplete();
+	}
+		
+		
+	
 	
 
 }
