@@ -41,7 +41,7 @@ public class MovieInfoServiceTest {
 	void retrieveAllMovieInfoById_RestClient() {
 		
 		//given
-		Long movieId = 1L;
+		Long movieId = 5L;
 		
 		//when
 		Mono<MovieInfo> movieInfoFlux = movieInfoService.retrieveAllMovieInfoById_RestClient(movieId);
