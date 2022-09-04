@@ -1,6 +1,7 @@
 package com.liam.projectreactor.services;
 
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.liam.projectreactor.models.Review;
@@ -14,7 +15,7 @@ public class ReviewServiceTest {
 			.baseUrl("http://localhost:8080/movies")
 			.build();
 	
-	ReviewService reviewService = new ReviewService();
+	ReviewService reviewService = new ReviewService(webClient);
 	
 	
 	
@@ -29,8 +30,9 @@ public class ReviewServiceTest {
 		
 		//then
 		StepVerifier.create(reviewFlux)
+		.assertNext(x -> assertEquals("Nolan is the real superhero", x.getComment()))
+//		.expectNextCount(1)
 		.verifyComplete();
-		
 		
 	}
 
