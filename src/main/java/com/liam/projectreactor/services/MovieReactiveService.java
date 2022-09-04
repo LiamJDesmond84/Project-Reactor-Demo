@@ -46,7 +46,7 @@ public class MovieReactiveService {
 	
 	public Flux<Movie> getAllMovies_restClient() {
 		
-		Flux<MovieInfo> moviesInfoFlux = movieInfoService.retrieveMoviesFlux(); // Retrieving List of MovieInfo - But we want the ID in order to pull the list of reviews
+		Flux<MovieInfo> moviesInfoFlux = movieInfoService.retrieveAllMovieInfo_RestClient(); // Retrieving List of MovieInfo - But we want the ID in order to pull the list of reviews
 		
 		System.out.println(moviesInfoFlux);
 		
@@ -56,7 +56,7 @@ public class MovieReactiveService {
 				// Using flatMap we are passing Movie ID & retrieving the Reviews
 			.flatMap(movieInfoVar -> {
 				// collectList gives a Mono, but the Reviews are represented as a List
-				Mono<List<Review>> reviewsMono = reviewService.retrieveReviewsFlux(movieInfoVar.getMovieInfoId())
+				Mono<List<Review>> reviewsMono = reviewService.retrieveReviewsFlux_RestClient(movieInfoVar.getMovieInfoId())
 				// Collecting to list because Movie class has List<Review>
 			.collectList();
 			
