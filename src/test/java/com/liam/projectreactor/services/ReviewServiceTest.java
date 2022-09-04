@@ -1,6 +1,7 @@
 package com.liam.projectreactor.services;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.liam.projectreactor.models.Review;
 
@@ -9,6 +10,9 @@ import reactor.test.StepVerifier;
 
 public class ReviewServiceTest {
 	
+	WebClient webClient = WebClient.builder() // creates instance of WebClient that automatically connects to this baseUrl
+			.baseUrl("http://localhost:8080/movies")
+			.build();
 	
 	ReviewService reviewService = new ReviewService();
 	
