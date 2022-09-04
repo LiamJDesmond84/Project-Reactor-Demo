@@ -3,7 +3,7 @@ package com.liam.projectreactor.services;
 import java.time.LocalDate;
 import java.util.List;
 
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import static com.liam.projectreactor.utils.CommonUtil.delay;
@@ -39,11 +39,11 @@ public class MovieInfoService {
 	}
 	
 	
-	public Mono<MovieInfo> retrieveAllMovieInfoById_RestClient() { // Connecting to running reactive-movies-restful-api jar file
+	public Mono<MovieInfo> retrieveAllMovieInfoById_RestClient(Long movieId) { // Connecting to running reactive-movies-restful-api jar file
 		
 		return webClient
 					.get()
-					.uri("/v1/movie_infos")
+					.uri("/v1/movie_infos/{movieId}")
 					.retrieve()
 					.bodyToMono(MovieInfo.class)
 					.log();
