@@ -84,7 +84,7 @@ public class MovieReactiveService {
 		Mono<List<Review>> reviewsMonoList = reviewService.retrieveReviewsFlux_RestClient(movieId)
 				.collectList();
 		
-		return movieInfoMono.zipWith(reviewsMonoList, (movieInf, rev) -> new Movie(movieInf, rev));
+		return movieInfoMono.zipWith(reviewsMonoList, (movieInf, rev) -> new Movie(movieInf, rev)).log();
 		
 	}
 

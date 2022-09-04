@@ -49,7 +49,7 @@ public class MovieReactiveServiceRestClientTest {
 	void getMovieById_restClient() {
 		
 		//given
-		long movieId = 4;
+		Long movieId = 4L; // can use Long or long
 		
 		//when
 		
@@ -57,7 +57,7 @@ public class MovieReactiveServiceRestClientTest {
 		
 		//then
 		StepVerifier.create(moviesFlux)
-			.expectNextCount(1)
+			.expectNextCount(1) // expecting just 1 movie coming back from the ID
 			.verifyComplete();
 	}
 		
