@@ -74,6 +74,19 @@ public class MovieReactiveService {
 			.log();
 			
 	}
+	
+	
+	// Mono - Because it's just ONE movie
+	public Mono<Movie> getMovieById_restClient(long movieId) {
+		
+		Mono<MovieInfo> movieInfoMono = movieInfoService.retrieveAllMovieInfoById_RestClient(movieId);
+		
+		Mono<List<Review>> reviewsMonoList = reviewService.retrieveReviewsFlux_RestClient(movieId)
+				.collectList();
+		
+		return movieInfoMono.zipWith(reviewsMonoList, (movieInf, rev) -> new Movie(movieInf, rev));
+		
+	}
 
 	
 	

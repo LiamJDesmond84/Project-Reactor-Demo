@@ -31,6 +31,7 @@ public class MovieReactiveServiceRestClientTest {
 		
 		//given
 		
+		
 		//when
 		
 		Flux<Movie> moviesFlux = movieReactiveService.getAllMovies_restClient();
