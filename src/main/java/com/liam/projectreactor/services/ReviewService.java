@@ -3,6 +3,7 @@ package com.liam.projectreactor.services;
 import java.util.List;
 
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.liam.projectreactor.models.MovieInfo;
 import com.liam.projectreactor.models.Review;
@@ -25,9 +26,14 @@ public class ReviewService {
 	
 	public Flux<Review> retrieveReviewsFlux_RestClient(long movieInfoId) {
 		
+		String uri = UriComponentsBuilder.fromUriString("/v1/reviews")
+				.queryParam("movieInfoId", movieInfoId) // Because query params can be complicated with these
+				.buildAndExpand()
+				.toUriString();
+		
 		return webClient
 				.get()
-				.uri("/v1/movie_infos")
+				.uri(uri)
 				.retrieve()
 				.bodyToFlux(Review.class)
 				.log();
