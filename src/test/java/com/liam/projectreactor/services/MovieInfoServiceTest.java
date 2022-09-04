@@ -48,7 +48,7 @@ public class MovieInfoServiceTest {
 		
 		//then
 		StepVerifier.create(movieInfoFlux)
-			.expectNextCount(7)
+			.expectNextCount(1)
 			.verifyComplete();
 		
 	}

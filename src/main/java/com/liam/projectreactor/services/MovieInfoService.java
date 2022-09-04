@@ -43,7 +43,7 @@ public class MovieInfoService {
 		
 		return webClient
 					.get()
-					.uri("/v1/movie_infos/{movieId}")
+					.uri("/v1/movie_infos/" + movieId)
 					.retrieve()
 					.bodyToMono(MovieInfo.class)
 					.log();
