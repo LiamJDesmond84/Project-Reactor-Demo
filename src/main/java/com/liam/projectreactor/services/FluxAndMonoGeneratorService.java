@@ -794,21 +794,35 @@ public class FluxAndMonoGeneratorService {
 // |___/                                  	
 	
 	
+	// state & sink act seperately -> state = 1-10, sink = 2-20(evens)
 	public Flux<Integer> explore_generate() {
 		
 							
 		return Flux.generate(
 				// Callable function with initial value(1) // bi-function // current value(state), sink.next, sink.complete, etc.
 				() -> 1, (state, sink) -> {
+					
 					sink.next(state * 2);
 					
 					if(state == 10) {
 						sink.complete(); // sink.complete() ends the loop
 					}
-					return state + 1;
+					return state + 1; // mimics a for loop's behavior
 		});
 	}
 	
+	
+
+//                     _       
+//  ___ _ __ ___  __ _| |_ ___ 
+// / __| '__/ _ \/ _` | __/ _ \ // Asynchronous & multi-threaded
+//| (__| | |  __/ (_| | ||  __/ // Generate & emit events from multiple threads
+// \___|_|  \___|\__,_|\__\___| // FluxSink - onNext, onComplete, onError
+	
+	
+	
+	
+            	
 //	  _____                 _ _     _   _____          _           
 //	  \_   \_ ____   ____ _| (_) __| | /__   \___  ___| |_         
 //	   / /\/ '_ \ \ / / _` | | |/ _` |   / /\/ _ \/ __| __|  _____ 
