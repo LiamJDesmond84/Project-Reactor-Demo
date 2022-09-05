@@ -785,6 +785,26 @@ public class FluxAndMonoGeneratorService {
 	
 	
 	
+
+//    							   _       
+//  __ _  ___ _ __   ___ _ __ __ _| |_ ___ 
+// / _` |/ _ \ '_ \ / _ \ '__/ _` | __/ _ \
+//| (_| |  __/ | | |  __/ | | (_| | ||  __/
+// \__, |\___|_| |_|\___|_|  \__,_|\__\___|
+// |___/                                  	
+	
+	
+	public Flux<Integer> explore_generate() {
+		
+		return Flux.generate(() -> 1, (state, sink) -> {
+			sink.next(state * 2);
+			if(state == 10) {
+				sink.complete();
+			}
+			return state + 1;
+		});
+	}
+	
 //	  _____                 _ _     _   _____          _           
 //	  \_   \_ ____   ____ _| (_) __| | /__   \___  ___| |_         
 //	   / /\/ '_ \ \ / / _` | | |/ _` |   / /\/ _ \/ __| __|  _____ 
