@@ -838,8 +838,9 @@ public class FluxAndMonoGeneratorService {
 				.thenAccept(x -> {
 					x.forEach(sink::next);
 				})
-				.thenRun(sink::complete); // once the operators above are completed then run sink.complete.  (Cannot do sink.complete() here for some reason)
-//			sink.complete();
+//				.thenRun(() -> sink.complete()); // once the operators above are completed then run sink.complete.  (Can be sink::complete instead)
+				.thenRun(() -> sendEvents(sink));
+
 		});
 	}
 	
