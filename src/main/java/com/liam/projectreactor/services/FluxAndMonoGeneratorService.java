@@ -12,6 +12,7 @@ import com.liam.projectreactor.exceptions.ReactorException;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.FluxSink;
 import reactor.core.publisher.Mono;
 @Slf4j
 public class FluxAndMonoGeneratorService {
@@ -822,11 +823,7 @@ public class FluxAndMonoGeneratorService {
 // \___|_|  \___|\__,_|\__\___| // FluxSink - onNext, onComplete, onError
 	
 	
-	public static List<String> names() {
-		
-		delay(1000);
-		return List.of("alex", "ben", "chloe");
-	}
+
 	
 	public Flux<String> explore_create() {
 		
@@ -838,9 +835,34 @@ public class FluxAndMonoGeneratorService {
 //			names().forEach(sink::next); // shorter version
 			CompletableFuture
 				.supplyAsync(() -> names())
-				.thenAccept(x -> x.forEach(sink::next));
-			sink.complete();
+				.thenAccept(x -> {
+					x.forEach(sink::next);
+				})
+				.thenRun(sink::complete); // once the operators above are completed then run sink.complete.  (Cannot do sink.complete() here for some reason)
+//			sink.complete();
 		});
+	}
+	
+	public void sendEvents(FluxSink<String> sink) {
+		
+
+			CompletableFuture
+				.supplyAsync(() -> names())
+				.thenAccept(x -> {
+					x.forEach(sink::next);
+				})
+				.thenRun(sink::complete); // once the operators above are completed then run sink.complete.  (Cannot do sink.complete() here for some reason)
+//			sink.complete();
+		
+	}
+	
+	
+	
+	
+	public static List<String> names() {
+		
+		delay(1000);
+		return List.of("alex", "ben", "chloe");
 	}
 	
             	
