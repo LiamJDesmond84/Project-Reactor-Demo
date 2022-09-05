@@ -789,7 +789,7 @@ public class FluxAndMonoGeneratorService {
 //    							   _       
 //  __ _  ___ _ __   ___ _ __ __ _| |_ ___ 
 // / _` |/ _ \ '_ \ / _ \ '__/ _` | __/ _ \
-//| (_| |  __/ | | |  __/ | | (_| | ||  __/ // Synchronous - Sequential - Maintains the state throughout the whole generation of events
+//| (_| |  __/ | | |  __/ | | (_| | ||  __/ // SynchronousSink - Sequential - Maintains the state throughout the whole generation of events
 // \__, |\___|_| |_|\___|_|  \__,_|\__\___|
 // |___/                                  	
 	

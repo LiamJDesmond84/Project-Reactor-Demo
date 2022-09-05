@@ -692,6 +692,29 @@ public class FluxAndMonoGeneratorServiceTest {
 	}
 	
 	
+
+	
+//	  							   _       
+//  __ _  ___ _ __   ___ _ __ __ _| |_ ___ 
+// / _` |/ _ \ '_ \ / _ \ '__/ _` | __/ _ \
+//| (_| |  __/ | | |  __/ | | (_| | ||  __/ // SynchronousSink - Sequential - Maintains the state throughout the whole generation of events
+// \__, |\___|_| |_|\___|_|  \__,_|\__\___|
+// |___/        	
+	
+	@Test
+	void explore_generate() {
+		
+		//given
+		
+		
+		//when
+		Flux<Integer> generatorFluxTest = fluxAndMonoGenServ.explore_generate();
+		
+		//then
+		StepVerifier.create(generatorFluxTest)
+			.expectNext(2, 4, 6, 8, 10)
+			.verifyComplete();
+	}
 	
 //	@Test
 //	void namesFluxImm() { // Reactive Streams are immutable, only operators(like .map) attached to the datasource can transform the data
