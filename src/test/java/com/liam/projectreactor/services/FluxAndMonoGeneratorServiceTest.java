@@ -737,7 +737,7 @@ public class FluxAndMonoGeneratorServiceTest {
 		StepVerifier.create(generatorFluxTest)
 //			.expectNext("alex", "ben", "chloe", "alex", "ben", "chloe")
 //			.expectNextCount(6)
-			.expectNextCount(9)
+			.expectNextCount(9) // Because we're calling the event twice now.  Plus the second CompletableFuture call(send events) ---- 3 + 3 + 3.
 			.verifyComplete();
 	}
 	
