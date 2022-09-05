@@ -835,9 +835,18 @@ public class FluxAndMonoGeneratorService {
 //			names().forEach(sink::next); // shorter version
 			CompletableFuture
 				.supplyAsync(() -> names())
-				.thenAccept(x -> {
-					x.forEach(sink::next);
+				
+//				.thenAccept(x -> {
+//					x.forEach(sink::next);
+//				})
+				
+				.thenAccept(x -> { // Sending same event multiple times
+					x.forEach((y) -> {
+						sink.next(y);
+						sink.next(y);
+					});
 				})
+				
 //				.thenRun(() -> sink.complete()); // once the operators above are completed then run sink.complete.  (Can be sink::complete instead)
 				.thenRun(() -> sendEvents(sink));
 
