@@ -716,6 +716,30 @@ public class FluxAndMonoGeneratorServiceTest {
 			.expectNextCount(10)
 			.verifyComplete();
 	}
+
+
+// 					   _       
+//  ___ _ __ ___  __ _| |_ ___ 
+// / __| '__/ _ \/ _` | __/ _ \ // Asynchronous & multi-threaded
+//| (__| | |  __/ (_| | ||  __/ // Generate & emit events from multiple threads
+// \___|_|  \___|\__,_|\__\___| // FluxSink - onNext, onComplete, onError
+	
+	@Test
+	void explore_create() {
+		
+		//given
+		
+		
+		//when
+		Flux<String> generatorFluxTest = fluxAndMonoGenServ.explore_create().log();
+		
+		//then
+		StepVerifier.create(generatorFluxTest)
+			.expectNext("alex", "ben", "chloe")
+//			.expectNextCount(10)
+			.verifyComplete();
+	}
+	
 	
 //	@Test
 //	void namesFluxImm() { // Reactive Streams are immutable, only operators(like .map) attached to the datasource can transform the data

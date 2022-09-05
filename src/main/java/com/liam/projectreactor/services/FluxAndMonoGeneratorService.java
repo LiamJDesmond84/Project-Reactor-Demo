@@ -824,16 +824,17 @@ public class FluxAndMonoGeneratorService {
 	public static List<String> names() {
 		
 		delay(1000);
-		return List.of("alex, ben, chloe");
+		return List.of("alex", "ben", "chloe");
 	}
 	
 	public Flux<String> explore_create() {
 		
-		return Flux.create(sink -> {
+		return Flux.create(sink -> { // Flux.create - Use an existing function & bring it in to the Reactive world.
 			
-			names().forEach(name -> {
-				sink.next(name);
-			});
+//			names().forEach(name -> {
+//				sink.next(name);
+//			});
+			names().forEach(sink::next); // shorter version
 		});
 	}
 	
