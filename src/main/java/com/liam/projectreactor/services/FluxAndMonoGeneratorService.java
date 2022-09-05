@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
+import static com.liam.projectreactor.utils.CommonUtil.delay;
 
 import com.liam.projectreactor.exceptions.ReactorException;
 
@@ -820,7 +821,21 @@ public class FluxAndMonoGeneratorService {
 // \___|_|  \___|\__,_|\__\___| // FluxSink - onNext, onComplete, onError
 	
 	
+	public static List<String> names() {
+		
+		delay(1000);
+		return List.of("alex, ben, chloe");
+	}
 	
+	public Flux<String> explore_create() {
+		
+		return Flux.create(sink -> {
+			
+			names().forEach(name -> {
+				sink.next(name);
+			});
+		});
+	}
 	
             	
 //	  _____                 _ _     _   _____          _           
