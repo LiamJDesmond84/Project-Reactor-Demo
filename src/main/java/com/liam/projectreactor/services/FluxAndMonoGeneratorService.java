@@ -796,6 +796,7 @@ public class FluxAndMonoGeneratorService {
 	
 	public Flux<Integer> explore_generate() {
 		
+							// initial value(1) // bi-function // sink.next, sink.complete, etc.
 		return Flux.generate(() -> 1, (state, sink) -> {
 			sink.next(state * 2);
 			if(state == 10) {
