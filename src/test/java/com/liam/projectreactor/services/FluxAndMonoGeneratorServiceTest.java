@@ -708,11 +708,12 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		
 		//when
-		Flux<Integer> generatorFluxTest = fluxAndMonoGenServ.explore_generate();
+		Flux<Integer> generatorFluxTest = fluxAndMonoGenServ.explore_generate().log();
 		
 		//then
 		StepVerifier.create(generatorFluxTest)
-			.expectNext(2, 4, 6, 8, 10)
+//			.expectNext(2, 4, 6, 8, 10, 12, 14, 16, 18, 20)
+			.expectNextCount(10)
 			.verifyComplete();
 	}
 	
