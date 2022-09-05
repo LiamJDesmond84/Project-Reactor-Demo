@@ -789,20 +789,23 @@ public class FluxAndMonoGeneratorService {
 //    							   _       
 //  __ _  ___ _ __   ___ _ __ __ _| |_ ___ 
 // / _` |/ _ \ '_ \ / _ \ '__/ _` | __/ _ \
-//| (_| |  __/ | | |  __/ | | (_| | ||  __/
+//| (_| |  __/ | | |  __/ | | (_| | ||  __/ // Synchronous - Sequential - Maintains the state throughout the whole generation of events
 // \__, |\___|_| |_|\___|_|  \__,_|\__\___|
 // |___/                                  	
 	
 	
 	public Flux<Integer> explore_generate() {
 		
-							// initial value(1) // bi-function // sink.next, sink.complete, etc.
-		return Flux.generate(() -> 1, (state, sink) -> {
-			sink.next(state * 2);
-			if(state == 10) {
-				sink.complete();
-			}
-			return state + 1;
+							
+		return Flux.generate(
+				// Callable function with initial value(1) // bi-function // current value(state), sink.next, sink.complete, etc.
+				() -> 1, (state, sink) -> {
+					sink.next(state * 2);
+					
+					if(state == 10) {
+						sink.complete(); // sink.complete() ends the loop
+					}
+					return state + 1;
 		});
 	}
 	
