@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 import static com.liam.projectreactor.utils.CommonUtil.delay;
 
@@ -834,7 +835,11 @@ public class FluxAndMonoGeneratorService {
 //			names().forEach(name -> {
 //				sink.next(name);
 //			});
-			names().forEach(sink::next); // shorter version
+//			names().forEach(sink::next); // shorter version
+			CompletableFuture
+				.supplyAsync(() -> names())
+				.thenAccept(x -> x.forEach(sink::next));
+			sink.complete();
 		});
 	}
 	
