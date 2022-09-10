@@ -771,7 +771,7 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		//then
 		StepVerifier.create(generatorMonoTest)
-			.expectNext("ALEX", "BEN", "CHLOE")
+			.expectNext("ALEX", "CHLOE") // Ben is only 3 characters, method sends greater than 3
 			.expectNextCount(0)
 			.verifyComplete();
 	}
