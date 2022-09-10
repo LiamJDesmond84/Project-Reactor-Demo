@@ -714,6 +714,22 @@ public class FluxAndMonoGeneratorService {
 			.log();
 	}
 	
+	
+	
+	public Flux<String> exploreOnErrorMap_for_debugging(Exception e) { // "A" - "B" throws Exception - does not recover from error
+		
+		
+		return Flux.just("A", "B", "C")
+			.concatWith(Flux.error(e))
+			.onErrorMap(exc -> { // Takes in a Function functional interface - Below return?
+				log.error("The Exception is: " + exc);
+				return new ReactorException(exc, exc.getMessage()); // We created this Custom? Exception - Takes in -> Throwable, Message
+				
+			})
+			.concatWith(Flux.just("G"))  // Does NOT log G - Does not recover from Exception
+			.log();
+	}
+	
 	public Mono<String> exploreOnErrorMapMono() { // "A" - "B" throws Exception - does not recover from error
 		
 		
