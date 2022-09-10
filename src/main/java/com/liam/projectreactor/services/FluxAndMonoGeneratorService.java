@@ -705,7 +705,7 @@ public class FluxAndMonoGeneratorService {
 			})
 			
 			.concatWith(Flux.just("D")) // Does NOT log D - Does not recover from Exception
-			.onErrorMap(exc -> { // Takes in a Function functional interface - Below return?
+			.onErrorMap(exc -> { // Takes in a Function functional interface - from the below return?
 				log.error("The Exception is: " + exc);
 				return new ReactorException(exc, exc.getMessage()); // We created this Custom? Exception - Takes in -> Throwable, Message
 				
@@ -719,14 +719,13 @@ public class FluxAndMonoGeneratorService {
 	public Flux<String> exploreOnErrorMap_for_debugging(Exception e) { // "A" - "B" throws Exception - does not recover from error
 		
 		
-		return Flux.just("A", "B", "C")
+		return Flux.just("A")
 			.concatWith(Flux.error(e))
-			.onErrorMap(exc -> { // Takes in a Function functional interface - Below return?
+			.onErrorMap(exc -> {
 				log.error("The Exception is: " + exc);
-				return new ReactorException(exc, exc.getMessage()); // We created this Custom? Exception - Takes in -> Throwable, Message
+				return new ReactorException(exc, exc.getMessage());
 				
 			})
-			.concatWith(Flux.just("G"))  // Does NOT log G - Does not recover from Exception
 			.log();
 	}
 	
