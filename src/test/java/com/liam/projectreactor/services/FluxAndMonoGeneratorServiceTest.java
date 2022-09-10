@@ -793,7 +793,7 @@ public class FluxAndMonoGeneratorServiceTest {
 		RuntimeException e = new RuntimeException("Not a valid State");
 		
 		//when
-		Flux<String> resumeValue = fluxAndMonoGenServ.exploreOnErrorMap_onOperatorDebug(e);
+		Flux<String> resumeValue = fluxAndMonoGenServ.exploreOnErrorMap_onOperatorDebug(e).log();
 		
 		//then
 		StepVerifier.create(resumeValue)
