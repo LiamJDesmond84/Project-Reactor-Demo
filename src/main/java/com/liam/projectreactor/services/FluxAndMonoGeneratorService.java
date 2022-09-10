@@ -853,6 +853,19 @@ public class FluxAndMonoGeneratorService {
 		});
 	}
 	
+	
+	public Mono<String> explore_create_mono() {
+		
+		return Mono.create(sink -> {
+			
+			sink.success("alex"); // value can come from another function as well, but for now we're making it static
+			
+		});
+		
+	}
+	
+	
+	
 	public void sendEvents(FluxSink<String> sink) {
 		
 
