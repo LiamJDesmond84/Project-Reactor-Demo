@@ -750,12 +750,11 @@ public class FluxAndMonoGeneratorServiceTest {
 		
 		
 		//when
-		Mono<String> generatorFluxTest = fluxAndMonoGenServ.explore_create_mono().log();
+		Mono<String> generatorMonoTest = fluxAndMonoGenServ.explore_create_mono().log();
 		
 		//then
-		StepVerifier.create(generatorFluxTest)
+		StepVerifier.create(generatorMonoTest)
 			.expectNext("alex")
-
 			.expectNextCount(0)
 			.verifyComplete();
 	}
