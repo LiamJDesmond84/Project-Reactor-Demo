@@ -788,7 +788,7 @@ public class FluxAndMonoGeneratorServiceTest {
 	void exploreOnErrorMap_for_debugging() {
 		
 		//given
-		IllegalStateException e = new IllegalStateException("Not a valid State");
+		RuntimeException e = new RuntimeException("Not a valid State");
 		
 		//when
 		Flux<String> resumeValue = fluxAndMonoGenServ.exploreOnErrorMap_for_debugging(e);
@@ -796,7 +796,8 @@ public class FluxAndMonoGeneratorServiceTest {
 		//then
 		StepVerifier.create(resumeValue)
 		.expectNext("A")
-		.verifyComplete();
+		.expectError(ReactorException.class)
+		.verify();
 		
 	}
 	
