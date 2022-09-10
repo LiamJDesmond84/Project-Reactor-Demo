@@ -789,7 +789,7 @@ public class FluxAndMonoGeneratorServiceTest {
 	void exploreOnErrorMap_onOperatorDebug() {
 		
 		//given
-		Hooks.onOperatorDebug(); // Needed at start of application, so would be in main Spring Boot method normally
+//		Hooks.onOperatorDebug(); // Needed at start of application, so would be in main Spring Boot method normally   ---  ERROR WHEN USING
 		RuntimeException e = new RuntimeException("Not a valid State");
 		
 		//when

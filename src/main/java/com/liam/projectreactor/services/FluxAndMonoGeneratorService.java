@@ -721,6 +721,7 @@ public class FluxAndMonoGeneratorService {
 		
 		return Flux.just("A")
 			.concatWith(Flux.error(e))
+			.checkpoint("errorSpot")
 			.onErrorMap(exc -> {
 				log.error("The Exception is: " + exc);
 				return new ReactorException(exc, exc.getMessage());
