@@ -716,7 +716,7 @@ public class FluxAndMonoGeneratorService {
 	
 	
 	
-	public Flux<String> exploreOnErrorMap_for_debugging(Exception e) { // "A" - "B" throws Exception - does not recover from error
+	public Flux<String> exploreOnErrorMap_onOperatorDebug(Exception e) { // "A" - "B" throws Exception - does not recover from error
 		
 		
 		return Flux.just("A")

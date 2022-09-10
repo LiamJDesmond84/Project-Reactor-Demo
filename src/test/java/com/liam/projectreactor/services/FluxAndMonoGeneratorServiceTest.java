@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import com.liam.projectreactor.exceptions.ReactorException;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Hooks;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 import reactor.test.scheduler.VirtualTimeScheduler;
@@ -785,13 +786,14 @@ public class FluxAndMonoGeneratorServiceTest {
 	
 	
 	@Test
-	void exploreOnErrorMap_for_debugging() {
+	void exploreOnErrorMap_onOperatorDebug() {
 		
 		//given
+		Hooks.onOperatorDebug(); // Needed at start of application, so would be in main Spring Boot method normally
 		RuntimeException e = new RuntimeException("Not a valid State");
 		
 		//when
-		Flux<String> resumeValue = fluxAndMonoGenServ.exploreOnErrorMap_for_debugging(e);
+		Flux<String> resumeValue = fluxAndMonoGenServ.exploreOnErrorMap_onOperatorDebug(e);
 		
 		//then
 		StepVerifier.create(resumeValue)
