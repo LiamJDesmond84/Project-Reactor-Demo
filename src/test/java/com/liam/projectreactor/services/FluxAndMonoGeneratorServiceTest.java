@@ -12,6 +12,7 @@ import reactor.core.publisher.Hooks;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 import reactor.test.scheduler.VirtualTimeScheduler;
+import reactor.tools.agent.ReactorDebugAgent;
 
 public class FluxAndMonoGeneratorServiceTest {
 	
@@ -802,6 +803,27 @@ public class FluxAndMonoGeneratorServiceTest {
 		.verify();
 		
 	}
+	
+	@Test
+	void exploreOnErrorMap_reactiveDebugAgent() {
+		
+		//given
+		ReactorDebugAgent.init(); // Needed at start of application, so would be in main Spring Boot method normally
+		ReactorDebugAgent.processExistingClasses();
+		
+		RuntimeException e = new RuntimeException("Not a valid State");
+		
+		//when
+		Flux<String> resumeValue = fluxAndMonoGenServ.exploreOnErrorMap_onOperatorDebug(e).log();
+		
+		//then
+		StepVerifier.create(resumeValue)
+		.expectNext("A")
+		.expectError(ReactorException.class)
+		.verify();
+		
+	}
+	
 	
 	
 //	@Test
