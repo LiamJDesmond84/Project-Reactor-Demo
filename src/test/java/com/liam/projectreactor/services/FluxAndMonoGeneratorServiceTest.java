@@ -794,10 +794,10 @@ public class FluxAndMonoGeneratorServiceTest {
 		RuntimeException e = new RuntimeException("Not a valid State");
 		
 		//when
-		Flux<String> resumeValue = fluxAndMonoGenServ.exploreOnErrorMap_onOperatorDebug(e).log();
+		Flux<String> value = fluxAndMonoGenServ.exploreOnErrorMap_onOperatorDebug(e).log();
 		
 		//then
-		StepVerifier.create(resumeValue)
+		StepVerifier.create(value)
 		.expectNext("A")
 		.expectError(ReactorException.class)
 		.verify();
@@ -805,7 +805,7 @@ public class FluxAndMonoGeneratorServiceTest {
 	}
 	
 	@Test
-	void exploreOnErrorMap_reactiveDebugAgent() {
+	void exploreOnErrorMap_reactiveDebugAgent() { // BEST OPTION - But only showing the onErrorMap() * log() lines?
 		
 		//given
 		ReactorDebugAgent.init(); // Needed at start of application, so would be in main Spring Boot method normally
@@ -814,10 +814,10 @@ public class FluxAndMonoGeneratorServiceTest {
 		RuntimeException e = new RuntimeException("Not a valid State");
 		
 		//when
-		Flux<String> resumeValue = fluxAndMonoGenServ.exploreOnErrorMap_onOperatorDebug(e).log();
+		Flux<String> value = fluxAndMonoGenServ.exploreOnErrorMap_onOperatorDebug(e).log();
 		
 		//then
-		StepVerifier.create(resumeValue)
+		StepVerifier.create(value)
 		.expectNext("A")
 		.expectError(ReactorException.class)
 		.verify();
