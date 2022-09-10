@@ -879,12 +879,12 @@ public class FluxAndMonoGeneratorService {
 		
 	}
 	
-	public Flux<String> explore_handle() {
+	public Flux<String> explore_handle() { // basically a simple map filter below
 		
 		return Flux.fromIterable(List.of("alex", "ben", "chloe"))
 				.handle((name, sink) -> {
 					if(name.length() > 3) {
-						sink.next(name);
+						sink.next(name.toUpperCase());
 					}
 				});
 		

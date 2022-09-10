@@ -760,6 +760,23 @@ public class FluxAndMonoGeneratorServiceTest {
 	}
 	
 	
+	@Test
+	void explore_handle() {
+		
+		//given
+		
+		
+		//when
+		Flux<String> generatorMonoTest = fluxAndMonoGenServ.explore_handle().log();
+		
+		//then
+		StepVerifier.create(generatorMonoTest)
+			.expectNext("ALEX", "BEN", "CHLOE")
+			.expectNextCount(0)
+			.verifyComplete();
+	}
+	
+	
 //	@Test
 //	void namesFluxImm() { // Reactive Streams are immutable, only operators(like .map) attached to the datasource can transform the data
 //		
